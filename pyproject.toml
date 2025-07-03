@@ -1,10 +1,10 @@
 [project]
-name = "ollamapp"
-version = "0.1.0"
+name = "ollama-think"
+version = "0.1.1"
 description = "Add your description here"
 readme = "README.md"
 authors = [
-    { name = "Chris Kilner", email = "chris@radix.fr" }
+    { name = "Chris Kilner", email = "cjp.kilner@gmail.com" }
 ]
 requires-python = ">=3.12.2"
 dependencies = [
