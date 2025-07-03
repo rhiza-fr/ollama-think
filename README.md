@@ -20,7 +20,7 @@ pip install ollamapp
 Here's a simple example of how to use the `OllamaClient`:
 
 ```python
-from ollamapp.client import OllamaClient
+from ollama_think.client import OllamaClient
 
 # Initialize the client
 client = OllamaClient()

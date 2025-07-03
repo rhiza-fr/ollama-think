@@ -2,7 +2,7 @@ import unittest
 
 from ollama import ChatResponse, Message
 
-from ollamapp.thinkresponse import ThinkResponse
+from ollama_think.thinkresponse import ThinkResponse
 
 
 class TestThinkResponse(unittest.TestCase):

@@ -3,18 +3,18 @@ from unittest.mock import patch
 
 from ollama import ChatResponse, Message
 
-from ollamapp.client import OllamaClient
+from ollama_think.client import Client
 
 
 class TestOllamaClient(unittest.TestCase):
     def setUp(self):
         """Set up mocks for Cache and the upstream client before each test."""
-        self.cache_patcher = patch("ollamapp.client.Cache")
+        self.cache_patcher = patch("ollama_think.client.Cache")
         self.MockCache = self.cache_patcher.start()
         self.mock_cache_instance = self.MockCache.return_value
         self.mock_cache_instance.get.return_value = None  # Default to a cache miss
 
-        self.chat_patcher = patch("ollamapp.client.UpStreaamOllamaClient.chat")
+        self.chat_patcher = patch("ollama_think.client.OllamaClient.chat")
         self.mock_chat = self.chat_patcher.start()
 
         self.addCleanup(self.cache_patcher.stop)
@@ -22,12 +22,12 @@ class TestOllamaClient(unittest.TestCase):
 
     def test_clear_cache_on_init(self):
         """Test if the cache is cleared when clear_cache=True."""
-        OllamaClient(clear_cache=True)
+        Client(clear_cache=True)
         self.mock_cache_instance.clear.assert_called_once()
 
     def test_close_method(self):
         """Test that the explicit close method calls the cache's close method."""
-        client = OllamaClient()
+        client = Client()
         client.close()
         self.mock_cache_instance.close.assert_called_once()
 
@@ -36,7 +36,7 @@ class TestOllamaClient(unittest.TestCase):
         self.mock_chat.return_value = ChatResponse(
             model="llama2", created_at="", message=Message(role="assistant", content="Hello, world!"), done=True
         )
-        client = OllamaClient()
+        client = Client()
         response = client.call(model="llama2", prompt="Hello, world!")
 
         self.assertEqual(response.content, "Hello, world!")
@@ -50,7 +50,7 @@ class TestOllamaClient(unittest.TestCase):
             model="llama2", created_at="", message=Message(role="assistant", content="Cached response"), done=True
         )
         self.mock_cache_instance.get.return_value = cached_response
-        client = OllamaClient()
+        client = Client()
 
         response = client.call(model="llama2", prompt="Cache me")
 
@@ -64,7 +64,7 @@ class TestOllamaClient(unittest.TestCase):
         self.mock_chat.return_value = ChatResponse(
             model="llama2", created_at="", message=Message(role="assistant", content="Fresh response"), done=True
         )
-        client = OllamaClient()
+        client = Client()
         client.call(model="llama2", prompt="No cache", use_cache=False)
 
         self.mock_cache_instance.get.assert_not_called()  # The key is still checked
@@ -79,7 +79,7 @@ class TestOllamaClient(unittest.TestCase):
                 ChatResponse(message=Message(role="assistant", content="world!"), done=True, model="l2", created_at=""),
             ]
         )
-        client = OllamaClient()
+        client = Client()
         responses = list(client.stream(model="llama2", prompt="Hello, world!"))
 
         self.assertEqual(len(responses), 2)
@@ -95,7 +95,7 @@ class TestOllamaClient(unittest.TestCase):
             ChatResponse(message=Message(role="assistant", content="stream"), done=True, model="l2", created_at=""),
         ]
         self.mock_cache_instance.get.return_value = cached_stream
-        client = OllamaClient()
+        client = Client()
 
         responses = list(client.stream(model="llama2", prompt="Cache me"))
 

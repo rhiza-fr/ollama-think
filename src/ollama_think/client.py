@@ -1,17 +1,18 @@
 import hashlib
-from typing import Any, Iterator, Literal, Mapping, Sequence, cast
+from collections.abc import Iterator, Mapping, Sequence
+from typing import Any, Literal, cast
 
 from diskcache import Cache
 from ollama import ChatResponse
-from ollama import Client as UpStreaamOllamaClient
+from ollama import Client as OllamaClient
 from ollama._types import ChatRequest, Message, Options, Tool
 from pydantic.json_schema import JsonSchemaValue
 from rich import print
 
-from ollamapp.thinkresponse import ThinkResponse
+from ollama_think.thinkresponse import ThinkResponse
 
 
-class OllamaClient(UpStreaamOllamaClient):
+class Client(OllamaClient):
     """
     Ollama client for interacting with the Ollama API.
 
@@ -149,7 +150,7 @@ class OllamaClient(UpStreaamOllamaClient):
 
 def examples():
     """Display the return objects of the Ollama client methods."""
-    client = OllamaClient()
+    client = Client()
 
     print("----- client.call with think=False -----")
     resp = client.call(model="qwen3", prompt="Hello, world!", think=False)
