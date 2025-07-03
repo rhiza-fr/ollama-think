@@ -12,7 +12,9 @@ class TestOllamaClient(unittest.TestCase):
         self.cache_patcher = patch("ollama_think.client.Cache")
         self.MockCache = self.cache_patcher.start()
         self.mock_cache_instance = self.MockCache.return_value
-        self.mock_cache_instance.get.return_value = None  # Default to a cache miss
+        self.mock_cache_instance.get.return_value = (
+            None  # Default to a cache miss
+        )
 
         self.chat_patcher = patch("ollama_think.client.OllamaClient.chat")
         self.mock_chat = self.chat_patcher.start()
@@ -34,7 +36,10 @@ class TestOllamaClient(unittest.TestCase):
     def test_call_with_prompt_and_cache_miss(self):
         """Test a standard call that results in a cache miss and stores the result."""
         self.mock_chat.return_value = ChatResponse(
-            model="llama2", created_at="", message=Message(role="assistant", content="Hello, world!"), done=True
+            model="llama2",
+            created_at="",
+            message=Message(role="assistant", content="Hello, world!"),
+            done=True,
         )
         client = Client()
         response = client.call(model="llama2", prompt="Hello, world!")
@@ -47,7 +52,10 @@ class TestOllamaClient(unittest.TestCase):
     def test_call_with_cache_hit(self):
         """Test that a call retrieves a response from the cache."""
         cached_response = ChatResponse(
-            model="llama2", created_at="", message=Message(role="assistant", content="Cached response"), done=True
+            model="llama2",
+            created_at="",
+            message=Message(role="assistant", content="Cached response"),
+            done=True,
         )
         self.mock_cache_instance.get.return_value = cached_response
         client = Client()
@@ -62,7 +70,10 @@ class TestOllamaClient(unittest.TestCase):
     def test_call_with_use_cache_false(self):
         """Test that use_cache=False makes an API call and does not save to cache."""
         self.mock_chat.return_value = ChatResponse(
-            model="llama2", created_at="", message=Message(role="assistant", content="Fresh response"), done=True
+            model="llama2",
+            created_at="",
+            message=Message(role="assistant", content="Fresh response"),
+            done=True,
         )
         client = Client()
         client.call(model="llama2", prompt="No cache", use_cache=False)
@@ -75,8 +86,18 @@ class TestOllamaClient(unittest.TestCase):
         """Test a standard stream that results in a cache miss and stores the result."""
         self.mock_chat.return_value = iter(
             [
-                ChatResponse(message=Message(role="assistant", content="Hello, "), done=False, model="l2", created_at=""),
-                ChatResponse(message=Message(role="assistant", content="world!"), done=True, model="l2", created_at=""),
+                ChatResponse(
+                    message=Message(role="assistant", content="Hello, "),
+                    done=False,
+                    model="l2",
+                    created_at="",
+                ),
+                ChatResponse(
+                    message=Message(role="assistant", content="world!"),
+                    done=True,
+                    model="l2",
+                    created_at="",
+                ),
             ]
         )
         client = Client()
@@ -91,8 +112,18 @@ class TestOllamaClient(unittest.TestCase):
     def test_stream_with_cache_hit(self):
         """Test that a stream retrieves a response from the cache."""
         cached_stream = [
-            ChatResponse(message=Message(role="assistant", content="Cached "), done=False, model="l2", created_at=""),
-            ChatResponse(message=Message(role="assistant", content="stream"), done=True, model="l2", created_at=""),
+            ChatResponse(
+                message=Message(role="assistant", content="Cached "),
+                done=False,
+                model="l2",
+                created_at="",
+            ),
+            ChatResponse(
+                message=Message(role="assistant", content="stream"),
+                done=True,
+                model="l2",
+                created_at="",
+            ),
         ]
         self.mock_cache_instance.get.return_value = cached_stream
         client = Client()

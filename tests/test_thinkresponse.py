@@ -39,7 +39,9 @@ class TestThinkResponse(unittest.TestCase):
             done=True,
         )
         think_response = ThinkResponse(chat_response)
-        expected_repr = "ThinkResponse(thinking='I am thinking...', content='Hello!')"
+        expected_repr = (
+            "ThinkResponse(thinking='I am thinking...', content='Hello!')"
+        )
         self.assertEqual(repr(think_response), expected_repr)
 
     def test_iter(self):
@@ -58,7 +60,9 @@ class TestThinkResponse(unittest.TestCase):
         self.assertEqual(content, "Hello!")
 
     def test_thinking_property(self):
-        message = Message(role="assistant", content="", thinking="Thinking aloud.")
+        message = Message(
+            role="assistant", content="", thinking="Thinking aloud."
+        )
         chat_response = ChatResponse(
             model="llama2",
             created_at="2023-08-04T19:22:45.499127Z",
