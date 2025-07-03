@@ -1,4 +1,5 @@
-from typing import Iterator, override
+from collections.abc import Iterator
+from typing import override
 
 from ollama import ChatResponse
 
