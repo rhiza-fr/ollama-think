@@ -3,19 +3,20 @@ from rich import print
 from ollama_think.client import Client
 
 
-def main():    
+def main():
     client = Client(host="http://localhost:11434")
 
-    prompt="Describe the earth to an alien who has just arrived."
-    options={'num_ctx': 8192, 'temperature': 0.9}
+    prompt = "Describe the earth to an alien who has just arrived."
+    options = {"num_ctx": 8192, "temperature": 0.9}
 
     print("Using prompt:", prompt)
     print("Using options:", options)
 
-    thinking, content = client.call(model="qwen3", prompt=prompt, think=True, options=options)
+    thinking, content = client.call(
+        model="qwen3", prompt=prompt, think=True, options=options
+    )
     print("Thinking:", thinking)
     print("Content:", content)
-
 
 
 if __name__ == "__main__":

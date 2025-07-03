@@ -16,7 +16,6 @@ from ollama import ChatResponse
 from ollama import Client as OllamaClient
 from ollama._types import ChatRequest, GenerateResponse, Message, Options, Tool
 from pydantic.json_schema import JsonSchemaValue
-from rich import print
 
 from ollama_think.thinkresponse import ThinkResponse
 
@@ -90,7 +89,7 @@ class Client(OllamaClient):
     def close(self):
         """
         Explicitly clean up the cache.
-        
+
         Most often this will be done for you.
         """
         self.cache.close()
@@ -260,8 +259,8 @@ class Client(OllamaClient):
             for thinking, content in client.stream(model="qwen3", prompt="Why is the sky blue?", thinking=True):
                 print(thinking, end="") # the thinking always comes first
                 print(content, end="")
-                
-            
+
+
         """
         if messages is None:
             if prompt is not None:
@@ -306,90 +305,5 @@ class Client(OllamaClient):
         Returns:
             A `GenerateResponse` object from the underlying API call.
         """
-        r = super().generate(model=model, keep_alive=0.0)
-        return r
+        return super().generate(model=model, keep_alive=0.0)
 
-def examples():
-    """Example usage of the client."""
-    import time
-    print("======= Usage =========")
-    print("# Step 1 - Create the client")
-    print("> client = Client()    # this may pick the environment variable OLLAMA_HOST")
-    print("> client = Client(host=\"http://localhost:11434\", cache_dir=\".ollama_cache\", clear_cache=False)   # or explicit settings")
-    client = Client(host="http://localhost:11434", cache_dir=".ollama_cache", clear_cache=False)
-    print("\n# Step 2 - Call the model")
-    print("> tr = client.call(model=\"qwen3\", prompt=\"Hello, world!\" think=False)  # 'think' is default False, which avoids pages of text for this example")
-    tr = client.call(model="qwen3", prompt="Hello, world!", think=False)
-    print("\nWe can now look at the response object and see that it looks exactly the same as a ChatResponse object")
-    print("> tr")
-    print(tr)
-
-    print("\nAs normal, we can access the thinking and the content via the unaltered ChatResponse.message")
-    print(f"> tr.message.thinking: \'{tr.message.thinking}\'")
-    print(f">  tr.message.content: \'{tr.message.content}\'")
-    
-    print("\nbut we also have some convenience methods")
-    print(f"> tr.thinking: \'{tr.thinking}\' # if None this is an empty string")
-    print(f">  tr.content: \'{tr.content}\'")
-    print(">     str(tr): \'" + str(tr) + "\'")
-    print(f">    f\"{{tr}}\"): \'{tr}\'")
- 
-    print("\nFor further convenience, we can unpack the ThinkResponse")
-    print("> thinking, content = client.call(model=\"qwen3\", prompt=\"Hello, world!\") ")
-    thinking, content = tr
-    print(f"> thinking: \'{thinking}\'")
-    print(f">  content: \'{content}\'")
-
-    print("-" * 80)
-
-    print("============= Caching =============")
-    client = Client(host="http://localhost:11434", cache_dir=".ollama_cache", clear_cache=True) # Make sure that there is no cache
-    client.stop("qwen3") # Make sure that the model is unloaded
-    
-    t1 = time.perf_counter()
-    _ = client.call(model="qwen3", prompt="Hello, world!", think=False)
-    t2 = time.perf_counter()
-    print(f"Cold model, No cache: {t2 - t1:0.4f} seconds (Ollama has to load the model)")
-    
-    t1 = time.perf_counter()
-    _ = client.call(model="qwen3", prompt="Hello, world!", think=False, use_cache=False)
-    t2 = time.perf_counter()
-    print(f"Warm model, No cache: {t2 - t1:0.4f} seconds (use_cache=False - normal Ollama performance)")
-    
-    t1 = time.perf_counter()
-    _ = client.call(model="qwen3", prompt="Hello, world!", think=False)
-    t2 = time.perf_counter()
-    print(f"          With Cache: {t2 - t1:0.4f} seconds (use_cache=True, default - typically > 1300 times faster)")
-    
-    print("----- client.stream with think=True -----")
-    stream = client.stream(
-        model="qwen3",
-        prompt="Hello, how are you?",
-        think=True,
-    )
-    chunk: ThinkResponse | None = None
-    for chunk in stream:
-        print(f"{chunk.thinking}", end="")
-        print(f"{chunk.content}", end="")
-    print("\n-----------------------------------------")
-    print("The last chunk contains the response details, but the contents of thinking and content were in previous chunks")
-    print(chunk)
-
-    print("----- unpacking stream -----")
-    stream = client.stream(
-        model="qwen3",
-        prompt="Hello, how are you?",
-        think=True,
-    )
-    for thinking, content in stream:
-        print(f"{thinking}", end="")
-        print(f"{content}", end="")
-    print("\n-----------------------------------------")
-
-
-def main():
-    examples()
-
-
-if __name__ == "__main__":
-    main()
