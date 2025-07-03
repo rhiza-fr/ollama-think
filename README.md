@@ -99,7 +99,7 @@ The `stream` method provides a strongly typed access to the underlying `Chat` me
 
 ```python
 # Make a streaming call
-stream = client.stream(model="qwen3", prompt="Tell me a short story.")
+stream = client.stream(model="qwen3", prompt="Tell me a short story about italian chimanzees and bananas")
 for chunk in stream:
     print(chunk.thinking, end="")
     print(chunk.content, end="")
@@ -113,14 +113,14 @@ Note: Not all models officially support thinking. They will return an error even
 
 ```python
 # Non-streaming call with think=True
-thinking, content = client.call(model="qwen3", prompt="Why is the sky blue?", think=True)
+thinking, content = client.call(model="qwen3", prompt="Why is the red at night??", think=True)
 print("--- Thinking ---")
 print(thinking)
 print("\n--- Content ---")
 print(content)
 
 # Streaming call with think=True
-stream = client.stream(model="qwen3", prompt="Why is the sky blue?", think=True)
+stream = client.stream(model="qwen3", prompt="Why is bigger an egg or a mouse?", think=True)
 for thinking_chunk, content_chunk in stream:
     print(thinking_chunk, end="") # The 'thinking' part usually comes first
     print(content_chunk, end="")
@@ -149,6 +149,20 @@ client = Client(clear_cache=True)
 ```
 
 ### Options
+
+```python
+client = Client(host="http://localhost:11434")
+prompt="Describe the earth to an alien who has just arrived."
+options={'num_ctx': 8192, 'temperature': 0.9}
+
+print("Using prompt:", prompt)
+print("Using options:", options)
+
+thinking, content = client.call(model="qwen3", prompt=prompt, think=True, options=options)
+print("Thinking:", thinking)
+print("Content:", content)
+```
+See examples/options_example.py for a full list of options
 
 ### Tool Calling
 
