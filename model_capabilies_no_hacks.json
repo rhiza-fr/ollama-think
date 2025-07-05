@@ -39,28 +39,28 @@
             ""
         ],
         "can_json_think": [
-            true,
-            ""
+            false,
+            "Thinking not supported"
         ],
         "can_pydantic": [
             true,
             ""
         ],
         "can_pydantic_think": [
-            true,
-            ""
+            false,
+            "Thinking not supported"
         ],
         "can_think": [
-            true,
-            ""
+            false,
+            "Does not support thinking"
         ],
         "can_tool_call": [
             true,
             ""
         ],
         "can_tool_call_think": [
-            true,
-            ""
+            false,
+            "Thinking not supported"
         ],
         "content_no_thinking": [
             true,
@@ -86,7 +86,7 @@
         ],
         "can_think": [
             false,
-            "Thinking supported but empty"
+            "Does not support thinking"
         ],
         "can_tool_call": [
             false,
@@ -97,8 +97,8 @@
             "Thinking not supported"
         ],
         "content_no_thinking": [
-            true,
-            ""
+            false,
+            "Thinking outputed to content when think=False '<think>\n\n</think>\n\nThe sum of 2 and 3 is **5**.'"
         ]
     },
     "deepscaler:latest": {
@@ -107,20 +107,20 @@
             ""
         ],
         "can_json_think": [
-            true,
-            ""
+            false,
+            "Thinking not supported"
         ],
         "can_pydantic": [
             true,
             ""
         ],
         "can_pydantic_think": [
-            true,
-            ""
+            false,
+            "Thinking not supported"
         ],
         "can_think": [
-            true,
-            ""
+            false,
+            "Does not support thinking"
         ],
         "can_tool_call": [
             false,
@@ -128,11 +128,11 @@
         ],
         "can_tool_call_think": [
             false,
-            "Does not support tools"
+            "Thinking not supported"
         ],
         "content_no_thinking": [
-            true,
-            ""
+            false,
+            "Thinking outputed to content when think=False '<think>\nTo solve the problem of adding two and three, I first identify the numbers involved: 2 and 3.\n\nNext, I perform the addition operation by combining these values. Adding 2 and 3 together results in a total sum of five.\n</think>\n\n**Solution:**\n\nWe need to calculate \\(2 + 3\\).\n\n1. **Identify the numbers to add:**\n   - First number: \\(2\\)\n   - Second number: \\(3\\)\n\n2. **Perform the addition:**\n   \\[\n   2 + 3 = 5\n   \\]\n\n**Final Answer:**\n\\[\n\\boxed{5}\n\\]'"
         ]
     },
     "deepseek-coder-v2:16b": {
@@ -664,7 +664,7 @@
         ],
         "can_think": [
             false,
-            "Thinking supported but empty"
+            "Does not support thinking"
         ],
         "can_tool_call": [
             false,
@@ -685,20 +685,20 @@
             ""
         ],
         "can_json_think": [
-            true,
-            ""
+            false,
+            "Thinking not supported"
         ],
         "can_pydantic": [
             true,
             ""
         ],
         "can_pydantic_think": [
-            true,
-            ""
+            false,
+            "Thinking not supported"
         ],
         "can_think": [
-            true,
-            ""
+            false,
+            "Does not support thinking"
         ],
         "can_tool_call": [
             false,
@@ -706,7 +706,7 @@
         ],
         "can_tool_call_think": [
             false,
-            "Expected tool call, received '5'"
+            "Thinking not supported"
         ],
         "content_no_thinking": [
             true,
@@ -719,20 +719,20 @@
             ""
         ],
         "can_json_think": [
-            true,
-            ""
+            false,
+            "Thinking not supported"
         ],
         "can_pydantic": [
             true,
             ""
         ],
         "can_pydantic_think": [
-            true,
-            ""
+            false,
+            "Thinking not supported"
         ],
         "can_think": [
-            true,
-            ""
+            false,
+            "Does not support thinking"
         ],
         "can_tool_call": [
             false,
@@ -740,7 +740,7 @@
         ],
         "can_tool_call_think": [
             false,
-            "Expected tool call, received ''"
+            "Thinking not supported"
         ],
         "content_no_thinking": [
             true,
@@ -1026,19 +1026,19 @@
         ],
         "can_json_think": [
             false,
-            "Expecting property name enclosed in double quotes: line 104 column 1 (char 221) '{\n\n\n \t\t\n        \n        \n\n                                               \n\n    \n\n    \n\n\n\n\n \n\n \n\n \n\n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n'"
+            "Thinking not supported"
         ],
         "can_pydantic": [
             true,
             ""
         ],
         "can_pydantic_think": [
-            true,
-            ""
+            false,
+            "Thinking not supported"
         ],
         "can_think": [
-            true,
-            ""
+            false,
+            "Does not support thinking"
         ],
         "can_tool_call": [
             false,
@@ -1046,11 +1046,11 @@
         ],
         "can_tool_call_think": [
             false,
-            "Does not support tools"
+            "Thinking not supported"
         ],
         "content_no_thinking": [
-            true,
-            ""
+            false,
+            "Thinking outputed to content when think=False '<think>\nOkay, let's see... the problem is asking for the sum of 2 and 3. Hmm, addition. Right, so when you add two numbers, you're combining their values. Let me start by recalling the basic counting facts. \n\nSo, if I have 2 apples and someone gives me 3 more apples, how many apples do I have in total? Let's count them out. First, 2 apples plus 3 apples. Let's break it down. Adding one at a time: 2 + 1 is 3, then another 1 makes 4, then 5, then 6. Wait, that's only four additions? No, wait, no. Because it's 2 + 3, not 3 + 3. Let me correct that.\n\nStarting with 2, adding the first 3: 2 + 3. Let's use objects to visualize. Imagine two sticks crossed out (representing 2), then add three blocks. So, one block makes it 3, second block 4, third block 5? Wait, no, that's if you're starting from zero. Maybe I should start fresh.\n\nThe numbers are 2 and 3. Addition is commutative, so 2 + 3 is the same as 3 + 2. Let's check both ways. If I take 2 balls and add 3 more, I can line them up. Two here: \ud83e\udd71\ud83e\udd71, then add three circles: \ud83d\udc11\ud83d\udc11\ud83d\udc11. Counting all together: 1, 2, 3, 4, 5. Wait, that's five objects. So 2 + 3 equals 5? That makes sense because 2 plus 3 is a common basic arithmetic fact. Let me verify with another method. \n\nUsing number line visualization: start at 0, move two units to the right to land on 2. Then add three by moving three units to the right: from 2, moving +1 is 3, +2 is 4, +3 is 5. Yes, so 2 + 3 = 5. Alternatively, using subtraction facts: if 5 - 3 = 2, then 5 - 2 = 3, so the relationship shows that 2 + 3 must be 5 to maintain equality. \n\nAnother way: factorials? No, that's for multiplication. Wait, no, addition is straightforward here. Maybe using algebraic tiles: two positive tiles and three positive tiles combined sum to five. No negative tiles involved here. \n\nWait, maybe check with fingers. Hold up 2 fingers on the left and 3 on the right. Total fingers-up are 5. Yep, that works. So all these methods point to the same conclusion. Therefore, 2 + 3 equals 5. Is there any chance this could be incorrect? Let me think of common mistakes. Sometimes people confuse addition with multiplication, but 2+3 isn't 6 here. Or maybe if there's a trick in the question, like non-associative operations, but the problem just says addition. So no, it's straightforward. \n\nSo after considering different methods\u2014counting objects, number line, algebraic verification, and checking for possible errors\u2014the answer consistently comes out as 5. I don't see any reason to doubt this result. It's a fundamental math fact verified through multiple approaches.\n</think>\n\nThe problem asks for the sum of 2 and 3. \n\n1. **Basic Addition**: Combining 2 and 3 gives \\(2 + 3\\).  \n2. **Counting Objects**: Visualizing 2 items plus 3 more results in 5 total objects.  \n3. **Number Line**: Starting at 0, moving 2 units right to 2, then adding 3 more units lands on 5.  \n4. **Algebraic Check**: If \\(5 - 3 = 2\\), then \\(5 - 2 = 3\\) maintains equality, confirming \\(2 + 3 = 5\\).  \n5. **Fingers/Ubiquitous Verification**: Using fingers or tally marks all lead to the total of 5.  \n\nAll methods confirm the result is consistent and error-free.  \n\n**Answer:** \\boxed{5}'"
         ]
     },
     "phi4-mini:latest": {
@@ -1093,20 +1093,20 @@
             ""
         ],
         "can_json_think": [
-            true,
-            ""
+            false,
+            "Thinking not supported"
         ],
         "can_pydantic": [
             true,
             ""
         ],
         "can_pydantic_think": [
-            true,
-            ""
+            false,
+            "Thinking not supported"
         ],
         "can_think": [
-            true,
-            ""
+            false,
+            "Does not support thinking"
         ],
         "can_tool_call": [
             false,
@@ -1114,11 +1114,11 @@
         ],
         "can_tool_call_think": [
             false,
-            "Does not support tools"
+            "Thinking not supported"
         ],
         "content_no_thinking": [
-            true,
-            ""
+            false,
+            "Thinking outputed to content when think=False '<think>User asked \"what is 2 + 3?\" The answer is 5.\n\nLet's produce a succinct answer: It equals 5.\n\nThe conversation is simple arithmetic addition. We have to check if any potential instructions from the system message or chain-of-thought instructions about chain-of-thought. Possibly instructions require a chain-of-thought process explanation? But there are no hidden instructions that say not to include chain-of-thought in final answer. However, the user instruction \"what is 2 + 3?\" The correct answer is 5.\n\nBut perhaps we need to produce an explanation? But the problem statement doesn't mention any chain-of-thought formatting restrictions. The conversation includes a simple addition question \"what is 2+3?\"\n\nHowever instructions say: \"explain reasoning process\" and \"chain-of-thought.\" But instructions are not included in the conversation context. Wait, the provided conversation has only one message from the user. So I can reply with final answer \"5\" in plain text.\n\nBut careful note: The request said \"what is 2 + 3?\" but there's no further requirement. Possibly we might need to check if additional instructions are hidden? No, just question. The assistant should produce a simple explanation: \"2+3 equals 5.\" But instructions say chain-of-thought in the solution message, but it instructs that internal chain-of-thought is not allowed as final answer. Wait instructions mention that I must not include chain-of-thought. Possibly we produce a minimal answer. The conversation is trivial.\n\nI'll produce plain text: \"The sum of 2 and 3 is 5.\" But then do I need to produce the chain-of-thought? According to the system, the chain-of-thought should not be output. Actually, instructions say that we must keep chain-of-thought hidden. So I'll produce final answer only.\n\nI have to check: There's a note that says \"the assistant should produce a final answer without chain-of-thought visible.\" But instructions say in internal chain-of-thought is hidden. The user said what is 2+3? The correct arithmetic sum is 5. Possibly the simplest solution. I'll also add some brief explanation if necessary.\n\nI need to decide: Do I mention that \"The sum of 2 and 3 is 5.\" But maybe not overcomplicate answer with chain-of-thought. I'll produce a short answer \"The answer is 5.\"\n\nI must check the instructions: \"what is 2 + 3?\" The best answer is \"The answer is 5.\" But perhaps I need to produce a detailed explanation if required? Possibly not.\n\nI'll produce final answer in plain text with no markdown formatting by default. However, question says \"explain chain-of-thought.\" Possibly I'll produce a final answer: \"2 +3 = 5\", then also produce an explanation that addition is commutative so the sum is equal to 5.\n\nBut instructions say that chain-of-thought should not be output in final answer. So I'll produce a concise answer, no extra chain-of-thought details, as required by guidelines: \"The sum of 2 and 3 equals 5.\"\n\nI also check if any policy issues arise? None.\n\nThus, the final answer is simply \"5\". Possibly I can produce a brief explanation like \"We add the two numbers to get the result.\"\n\nWait instructions in the question says: \"what is 2 + 3?\" The correct answer is 5. So final output should be something that is \"The sum of 2 and 3 is 5.\" But check if user requested chain-of-thought? Possibly I'll produce a final answer with one sentence.\n\nI will produce the final answer: \"The sum of 2 and 3 is 5.\"\n\nI'll produce final answer as text \"5\" but maybe add explanation line if necessary. The instructions said \"explain your reasoning.\" But instructions say that chain-of-thought should not be included in final answer according to guidelines.\n\nDouble-checking instructions for chain-of-thought: They say \"Don't output chain-of-thought.\" So I'll produce final answer message with a concise explanation then final result. However the instructions in the conversation said something like: \"explain your reasoning\" but no, it's not required to show chain-of-thought.\n\nMaybe I'll simply produce a final answer that says: \"The sum of 2 and 3 is 5.\" Then I can optionally produce a note such as: \"I computed by adding them.\"\n\nBut instructions say the chain-of-thought must be hidden. So only output final result in final message, not chain-of-thought.\n\nThus I'll produce answer as: \"5\" with explanation if necessary.\n\nBut wait instructions say chain-of-thought is internal and not to be included in final answer. The conversation said \"what is 2+3?\" No further instructions given so I'll simply answer:\n\nI'll produce: \"The sum of 2 and 3 is 5.\"\n\nThus final answer: \"5\".\n\nI also check if there's any other arithmetic operations? Possibly not.\n\nAlright, I'll produce final answer message.</think>The sum of 2 and 3 is 5.'"
         ]
     },
     "phi4:latest": {

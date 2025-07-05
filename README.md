@@ -102,7 +102,7 @@ for chunk in stream:
 
 ### Thinking Mode
 
-The `think` parameter tells ollama to enable thinking for models that support this. For other models that use non-standard ways of enabling thinking we do the neccesary. See [src/ollama_think/thinking_hacks.py](src/ollama_think/thinking_hacks.py)
+The `think` parameter tells ollama to enable thinking for models that support this. For other models that use non-standard ways of enabling thinking we do the neccesary. See [config.yaml](config.yaml)
 
 Some models will think, even without 'enabling' thinking. This output is separated out of the `content` into `thinking`
 
