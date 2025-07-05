@@ -1,0 +1,1702 @@
+{
+    "codeqwen:7b-chat": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model codeqwen:7b-chat, THINK, think=True failed: registry.ollama.ai/library/codeqwen:7b-chat does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Model codeqwen:7b-chat, TOOL, think=False failed: registry.ollama.ai/library/codeqwen:7b-chat does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "cogito:14b": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            true,
+            ""
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            true,
+            ""
+        ],
+        "can_think": [
+            true,
+            ""
+        ],
+        "can_tool_call": [
+            true,
+            ""
+        ],
+        "can_tool_call_think": [
+            true,
+            ""
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "cogitothink:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            true,
+            ""
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            true,
+            ""
+        ],
+        "can_think": [
+            true,
+            ""
+        ],
+        "can_tool_call": [
+            true,
+            ""
+        ],
+        "can_tool_call_think": [
+            true,
+            ""
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "deepcoder:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            true,
+            ""
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            true,
+            ""
+        ],
+        "can_think": [
+            true,
+            ""
+        ],
+        "can_tool_call": [
+            false,
+            "Model deepcoder:latest, TOOL, think=False failed: registry.ollama.ai/library/deepcoder:latest does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Model deepcoder:latest, TOOL, think=True failed: registry.ollama.ai/library/deepcoder:latest does not support tools (status code: 400)"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "deepscaler:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            true,
+            ""
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            true,
+            ""
+        ],
+        "can_think": [
+            true,
+            ""
+        ],
+        "can_tool_call": [
+            false,
+            "Model deepscaler:latest, TOOL, think=False failed: registry.ollama.ai/library/deepscaler:latest does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Model deepscaler:latest, TOOL, think=True failed: registry.ollama.ai/library/deepscaler:latest does not support tools (status code: 400)"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "deepseek-coder-v2:16b": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model deepseek-coder-v2:16b, THINK, think=True failed: registry.ollama.ai/library/deepseek-coder-v2:16b does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Model deepseek-coder-v2:16b, TOOL, think=False failed: registry.ollama.ai/library/deepseek-coder-v2:16b does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "deepseek-r1:1.5b": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Model deepseek-r1:1.5b, JSON, think=True failed: Expecting property name enclosed in double quotes: line 3 column 1 (char 3) {\n\n{\n\n\"The answer to the question 'what is 2 plus 3?' is 5. It's a straightforward addition problem where the sum of two and three equals five.\":{\"the_answer\":\"5\", \"step-by-step_explanation\":\"To find the sum of 2 and 3, add them together: 2 + 3 = 5.\"}\n}"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Model deepseek-r1:1.5b, PYDANTIC, think=True failed: 1 validation error for ResponseObj\n  Invalid JSON: key must be a string at line 3 column 1 [type=json_invalid, input_value='{\\n\\n{\\n\\n\"addition_resu...t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.11/v/json_invalid {\n\n{\n\n\"addition_result\": 5}\n  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+        ],
+        "can_think": [
+            true,
+            ""
+        ],
+        "can_tool_call": [
+            false,
+            "Model deepseek-r1:1.5b, TOOL, think=False failed: registry.ollama.ai/library/deepseek-r1:1.5b does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Model deepseek-r1:1.5b, TOOL, think=True failed: registry.ollama.ai/library/deepseek-r1:1.5b does not support tools (status code: 400)"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "deepseek-r1:14b": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Model deepseek-r1:14b, JSON, think=True failed: Expecting property name enclosed in double quotes: line 1 column 2 (char 1) {{\n\n}"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Model deepseek-r1:14b, PYDANTIC, think=True failed: 1 validation error for ResponseObj\n  Invalid JSON: key must be a string at line 1 column 2 [type=json_invalid, input_value='{{\\n\\n   \\t\\t\\t\\t\\t\\t\\t\\...t  \\t\\t    \\t\\t\\t\\t\\t\\t', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.11/v/json_invalid {{\n\n   \t\t\t\t\t\t\t\t\t   \t\t\t  \"addition_result\" : 5\n}\n\n \t\t\t  \t\t    \t\t\t\t\t\t"
+        ],
+        "can_think": [
+            true,
+            ""
+        ],
+        "can_tool_call": [
+            false,
+            "Model deepseek-r1:14b, TOOL, think=False failed: registry.ollama.ai/library/deepseek-r1:14b does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Model deepseek-r1:14b, TOOL, think=True failed: registry.ollama.ai/library/deepseek-r1:14b does not support tools (status code: 400)"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "deepseek-r1:7b": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Model deepseek-r1:7b, JSON, think=True failed: Expecting ':' delimiter: line 1 column 6 (char 5) {\"{\" questions\": [\"What is 2 + 3?\"], \"answers\": [\"5\", \"Five\", \"Cinq\", \"2+3=5\"], \"explanation\": [\"To solve this problem, you simply add the numbers 2 and 3 together. 2 plus 3 equals 5.\"], \"difficulty\": \"easy\", \"type\": \"arith\"}"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Model deepseek-r1:7b, PYDANTIC, think=True failed: 1 validation error for ResponseObj\n  Invalid JSON: expected `:` at line 1 column 5 [type=json_invalid, input_value='{\"{\"addition_result\":5}\\...\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t ', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.11/v/json_invalid {\"{\"addition_result\":5}\n\n      \t\t\t\t\t\t\t\t\t\t\t\t\t "
+        ],
+        "can_think": [
+            true,
+            ""
+        ],
+        "can_tool_call": [
+            false,
+            "Model deepseek-r1:7b, TOOL, think=False failed: registry.ollama.ai/library/deepseek-r1:7b does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Model deepseek-r1:7b, TOOL, think=True failed: registry.ollama.ai/library/deepseek-r1:7b does not support tools (status code: 400)"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "deepseek-r1:8b": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Model deepseek-r1:8b, JSON, think=True failed: Expecting property name enclosed in double quotes: line 4 column 1 (char 4) {\n\n\n{\n\n\n  \"prompt\": \"what is 2 + 3?\",\n  \"model\": \"text-davinci-002\",\n  \"temperature\": 0.5,\n  \"max_tokens\": 150,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"What is the answer to this question: what is 2 + 3? Please respond in exactly one complete sentence with only the number and no extra text.\"\n    }\n  ]\n}"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Model deepseek-r1:8b, PYDANTIC, think=True failed: 1 validation error for ResponseObj\n  Invalid JSON: key must be a string at line 3 column 1 [type=json_invalid, input_value='{\\n\\n{\\n\\n\"addition_result\": 5\\n\\n}\\n\\n', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.11/v/json_invalid {\n\n{\n\n\"addition_result\": 5\n\n}\n\n"
+        ],
+        "can_think": [
+            true,
+            ""
+        ],
+        "can_tool_call": [
+            false,
+            "Model deepseek-r1:8b, TOOL, think=False failed: registry.ollama.ai/library/deepseek-r1:8b does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Model deepseek-r1:8b, TOOL, think=True failed: registry.ollama.ai/library/deepseek-r1:8b does not support tools (status code: 400)"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "deepseek-r1:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Model deepseek-r1:latest, JSON, think=True failed: Expecting property name enclosed in double quotes: line 4 column 1 (char 4) {\n\n\n{\n\n\n\"Human\": \"what is 2 + 3?\"\n\n}"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Model deepseek-r1:latest, PYDANTIC, think=True failed: 1 validation error for ResponseObj\n  Invalid JSON: key must be a string at line 3 column 1 [type=json_invalid, input_value='{\\n\\n{\\n\\n  \"addition_result\": 5\\n\\n}\\n\\n', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.11/v/json_invalid {\n\n{\n\n  \"addition_result\": 5\n\n}\n\n"
+        ],
+        "can_think": [
+            true,
+            ""
+        ],
+        "can_tool_call": [
+            false,
+            "Model deepseek-r1:latest, TOOL, think=False failed: registry.ollama.ai/library/deepseek-r1:latest does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Model deepseek-r1:latest, TOOL, think=True failed: registry.ollama.ai/library/deepseek-r1:latest does not support tools (status code: 400)"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "dolphin-llama3:8b": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model dolphin-llama3:8b, THINK, think=True failed: registry.ollama.ai/library/dolphin-llama3:8b does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Model dolphin-llama3:8b, TOOL, think=False failed: registry.ollama.ai/library/dolphin-llama3:8b does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "ebdm/gemma3-enhanced:12b": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model ebdm/gemma3-enhanced:12b, THINK, think=True failed: registry.ollama.ai/ebdm/gemma3-enhanced:12b does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Expected tool call 2 + 3 = 5"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "exaone-deep:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model exaone-deep:latest, THINK, think=True failed: registry.ollama.ai/library/exaone-deep:latest does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Model exaone-deep:latest, TOOL, think=False failed: registry.ollama.ai/library/exaone-deep:latest does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "falcon3:10b": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model falcon3:10b, THINK, think=True failed: registry.ollama.ai/library/falcon3:10b does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Model falcon3:10b, TOOL, think=False failed: registry.ollama.ai/library/falcon3:10b does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "gemma2:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model gemma2:latest, THINK, think=True failed: registry.ollama.ai/library/gemma2:latest does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Model gemma2:latest, TOOL, think=False failed: registry.ollama.ai/library/gemma2:latest does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "gemma3:12b": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model gemma3:12b, THINK, think=True failed: registry.ollama.ai/library/gemma3:12b does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Model gemma3:12b, TOOL, think=False failed: registry.ollama.ai/library/gemma3:12b does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "gemma3:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model gemma3:latest, THINK, think=True failed: registry.ollama.ai/library/gemma3:latest does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Model gemma3:latest, TOOL, think=False failed: registry.ollama.ai/library/gemma3:latest does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "gemma3n:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model gemma3n:latest, THINK, think=True failed: registry.ollama.ai/library/gemma3n:latest does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Model gemma3n:latest, TOOL, think=False failed: registry.ollama.ai/library/gemma3n:latest does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "granite3.1-dense:8b": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model granite3.1-dense:8b, THINK, think=True failed: registry.ollama.ai/library/granite3.1-dense:8b does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Expected tool call <tool_call>[{\"arguments\":{\"a\":2,\"b\":3},\"name\":\"addTwoInts\"}]"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "granite3.2-vision:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Thinking supported but empty"
+        ],
+        "can_tool_call": [
+            false,
+            "Expected tool call \n5"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "granite3.2:8b-instruct-q8_0": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            true,
+            ""
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            true,
+            ""
+        ],
+        "can_think": [
+            true,
+            ""
+        ],
+        "can_tool_call": [
+            false,
+            "Expected tool call <tool_call>[{\"arguments\":{\"a\":2,\"b\":3},\"name\":\"addTwoInts\"}]"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Expected tool call <tool_call>[{\"arguments\":{\"a\":2,\"b\":3},\"name\":\"addTwoInts\"}]"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "granite3.2:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            true,
+            ""
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            true,
+            ""
+        ],
+        "can_think": [
+            true,
+            ""
+        ],
+        "can_tool_call": [
+            false,
+            "Expected tool call 5"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Expected tool call 5"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "granite3.3:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            true,
+            ""
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            true,
+            ""
+        ],
+        "can_think": [
+            true,
+            ""
+        ],
+        "can_tool_call": [
+            false,
+            "Expected tool call "
+        ],
+        "can_tool_call_think": [
+            false,
+            "Expected tool call "
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "llama3.1:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model llama3.1:latest, THINK, think=True failed: registry.ollama.ai/library/llama3.1:latest does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            true,
+            ""
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "llama3.2-vision:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model llama3.2-vision:latest, THINK, think=True failed: registry.ollama.ai/library/llama3.2-vision:latest does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Model llama3.2-vision:latest, TOOL, think=False failed: registry.ollama.ai/library/llama3.2-vision:latest does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "llama3.2:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model llama3.2:latest, THINK, think=True failed: registry.ollama.ai/library/llama3.2:latest does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            true,
+            ""
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "marco-o1:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model marco-o1:latest, THINK, think=True failed: registry.ollama.ai/library/marco-o1:latest does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Model marco-o1:latest, TOOL, think=False failed: registry.ollama.ai/library/marco-o1:latest does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "minicpm-v:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model minicpm-v:latest, THINK, think=True failed: registry.ollama.ai/library/minicpm-v:latest does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Model minicpm-v:latest, TOOL, think=False failed: registry.ollama.ai/library/minicpm-v:latest does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "mistral:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model mistral:latest, THINK, think=True failed: registry.ollama.ai/library/mistral:latest does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            true,
+            ""
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "phi3.5:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model phi3.5:latest, THINK, think=True failed: registry.ollama.ai/library/phi3.5:latest does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Model phi3.5:latest, TOOL, think=False failed: registry.ollama.ai/library/phi3.5:latest does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "phi3:14b": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model phi3:14b, THINK, think=True failed: registry.ollama.ai/library/phi3:14b does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Model phi3:14b, TOOL, think=False failed: registry.ollama.ai/library/phi3:14b does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "phi4-mini-reasoning:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            true,
+            ""
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            true,
+            ""
+        ],
+        "can_think": [
+            true,
+            ""
+        ],
+        "can_tool_call": [
+            false,
+            "Model phi4-mini-reasoning:latest, TOOL, think=False failed: registry.ollama.ai/library/phi4-mini-reasoning:latest does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Model phi4-mini-reasoning:latest, TOOL, think=True failed: registry.ollama.ai/library/phi4-mini-reasoning:latest does not support tools (status code: 400)"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "phi4-mini:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model phi4-mini:latest, THINK, think=True failed: registry.ollama.ai/library/phi4-mini:latest does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Expected tool call <|tool_call|>I will use the addTwoInts function to calculate this for you. Please wait a moment.\n\n{ \"result\": 5 }"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "phi4-reasoning:plus": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            true,
+            ""
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            true,
+            ""
+        ],
+        "can_think": [
+            true,
+            ""
+        ],
+        "can_tool_call": [
+            false,
+            "Model phi4-reasoning:plus, TOOL, think=False failed: registry.ollama.ai/library/phi4-reasoning:plus does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Model phi4-reasoning:plus, TOOL, think=True failed: registry.ollama.ai/library/phi4-reasoning:plus does not support tools (status code: 400)"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "phi4:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model phi4:latest, THINK, think=True failed: registry.ollama.ai/library/phi4:latest does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Model phi4:latest, TOOL, think=False failed: registry.ollama.ai/library/phi4:latest does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "qwen2.5-coder:1.5b": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model qwen2.5-coder:1.5b, THINK, think=True failed: registry.ollama.ai/library/qwen2.5-coder:1.5b does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Expected tool call {\"name\": \"addTwoInts\", \"arguments\": {\"a\": 2, \"b\": 3}}"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "qwen2.5-coder:14b": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model qwen2.5-coder:14b, THINK, think=True failed: registry.ollama.ai/library/qwen2.5-coder:14b does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Expected tool call {\n  \"name\": \"addTwoInts\",\n  \"arguments\": {\n    \"a\": 2,\n    \"b\": 3\n  }\n}"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "qwen2.5-coder:7b-base": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model qwen2.5-coder:7b-base, THINK, think=True failed: registry.ollama.ai/library/qwen2.5-coder:7b-base does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Model qwen2.5-coder:7b-base, TOOL, think=False failed: registry.ollama.ai/library/qwen2.5-coder:7b-base does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "qwen2.5-coder:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model qwen2.5-coder:latest, THINK, think=True failed: registry.ollama.ai/library/qwen2.5-coder:latest does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Expected tool call {\n    \"name\": \"addTwoInts\",\n    \"arguments\": {\n        \"a\": 2,\n        \"b\": 3\n    }\n}"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "qwen3:0.6b": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Model qwen3:0.6b, JSON, think=True failed: Expecting ':' delimiter: line 1 column 5 (char 4) {\"{\"error\": \"2 + 3\", \"output\": \"5\"}"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Model qwen3:0.6b, PYDANTIC, think=True failed: 1 validation error for ResponseObj\n  Invalid JSON: expected `:` at line 1 column 5 [type=json_invalid, input_value='{\"{\"addition_result\": 5}\\n', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.11/v/json_invalid {\"{\"addition_result\": 5}\n"
+        ],
+        "can_think": [
+            true,
+            ""
+        ],
+        "can_tool_call": [
+            true,
+            ""
+        ],
+        "can_tool_call_think": [
+            true,
+            ""
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "qwen3:1.7b": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Model qwen3:1.7b, JSON, think=True failed: Expecting property name enclosed in double quotes: line 4 column 1 (char 4) {\n\n\n{\n\n\n}"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Model qwen3:1.7b, PYDANTIC, think=True failed: 1 validation error for ResponseObj\n  Invalid JSON: expected `:` at line 1 column 5 [type=json_invalid, input_value='{\"{\"addition_result\":25}\\n', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.11/v/json_invalid {\"{\"addition_result\":25}\n"
+        ],
+        "can_think": [
+            true,
+            ""
+        ],
+        "can_tool_call": [
+            true,
+            ""
+        ],
+        "can_tool_call_think": [
+            true,
+            ""
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "qwen3:14b": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Model qwen3:14b, JSON, think=True failed: Extra data: line 1 column 3 (char 2) {}{}"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Model qwen3:14b, PYDANTIC, think=True failed: 1 validation error for ResponseObj\n  Invalid JSON: key must be a string at line 3 column 1 [type=json_invalid, input_value='{\\n\\n{\\n\\n\"addition_result\": 5\\n\\n}', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.11/v/json_invalid {\n\n{\n\n\"addition_result\": 5\n\n}"
+        ],
+        "can_think": [
+            true,
+            ""
+        ],
+        "can_tool_call": [
+            true,
+            ""
+        ],
+        "can_tool_call_think": [
+            true,
+            ""
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "qwen3:4b": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Model qwen3:4b, JSON, think=True failed: Expecting property name enclosed in double quotes: line 2 column 1 (char 2) {\n{\n\"answer\": \"5\"\n}"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Model qwen3:4b, PYDANTIC, think=True failed: 1 validation error for ResponseObj\n  Invalid JSON: key must be a string at line 2 column 1 [type=json_invalid, input_value='{\\n{\\n\"addition_result\": 5\\n}\\n', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.11/v/json_invalid {\n{\n\"addition_result\": 5\n}\n"
+        ],
+        "can_think": [
+            true,
+            ""
+        ],
+        "can_tool_call": [
+            false,
+            "Expected tool call The result of 2 + 3 is 5."
+        ],
+        "can_tool_call_think": [
+            true,
+            ""
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "qwen3:4b-nothink": {
+        "can_json": [
+            false,
+            "Model qwen3:4b-nothink, JSON, think=False failed: Expecting ',' delimiter: line 271 column 1 (char 291) {\n\n\"2 + 3\":\n\n2  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Thinking supported but empty"
+        ],
+        "can_tool_call": [
+            false,
+            "Expected tool call \n\nThe result of 2 + 3 is 5."
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "qwen3:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Model qwen3:latest, JSON, think=True failed: Expecting property name enclosed in double quotes: line 4 column 1 (char 4) {\n\n\n{\n\n\n  \"question\": \"what is 2 + 3?\",\n  \"answer\": \"5\",\n  \"explanation\": \"The addition of 2 and 3 results in 5.\"\n}"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Model qwen3:latest, PYDANTIC, think=True failed: 1 validation error for ResponseObj\n  Invalid JSON: expected `:` at line 1 column 5 [type=json_invalid, input_value='{\"{\"addition_result\":5}\\n', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.11/v/json_invalid {\"{\"addition_result\":5}\n"
+        ],
+        "can_think": [
+            true,
+            ""
+        ],
+        "can_tool_call": [
+            true,
+            ""
+        ],
+        "can_tool_call_think": [
+            true,
+            ""
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "reader-lm:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model reader-lm:latest, THINK, think=True failed: registry.ollama.ai/library/reader-lm:latest does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Model reader-lm:latest, TOOL, think=False failed: registry.ollama.ai/library/reader-lm:latest does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "smallthinker:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model smallthinker:latest, THINK, think=True failed: registry.ollama.ai/library/smallthinker:latest does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Model smallthinker:latest, TOOL, think=False failed: registry.ollama.ai/library/smallthinker:latest does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "starcoder2:7b": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model starcoder2:7b, THINK, think=True failed: registry.ollama.ai/library/starcoder2:7b does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Model starcoder2:7b, TOOL, think=False failed: registry.ollama.ai/library/starcoder2:7b does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    },
+    "wizardlm2:7b": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Model wizardlm2:7b, THINK, think=True failed: registry.ollama.ai/library/wizardlm2:7b does not support thinking (status code: 400)"
+        ],
+        "can_tool_call": [
+            false,
+            "Model wizardlm2:7b, TOOL, think=False failed: registry.ollama.ai/library/wizardlm2:7b does not support tools (status code: 400)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    }
+}
