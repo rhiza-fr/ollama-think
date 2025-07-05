@@ -1,22 +1,40 @@
-from typer import run
+from typing import Annotated
+
+import typer
+from rich import print
 
 from ollama_think.client import Client
 
 
-def main():
-    # default arg is prompt
-    # should take --model model, --think --no-think --host host --chat
-    # verbosity 
-    #   0) silent
-    #   1) prompt -> content
-    #   2) prompt -> thinking, content
-    #   3) A transient waiting anim, transient streaming thinking then response
-    #   4) A rich pannel with streaming markup data and full stats
-    with Client(host="http://localhost:11434") as client:
-        # do something
-        pass
+def main(
+    prompt: Annotated[str, typer.Argument(help="The prompt to send to the model.")],
+    model: Annotated[str, typer.Option("--model", "-m", help="The model to use.")] = "qwen3",
+    think: Annotated[
+        bool,
+        typer.Option(help="Enable thinking mode. Use --no-think to disable."),
+    ] = True,
+    host: Annotated[str, typer.Option(help="The Ollama host URL.")] = "http://localhost:11434",
+) -> None:
+    """
+    A simple command-line interface for ollama-think.
+    """
+    with Client(host=host) as client:
+        seen_first_content = False
+        stream = client.stream(model=model, prompt=prompt, think=think)
+        if think:
+            print("[dim]Thinking...[/dim]")
+        for thinking, content in stream:
+            if thinking:
+                print(f"[i]{thinking}[/i]", end="")
+            elif think and seen_first_content is False:
+                seen_first_content = True
+                print("[dim]Content...[/dim]")
+            print(content, end="")
+
+
+def entrypoint():
+    typer.run(main)
 
 
 if __name__ == "__main__":
-    run(main)
-
+    entrypoint()
