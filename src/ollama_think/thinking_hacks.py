@@ -55,8 +55,8 @@ def setup_stream_parser(model: str, hacks: ThinkingHacks | None) -> StreamingPar
 
     regexes: list[str] = hacks.get("content_parsers", [])
     if regexes:
-        # this will fail half the time for granite3.2 !
-        return StreamingParser(format_pattern=str(regexes[0]))
+        # Prefer the last stream parse (granite3.2 inverses the order when streaming !?)
+        return StreamingParser(format_pattern=str(regexes[-1])) 
     return None
 
 
