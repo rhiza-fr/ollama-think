@@ -5,6 +5,7 @@ This module provides a `Client` class that adds several key features:
 - Caching of API responses to improve performance and reduce redundant calls.
 - A `ThinkResponse` wrapper for easier handling of model outputs, including 'thinking' steps.
 - `call` and `stream` methods with a consistent interface for both blocking and streaming interactions.
+- hacks older models to respect thinking separation where possible
 """
 
 import hashlib
