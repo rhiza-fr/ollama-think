@@ -5,7 +5,7 @@ This project provides a Python client for the Ollama API, extending the official
 ## Features
 
 - **Caching**: Automatically caches responses to speed up repeated requests.
-- **Thinking Mode**: A `think` parameter to observe the model's reasoning process.
+- **Thinking**: Enables officially unsupported models to use thinking mode.
 - **Streaming and Non-streaming**: Separates the underlying streaming and non-streaming interface to provide clean type hints.
 - **Syntax Sugar**: Less boiler-plate, so that you can maintain your flow.
 
@@ -13,13 +13,9 @@ This project provides a Python client for the Ollama API, extending the official
 
 ```bash
 pip install ollama-think
-```
-or
-```bash
+# or
 poetry add ollama-think
-```
-or
-```bash
+# or
 uv add ollama-think
 ```
 
@@ -98,32 +94,35 @@ print(f"Thinking: {thinking}, Content: {content}")
 The `stream` method provides a strongly typed access to the underlying `Chat` method in streaming mode. It returns a an iterator of `ThinkResponse` chunks
 
 ```python
-# Make a streaming call
-stream = client.stream(model="qwen3", prompt="Tell me a short story about italian chimanzees and bananas")
+stream = client.stream(model="qwen3", prompt="Tell me a short story about italian chimpanzees and bananas")
 for chunk in stream:
-    print(chunk.thinking, end="")
+    print(chunk.thinking, end="") # empty, since think=False. Your choice
     print(chunk.content, end="")
 ```
 
 ### Thinking Mode
 
-The `think` parameter allows you to see the model's "thinking" process. When `think=True`, the `thinking` attribute of the response will be populated.
+The `think` parameter tells ollama to enable thinking for models that support this. For other models that use non-standard ways of enabling thinking we do the neccesary. See [src/ollama_think/thinking_hacks.py](src/ollama_think/thinking_hacks.py)
 
-Note: Not all models officially support thinking. They will return an error even if they have '&lt;think&gt;' tags in their content. It would be possible to intercept this just as ollama probably does under the hood, but this is not implemented here.
+Some models will think, even without 'enabling' thinking. This output is separated out of the `content` into `thinking`
+
+See [Model Capabilities](model_capabilities.md)
+
+Note: Not all models officially or unofficially support thinking. They will return an error if you try to enable thinking.
 
 ```python
 # Non-streaming call with think=True
-thinking, content = client.call(model="qwen3", prompt="Why is the red at night??", think=True)
+thinking, content = client.call(model="qwen3", prompt="Why is the sky red at night??", think=True)
 print("--- Thinking ---")
 print(thinking)
 print("\n--- Content ---")
 print(content)
 
 # Streaming call with think=True
-stream = client.stream(model="qwen3", prompt="Why is bigger an egg or a mouse?", think=True)
+stream = client.stream(model="qwen3", prompt="What is bigger an egg or a mouse?", think=True)
 for thinking_chunk, content_chunk in stream:
-    print(thinking_chunk, end="") # The 'thinking' part usually comes first
-    print(content_chunk, end="")
+    print(thinking_chunk, end="")
+    print(content_chunk, end="") # empty until thinking is finished
 ```
 
 ### Caching
@@ -162,11 +161,44 @@ thinking, content = client.call(model="qwen3", prompt=prompt, think=True, option
 print("Thinking:", thinking)
 print("Content:", content)
 ```
-See examples/options_example.py for a full list of options
+See [examples/options_example.py](examples/options_example.py) for a full list of options
 
 ### Tool Calling
 
+See [examples/tool_calling_example.py](examples/tool_calling_example.py)
+
 ### Response Formats
+
+Forcing JSON format can encourage some models to behave. It is usualy a good idea to mention JSON in the prompt.
+
+```python
+import json
+
+text_json = client.call(
+    model="qwen3",
+    prompt="Design a json representation of a spiral galaxy",
+    format="json",
+).content
+
+my_object = json.loads(text_json) # might explode if invalid json was returned
+```
+
+You can use pydantic models to describe more exactly the format you want.
+
+```python
+from pydantic import BaseModel, Field
+
+class Heat(BaseModel):
+    """A specially crafted response object to capture an iterpretation of heat"""
+    reaoning: str = Field(..., description="your reasoning for the response")
+    average_temperature: float = Field(..., description="average temperature")
+
+text_obj = client.call(model="qwen3", prompt="How hot is the world?",
+        format=Heat.model_json_schema()).content
+
+my_obj = Heat.model_validate_json(text_obj) # might explode it the format is invalid
+```
+See [examples/response_format_example.py](examples/response_format_example.py)
 
 
 ### Access to the underlying ollama client
@@ -185,10 +217,6 @@ response: ChatResponse = client.chat(model='llama3.2', messages=[
   },
 ])
 print(response['message']['content'])
-
-# but this seems so much easier
-print(client.call(model='llama3.2', prompt='Why is the sky blue?'))
-
 ```
 
 ### Prompts and Messages
@@ -239,6 +267,8 @@ client.call(model='llama3.2', messages=[message])
 - ollama https://ollama.com/
 - ollama-python https://github.com/ollama/ollama-python
 - diskcache https://github.com/grantjenks/python-diskcache/
+- pydantic https://pydantic-docs.helpmanual.io/
+
 
 ## Reference docs
 
