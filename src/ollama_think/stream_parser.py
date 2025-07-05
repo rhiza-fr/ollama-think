@@ -262,6 +262,11 @@ class StreamingParser:
                 content_parts.append(self._buffer)
             self._buffer = ""
 
+        # If no parts were ever captured and there's still data in the buffer,
+        # assume it's all content. This handles patterns that don't match at all.
+        if not thinking_parts and not content_parts and self._buffer:
+            content_parts.append(self._buffer)
+            self._buffer = ""
+
         if thinking_parts or content_parts:
             yield "".join(thinking_parts), "".join(content_parts)
-
