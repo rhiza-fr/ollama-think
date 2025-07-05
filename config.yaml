@@ -5,13 +5,15 @@ defaults:
   enable_thinking: false
   add_message: null
   content_parsers:
-    - <think>(?P<thinking>.*?)</think>(?P<content>.*)
+    - "<think>(?P<thinking>.*?)</think>(?P<content>.*)"
 
 models:
   - name: cogito
     add_message:
       role: system
       content: Enable deep thinking subroutine.
+  - name: granite3.2-vision
+    content_parsers: [] # doesn't produce thinking
   - name: granite3.2
     add_message:
       role: control
@@ -24,10 +26,10 @@ models:
       role: control
       content: thinking
     content_parsers:
-      - <think>(?P<thinking>.*?)</think><response>(?P<content>.*?</response>)
+      - "<think>(?P<thinking>.*?)</think><response>(?P<content>.*?)</response>"
   - name: reflection
     content_parsers:
-      - <thinking>(?P<thinking>.*?)</thinking>\s*<output>(?P<content>.*?)</output>
+      - "<thinking>(?P<thinking>.*?)</thinking><output>(?P<content>.*?)</output>"
   - name: phi4-reasoning
   - name: phi4-mini-reasoning
   - name: deepscaler
