@@ -88,6 +88,13 @@ TEST_CASES = [
         "This thought is written",
         "",
     ),
+    (
+        "no_match_at_all",
+        r"<thinking>(?P<thinking>.*?)</thinking>",
+        "This is just some plain text.",
+        "",
+        "This is just some plain text.",
+    ),
 ]
 
 

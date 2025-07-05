@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 
+import pytest
 from pydantic import BaseModel, Field
 from rich import print
 
@@ -104,7 +105,7 @@ def _tool_calling(model: str, think: bool = True) -> tuple[bool, str]:
 def _get_model_names():
     return [m["model"] for m in client.list()["models"]]
 
-
+@pytest.mark.slow
 def test_model_capabilities():
     model_names = _get_model_names()
     blacklisted_models = [
