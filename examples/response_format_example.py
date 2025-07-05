@@ -10,12 +10,11 @@ from ollama_think.client import Client
 class MyResponseObject(BaseModel):
     """A specially crafted response object to capture an iterpretation of heat"""
 
-    how_hot_is_the_world: str = Field(
-        default=..., description="your reasoning for the response"
-    )
+    how_hot_is_the_world: str = Field(default=..., description="your reasoning for the response")
     average_temperature: float = Field(..., description="average temperature")
     confidence: int = Field(
-        default=..., description="how confident you are about your respponse. 0-10"
+        default=...,
+        description="how confident you are about your respponse. 0-10",
     )
 
 
@@ -23,9 +22,7 @@ def main():
     with Client(host="http://localhost:11434") as client:
         # implicit format=None
         print("Default format is string:")
-        print(
-            f"{client.call(model='qwen3', prompt='Hello, who made you?', think=True)}"
-        )
+        print(f"{client.call(model='qwen3', prompt='Hello, who made you?', think=True)}")
 
         # explicit json format
         print("\njson format: response as text")

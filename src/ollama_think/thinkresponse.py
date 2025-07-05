@@ -19,11 +19,17 @@ class ThinkResponse(ChatResponse):
         """
         return self.message.content or ""
 
-    def __repr__(self) -> str:
+    def to_json(self) -> str:
         """
-        Returns a string representation of the object, using the message content.
+        Returns a JSON representation of the object.
         """
-        return f"ThinkResponse(thinking={self.message.thinking!r}, content={self.message.content!r})"
+        return self.model_dump_json()
+
+    def to_dict(self) -> dict:
+        """
+        Returns a dictionary representation of the object.
+        """
+        return self.model_dump()
 
     @override
     def __iter__(self) -> Iterator[str]:  # type: ignore[override]
