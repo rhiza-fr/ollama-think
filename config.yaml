@@ -1,0 +1,34 @@
+hacks:
+  enabled: true
+
+defaults:
+  enable_thinking: false
+  add_message: null
+  content_parsers:
+    - <think>(?P<thinking>.*?)</think>(?P<content>.*)
+
+models:
+  - name: cogito
+    add_message:
+      role: system
+      content: Enable deep thinking subroutine.
+  - name: granite3.2
+    add_message:
+      role: control
+      content: thinking
+    content_parsers:
+      - "Here is my response:\n(?P<content>.*?)Here is my thought process:\n(?P<thinking>.*)"
+      - "Here is my thought process:\n(?P<thinking>.*?)Here is my response:\n(?P<content>.*)"
+  - name: granite3.3
+    add_message:
+      role: control
+      content: thinking
+    content_parsers:
+      - <think>(?P<thinking>.*?)</think><response>(?P<content>.*?</response>)
+  - name: reflection
+    content_parsers:
+      - <thinking>(?P<thinking>.*?)</thinking>\s*<output>(?P<content>.*?)</output>
+  - name: phi4-reasoning
+  - name: phi4-mini-reasoning
+  - name: deepscaler
+  - name: deepcoder

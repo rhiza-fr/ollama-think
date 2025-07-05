@@ -2,68 +2,61 @@ import re
 
 from ollama._types import ChatRequest
 
-from ollama_think.hack_config import THINKING_HACKS
+from ollama_think.config import ThinkingHacks
 from ollama_think.stream_parser import StreamingParser
 from ollama_think.thinkresponse import ThinkResponse
 
 
-def hack_request(cr: ChatRequest) -> ChatRequest:
+def hack_request(cr: ChatRequest, hacks: ThinkingHacks) -> ChatRequest:
     """
     Modify a ChatRequest object to enable thinking hacks based on the model name.
 
     Args:
         cr: A ChatRequest object to be modified.
-
+        hacks: Hacks relevant to this model
     Returns:
         A modified ChatRequest object with thinking hacks applied.
     """
-    for key in THINKING_HACKS.keys():
-        if cr.model.startswith(key):
-            if THINKING_HACKS[key].get("enable_thinking", False) is False:
-                cr.think = False
-            new_message = THINKING_HACKS[key].get("add_message", "")
-            if new_message and cr.messages:
-                messages = [new_message]
-                for message in cr.messages:
-                    messages.append(message)
-                cr.messages = messages
-            break
+    if hacks.get("enable_thinking", False) is False:
+        cr.think = False
+    new_message = hacks.get("add_message", "")
+    if new_message and cr.messages:
+        messages = [new_message]
+        for message in cr.messages:
+            messages.append(message) #type: ignore hmmm
+        cr.messages = messages
     return cr
 
 
-def hack_response(model: str, tr: ThinkResponse) -> ThinkResponse:
+def hack_response(tr: ThinkResponse, hacks: ThinkingHacks) -> ThinkResponse:
     """
     Parse a ThinkResponse object to extract thinking content based on the model name.
 
     Args:
-        model: The name of the model.
         tr: A ThinkResponse object to be processed.
-
+        hacks: Hacks relevant to this model
     Returns:
         A ThinkResponse object with extracted thinking content.
     """
-    for key in THINKING_HACKS.keys():
-        if model.startswith(key):
-            regexes: list[str] = THINKING_HACKS[key].get("content_parsers", [])
-            if regexes:
-                for regex in regexes:
-                    match = re.search(pattern=str(regex), string=tr.content, flags=re.DOTALL)
-                    if match:
-                        tr.message.thinking = match.group("thinking").strip()
-                        tr.message.content = match.group("content").strip()
-                        break
-            break
+    regexes: list[str] = hacks.get("content_parsers", [])
+    if regexes:
+        for regex in regexes:
+            match = re.search(pattern=str(regex), string=tr.content, flags=re.DOTALL)
+            if match:
+                tr.message.thinking = match.group("thinking").strip()
+                tr.message.content = match.group("content").strip()
+                break
     return tr
 
 
-def setup_stream_parser(model: str) -> StreamingParser | None:
-    for key in THINKING_HACKS.keys():
-        if model.startswith(key):
-            regexes: list[str] = THINKING_HACKS[key].get("content_parsers", [])
-            if regexes:
-                # this will fail half the time for granite3.2 !
-                return StreamingParser(format_pattern=str(regexes[0]))
-            break
+def setup_stream_parser(model: str, hacks: ThinkingHacks | None) -> StreamingParser | None:
+    if not hacks:
+        return None
+
+    regexes: list[str] = hacks.get("content_parsers", [])
+    if regexes:
+        # this will fail half the time for granite3.2 !
+        return StreamingParser(format_pattern=str(regexes[0]))
     return None
 
 

@@ -18,6 +18,7 @@ from ollama._client import _copy_tools
 from ollama._types import ChatRequest, GenerateResponse, Message, Options, Tool
 from pydantic.json_schema import JsonSchemaValue
 
+from ollama_think.config import Config
 from ollama_think.thinking_hacks import (
     hack_request,
     hack_response,
@@ -91,6 +92,7 @@ class Client(OllamaClient):
         self.cache = Cache(directory=cache_dir)
         if clear_cache:
             self.cache.clear()
+        self.config = Config()
         super().__init__(host=host)
 
     def close(self):
@@ -210,7 +212,9 @@ class Client(OllamaClient):
             tools=list(_copy_tools(tools)),
             think=think,
         )
-        request = hack_request(request)  # cludge ollama to respect thought
+        model_hacks = self.config.get_hacks_if_enabled(model)
+        if model_hacks:
+            request = hack_request(request, hacks=model_hacks)  # cludge ollama to respect thought
         hash_key = self._make_cache_key(request)
         response = None
         if use_cache:
@@ -222,8 +226,9 @@ class Client(OllamaClient):
             if use_cache:
                 self.cache.set(hash_key, response, tag=model)
         tr = ThinkResponse(response)
-        response = hack_response(model, tr)  # cludge ollama to respect thought
-        return response
+        if model_hacks:
+            tr = hack_response(tr, hacks=model_hacks)  # cludge ollama to respect thought
+        return tr
 
     def stream(
         self,
@@ -284,7 +289,9 @@ class Client(OllamaClient):
             tools=list(_copy_tools(tools)),
             think=think,
         )
-        request = hack_request(request)  # cludge ollama to respect thought
+        model_hacks = self.config.get_hacks_if_enabled(model)
+        if model_hacks:
+            request = hack_request(request, hacks=model_hacks)  # cludge ollama to respect thought
         hash_key = self._make_cache_key(request)
 
         response = None
@@ -294,7 +301,7 @@ class Client(OllamaClient):
             response = cast(list[ThinkResponse], response)
             yield from response
         else:
-            hack_parser = setup_stream_parser(model) # will be None if no hacks are required
+            hack_parser = setup_stream_parser(model, hacks=model_hacks) # will be None if no hacks are required
             chunks: list[ThinkResponse] = [] # we will cache this list, when finished
             for chunk in super().chat(**request.__dict__):
                 tr = ThinkResponse(chunk)
