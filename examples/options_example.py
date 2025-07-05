@@ -12,9 +12,7 @@ def main():
     print("Using prompt:", prompt)
     print("Using options:", options)
 
-    thinking, content = client.call(
-        model="qwen3", prompt=prompt, think=True, options=options
-    )
+    thinking, content = client.call(model="qwen3", prompt=prompt, think=True, options=options)
     print("Thinking:", thinking)
     print("Content:", content)
 

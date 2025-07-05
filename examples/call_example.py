@@ -14,9 +14,7 @@ def main():
     print(response)
 
     # printing the response interpreted as response.message.content
-    response = client.call(
-        model="qwen3", prompt="Why is the meaning of life 42?", think=True
-    )
+    response = client.call(model="qwen3", prompt="Why is the meaning of life 42?", think=True)
     print(f"{response}")
 
     # separating thinking and content
