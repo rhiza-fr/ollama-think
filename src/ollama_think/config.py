@@ -17,10 +17,12 @@ class Config():
         self.enable_hacks = False
         self.load_config(default_path)
         
-    def load_config(self, path: Path):
+    def load_config(self, path: str | Path):
+        path = Path(path)
         if not path.exists():
             print("WARNING: config not found at {path}, no hacks for older models enabled.")
             self.enable_hacks = False
+            self.models = {}
             return
 
         # Parse YAML

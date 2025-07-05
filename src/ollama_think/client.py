@@ -330,3 +330,5 @@ class Client(OllamaClient):
         """
         return super().generate(model=model, keep_alive=0.0)
 
+    def load_config(self, path: str) -> None:
+        self.config.load_config(path)
