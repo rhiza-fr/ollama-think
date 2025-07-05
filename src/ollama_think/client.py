@@ -8,15 +8,22 @@ This module provides a `Client` class that adds several key features:
 """
 
 import hashlib
-from collections.abc import Iterator, Mapping, Sequence
+from collections.abc import Callable, Iterator, Mapping, Sequence
 from typing import Any, Literal, cast
 
 from diskcache import Cache
 from ollama import ChatResponse
 from ollama import Client as OllamaClient
+from ollama._client import _copy_tools
 from ollama._types import ChatRequest, GenerateResponse, Message, Options, Tool
 from pydantic.json_schema import JsonSchemaValue
 
+from ollama_think.thinking_hacks import (
+    hack_request,
+    hack_response,
+    hack_stream_chunk,
+    setup_stream_parser,
+)
 from ollama_think.thinkresponse import ThinkResponse
 
 
@@ -122,7 +129,7 @@ class Client(OllamaClient):
         model: str = "",
         prompt: str | None = None,
         messages: Sequence[Mapping[str, Any] | Message] | None = None,
-        tools: Sequence[Tool] | None = None,
+        tools: Sequence[Mapping[str, Any] | Tool | Callable] | None = None,
         think: bool = False,
         format: JsonSchemaValue | Literal["", "json"] | None = None,
         options: Mapping[str, Any] | Options | None = None,
@@ -200,9 +207,10 @@ class Client(OllamaClient):
             format=format,
             keep_alive=keep_alive,
             messages=messages,
-            tools=tools,
+            tools=list(_copy_tools(tools)),
             think=think,
         )
+        request = hack_request(request)  # cludge ollama to respect thought
         hash_key = self._make_cache_key(request)
         response = None
         if use_cache:
@@ -213,15 +221,16 @@ class Client(OllamaClient):
             response = super().chat(**request.__dict__)
             if use_cache:
                 self.cache.set(hash_key, response, tag=model)
-
-        return ThinkResponse(response)
+        tr = ThinkResponse(response)
+        response = hack_response(model, tr)  # cludge ollama to respect thought
+        return response
 
     def stream(
         self,
         model: str = "",
         prompt: str | None = None,
         messages: Sequence[Mapping[str, Any] | Message] | None = None,
-        tools: Sequence[Tool] | None = None,
+        tools: Sequence[Mapping[str, Any] | Tool | Callable] | None = None,
         think: bool = True,
         format: JsonSchemaValue | Literal["", "json"] | None = None,
         options: Mapping[str, Any] | Options | None = None,
@@ -272,22 +281,29 @@ class Client(OllamaClient):
             format=format,
             keep_alive=keep_alive,
             messages=messages,
-            tools=tools,
+            tools=list(_copy_tools(tools)),
             think=think,
         )
+        request = hack_request(request)  # cludge ollama to respect thought
         hash_key = self._make_cache_key(request)
 
         response = None
         if use_cache:
             response = self.cache.get(hash_key, None)
         if response:
-            response = cast(list[ChatResponse], response)
-            yield from (ThinkResponse(chunk) for chunk in response)
+            response = cast(list[ThinkResponse], response)
+            yield from response
         else:
-            chunks: list[ChatResponse] = []
+            hack_parser = setup_stream_parser(model) # will be None if no hacks are required
+            chunks: list[ThinkResponse] = [] # we will cache this list, when finished
             for chunk in super().chat(**request.__dict__):
-                chunks.append(chunk)
-                yield ThinkResponse(chunk)
+                tr = ThinkResponse(chunk)
+                if hack_parser:
+                    tr = hack_stream_chunk(tr, hack_parser)
+                    if not tr:  # we consumed a non-output chunk like a <think> tag
+                        continue
+                chunks.append(tr)
+                yield tr
             if use_cache:
                 self.cache.set(hash_key, chunks, tag=model)
 
