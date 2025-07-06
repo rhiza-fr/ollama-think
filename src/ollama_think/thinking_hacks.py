@@ -23,7 +23,7 @@ def hack_request(cr: ChatRequest, hacks: ThinkingHacks) -> ChatRequest:
     if new_message and cr.messages:
         messages = [new_message]
         for message in cr.messages:
-            messages.append(message) #type: ignore hmmm
+            messages.append(message)  # type: ignore hmmm
         cr.messages = messages
     return cr
 
@@ -56,7 +56,7 @@ def setup_stream_parser(model: str, hacks: ThinkingHacks | None) -> StreamingPar
     regexes: list[str] = hacks.get("content_parsers", [])
     if regexes:
         # Prefer the last stream parse (granite3.2 inverses the order when streaming !?)
-        return StreamingParser(format_pattern=str(regexes[-1])) 
+        return StreamingParser(format_pattern=str(regexes[-1]))
     return None
 
 

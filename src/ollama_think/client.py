@@ -303,7 +303,9 @@ class Client(OllamaClient):
             response = cast(list[ThinkResponse], response)
             yield from response
         else:
-            hack_parser = setup_stream_parser(model, hacks=model_hacks)  # will be None if no hacks are required
+            hack_parser = setup_stream_parser(
+                model, hacks=model_hacks
+            )  # will be None if no hacks are required
             chunks: list[ThinkResponse] = []  # we will cache this list, when finished
             for chunk in super().chat(**request.__dict__):
                 tr = ThinkResponse(chunk)
