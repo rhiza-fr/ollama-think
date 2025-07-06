@@ -1,6 +1,5 @@
 import pytest
 
-# Assuming your StreamingParser class is in a file named `parser.py`
 from ollama_think.stream_parser import StreamingParser
 
 # A list of chunk sizes to test against for each scenario.
@@ -103,21 +102,15 @@ TEST_CASES = [
     TEST_CASES,
     ids=[case[0] for case in TEST_CASES],
 )
-def test_streaming_parser_scenarios(
-    test_id, format_pattern, full_response, expected_thinking, expected_content
-):
+def test_streaming_parser_scenarios(test_id, format_pattern, full_response, expected_thinking, expected_content):
     """
     Tests the StreamingParser against a variety of scenarios and chunk sizes.
     This test is updated for the API that yields (thinking, content) tuples.
     """
     for chunk_size in CHUNK_SIZES_TO_TEST:
-        # Arrange: Create a new parser for each run
         parser = StreamingParser(format_pattern)
 
-        # Act: Process the stream
-        stream = (
-            full_response[i : i + chunk_size] for i in range(0, len(full_response), chunk_size)
-        )
+        stream = (full_response[i : i + chunk_size] for i in range(0, len(full_response), chunk_size))
 
         actual_thinking = ""
         actual_content = ""
@@ -132,7 +125,6 @@ def test_streaming_parser_scenarios(
             actual_thinking += thinking_part
             actual_content += content_part
 
-        # Assert
         assert actual_thinking == expected_thinking, (
             f"Failed thinking for chunk size {chunk_size} in test '{test_id}' with text '{full_response}' and pattern '{format_pattern}'"
         )
@@ -155,21 +147,13 @@ def test_reset_functionality():
     Tests that the reset() method correctly clears the parser's state.
     This test is updated to reflect the internal state of the final parser version.
     """
-    # Arrange
     format_pattern = r"<t>(?P<thinking>.*?)</t>"
     parser = StreamingParser(format_pattern)
 
-    # Process a partial chunk. The parser finds '<t>', consumes it, and then
-    # enters the CAPTURE state, but the end-marker '</t>' is not found.
     list(parser.process_chunk("<t>some partial"))
 
-    # Assert that the state is no longer initial.
     assert parser._plan_index == 1  # Moved past the initial 'FIND' step
-
-    # Act
     parser.reset()
-
-    # Assert that the state has been reset to its starting values
     assert parser._buffer == ""
     assert parser._plan_index == 0
 
@@ -178,15 +162,8 @@ def test_empty_stream():
     """
     Tests that the parser handles an empty stream gracefully.
     """
-    # Arrange
     parser = StreamingParser(r"<t>(?P<thinking>.*)</t>")
-
-    # Act
-    # Process an empty chunk
     results_process = list(parser.process_chunk(""))
-    # Finalize an empty stream
     results_finalize = list(parser.finalize())
-
-    # Assert
     assert results_process == []
     assert results_finalize == []

@@ -1,11 +1,11 @@
 # Ollama-Think Library
 
-This project provides a Python client for the Ollama API, extending the official `ollama-python` library with the addition of caching and a generous dose of syntax sugar.
+This project provides a Python client for the Ollama API, extending the official `ollama-python` library with the addition of caching, a generous dose of syntax sugar and increased `think` model compatibility.
 
 ## Features
 
 - **Caching**: Automatically caches responses to speed up repeated requests.
-- **Thinking**: Enables officially unsupported models to use thinking mode.
+- **Thinking**: Enables some officially unsupported models to use thinking mode.
 - **Streaming and Non-streaming**: Separates the underlying streaming and non-streaming interface to provide clean type hints.
 - **Syntax Sugar**: Less boiler-plate, so that you can maintain your flow.
 
@@ -24,7 +24,6 @@ uv add ollama-think
 ### Initialization
 
 You can initialize the client with default settings, which will look for the `OLLAMA_HOST` environment variable or default to `http://localhost:11434`.
-
 
 ```python
 from ollama_think.client import Client
@@ -46,7 +45,7 @@ client = Client(
 
 ### Making Calls
 
-The `call` method provides a strongly typed access to the underlying `Chat` method in non-streaming mode. It returns a `ThinkResponse` object which is a subclass of `ollama.ChatResponse` and adds some convenience properties.
+The `call` method provides strongly typed access to the underlying `Chat` method in non-streaming mode. It returns a `ThinkResponse` object which is a subclass of `ollama.ChatResponse` and adds some convenience properties. You can use `prompt` or `messages` as you prefer.
 
 ```python
 # Make a non-streaming call
@@ -96,19 +95,19 @@ The `stream` method provides a strongly typed access to the underlying `Chat` me
 ```python
 stream = client.stream(model="qwen3", prompt="Tell me a short story about italian chimpanzees and bananas")
 for chunk in stream:
-    print(chunk.thinking, end="") # empty, since think=False. Your choice
+    print(chunk.thinking, end="") # empty, since think=False. Your choice.
     print(chunk.content, end="")
 ```
 
 ### Thinking Mode
 
-The `think` parameter tells ollama to enable thinking for models that support this. For other models that use non-standard ways of enabling thinking we do the neccesary. See [config.yaml](config.yaml)
+The `think` parameter tells ollama to enable thinking for models that support this. For other models that use non-standard ways of enabling thinking we do the neccesary. See the default condiguration: [config.yaml](config.yaml)
 
 Some models will think, even without 'enabling' thinking. This output is separated out of the `content` into `thinking`
 
 See [Model Capabilities](model_capabilities.md)
 
-Note: Not all models officially or unofficially support thinking. They will return an error if you try to enable thinking.
+Note: Not all models officially or unofficially support thinking. They will throw a `400` error if you try to enable thinking.
 
 ```python
 # Non-streaming call with think=True
@@ -122,13 +121,12 @@ print(content)
 stream = client.stream(model="qwen3", prompt="What is bigger an egg or a mouse?", think=True)
 for thinking_chunk, content_chunk in stream:
     print(thinking_chunk, end="")
-    print(content_chunk, end="") # empty until thinking is finished
+    print(content_chunk, end="") # empty until thinking is finished for most models
 ```
 
 ### Caching
 
-The client automatically caches responses using the light-weight DiskCache library to avoid re-generating them for the same request. You can disable this behavior by setting `use_cache=False`.
-
+The client automatically caches responses using the light-weight `DiskCache` library to avoid re-generating them for the same request. You can disable this behavior by setting `use_cache=False`.
 
 ```python
 # This call will be cached
@@ -149,6 +147,13 @@ client = Client(clear_cache=True)
 
 ### Options
 
+The `options` parameter of the underlying `chat` method can be used to change how the model
+responds. The most commonly used parameters are
+
+- `temperature` Low values keep the model deterministic, Higher values for more creativity Typically 0.1 -> 1.0
+- `num_ctx` Ollama has a default context length of 2048, which can be increased if you have enough VRAM. If you send in more
+than `num_ctx` tokens, ollama will silently truncate your message, which can lead to lost instructions.
+
 ```python
 client = Client(host="http://localhost:11434")
 prompt="Describe the earth to an alien who has just arrived."
@@ -161,9 +166,14 @@ thinking, content = client.call(model="qwen3", prompt=prompt, think=True, option
 print("Thinking:", thinking)
 print("Content:", content)
 ```
+
 See [examples/options_example.py](examples/options_example.py) for a full list of options
 
 ### Tool Calling
+
+Before, and underneath the concept of MCP servers are the humble tool_calls. By telling the model that you have a tool available,
+the model can choose to reply with a special format that indicates that it wants to call a tool. Typically, this call is
+intercepted, the tool is excecuted and the result sent back to the model. The model's second response can then be shown to a user.
 
 See [examples/tool_calling_example.py](examples/tool_calling_example.py)
 
@@ -198,8 +208,8 @@ text_obj = client.call(model="qwen3", prompt="How hot is the world?",
 
 my_obj = Heat.model_validate_json(text_obj) # might explode it the format is invalid
 ```
-See [examples/response_format_example.py](examples/response_format_example.py)
 
+See [examples/response_format_example.py](examples/response_format_example.py)
 
 ### Access to the underlying ollama client
 
@@ -243,11 +253,11 @@ client.call(model='llama3.2', messages=[message])
 - `thinking` : str - The thinking content from the message.
 - `content` : str - The content from the message.
 
-#### Inherited fields:
+#### Inherited fields
 
 - `model`: str Model used to generate response.
 - `created_at`: str - Time when the request was created.
--  `done`: bool - True if response is complete, otherwise False. Useful for streaming to detect the final response.
+- `done`: bool - True if response is complete, otherwise False. Useful for streaming to detect the final response.
 - `done_reason`: str - Reason for completion. Only present when done is True.
 - `total_duration`: int - Total duration in nanoseconds.
 - `load_duration`: int - Load duration in nanoseconds.
@@ -256,32 +266,29 @@ client.call(model='llama3.2', messages=[message])
 - `eval_count`: int - Number of tokens evaluated in inference.
 - `eval_duration`: int - Duration of evaluating inference in nanoseconds.
 - `message`
-    - `role`: str - Assumed role of the message. Response messages has role 'assistant' or 'tool'.
-    - `content`: str - Content of the message. Response messages contains message fragments when streaming.
-    - `thinking`: str - Thinking content. Only present when thinking is enabled.'
-    - `images`: Sequence[Image] - List of image data for multimodal models.
-    - `tool_calls`: Sequence[ToolCall]  -Tools calls to be made by the model.
+  - `role`: str - Assumed role of the message. Response messages has role 'assistant' or 'tool'.
+  - `content`: str - Content of the message. Response messages contains message fragments when streaming.
+  - `thinking`: str - Thinking content. Only present when thinking is enabled.'
+  - `images`: Sequence[Image] - List of image data for multimodal models.
+  - `tool_calls`: Sequence[ToolCall]  -Tools calls to be made by the model.
 
 ## Credit to
 
-- ollama https://ollama.com/
-- ollama-python https://github.com/ollama/ollama-python
-- diskcache https://github.com/grantjenks/python-diskcache/
-- pydantic https://pydantic-docs.helpmanual.io/
-
+- ollama [https://ollama.com/]([https://ollama.com/)
+- ollama-python [https://github.com/ollama/ollama-python]([https://github.com/ollama/ollama-python)
+- diskcache [https://github.com/grantjenks/python-diskcache/]([https://github.com/grantjenks/python-diskcache/)
+- pydantic [https://pydantic-docs.helpmanual.io/]([https://pydantic-docs.helpmanual.io/)
 
 ## Reference docs
 
-- Ollama Thinking - https://ollama.com/blog/thinking
-- Ollama Tool support - https://ollama.com/blog/tool-support
-- Ollama Structured Outputs - https://ollama.com/blog/structured-outputs
-- Ollama Options - https://github.com/ollama/ollama-python/blob/main/ollama/_types.py
-
-
+- Ollama Thinking - [https://ollama.com/blog/thinking](https://ollama.com/blog/thinking)
+- Ollama Tool support - [https://ollama.com/blog/tool-support]([https://ollama.com/blog/tool-support)
+- Ollama Structured Outputs - [https://ollama.com/blog/structured-outputs]([https://ollama.com/blog/structured-outputs)
+- Ollama Options - [https://github.com/ollama/ollama-python/blob/main/ollama/_types.py]([https://github.com/ollama/ollama-python/blob/main/ollama/_types.py)
 
 ## Contributing
 
-Contributions are welcome! Please open an issue or submit a pull request.
+Contributions are welcome. Please open an issue or submit a pull request.
 
 ## License
 

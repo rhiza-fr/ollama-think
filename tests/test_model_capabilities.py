@@ -32,7 +32,7 @@ def _content_no_thinking(model: str) -> tuple[bool, str]:
         if tr.content.find("<think>") > -1 or tr.content.find("Here is my thought process") > -1:
             return (
                 False,
-                f"Thinking outputed to content when think=False \'{tr.content}\'",
+                f"Thinking outputed to content when think=False '{tr.content}'",
             )
         return (True, "")
     except Exception as e:
@@ -100,7 +100,7 @@ def _tool_calling(model: str, think: bool = True) -> tuple[bool, str]:
                 return True, ""
         return False, f"Expected tool call, received '{r}'"
     except Exception as e:
-        if str(e).find('does not support tools') > 0:
+        if str(e).find("does not support tools") > 0:
             err = "Does not support tools"
             return False, err
         err = f"{e}"
@@ -112,6 +112,7 @@ def _tool_calling(model: str, think: bool = True) -> tuple[bool, str]:
 def _get_model_names():
     return [m["model"] for m in client.list()["models"]]
 
+
 @pytest.mark.slow
 def test_model_capabilities(output_path: str = "model_capabilies.json"):
     model_names = _get_model_names()
@@ -122,7 +123,7 @@ def test_model_capabilities(output_path: str = "model_capabilies.json"):
         "tazarov/all-minilm-l6-v2-f32:latest",
         "stable-code:3b-code-q4_0",
         "stable-code:3b-code-q4_0",
-        "qwen3:4b-nothink"
+        "qwen3:4b-nothink",
     ]
     models = [m for m in model_names if m not in blacklisted_models]
 
@@ -197,7 +198,7 @@ def generate_markdown_report(
         "can_tool_call",
         "can_think",
         "content_no_thinking",
-        # "can_json_think",
+        # "can_json_think",  # these just add noise
         # "can_pydantic_think",
         # "can_tool_call_think",
     ]
@@ -207,9 +208,9 @@ def generate_markdown_report(
         "can_json": "JSON Format",
         "can_pydantic": "Pydantic Format",
         "can_tool_call": "Tool Calls",
-        # "can_json_think": "JSON (T)",
-        # "can_pydantic_think": "Pydantic (T)",
-        # "can_tool_call_think": "Tool Call (T)",
+        "can_json_think": "JSON (T)",
+        "can_pydantic_think": "Pydantic (T)",
+        "can_tool_call_think": "Tool Call (T)",
     }
 
     # Build Markdown table
@@ -218,7 +219,7 @@ def generate_markdown_report(
         "",
         "This report compares model capabilities with and without `ollama-think`'s compatibility hacks.",
         "A `❌` &rarr; `✅` indicates that the hack fixed a previously failing capability.",
-        "",
+        "A `❗` indicates invalid JSON",
     ]
 
     # Header
@@ -230,10 +231,13 @@ def generate_markdown_report(
 
     def format_icon(res):
         ok = res[0]
-        desc = html.escape( res[1][:50].replace('\n'," ").replace('|',''))
+        desc = html.escape(res[1][:50].replace("\n", " ").replace("|", ""))
         if ok:
             return "✅"
-        return f"[❌](## \"{desc}\")"
+        # Invalid JSON, Expecting
+        if res[1].find("Invalid JSON") > -1 or res[1].find("Expecting") > -1:
+            return '[❗](## "Invalid JSON")'
+        return f'[❌](## "{desc}")'
 
     def format_cell(no_hacks_res, hacks_res):
         no_hacks_ok = no_hacks_res[0] if no_hacks_res else False

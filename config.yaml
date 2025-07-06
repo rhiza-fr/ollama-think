@@ -1,35 +1,51 @@
 hacks:
+  # set to false to get default ollama behaviour
   enabled: true
 
 defaults:
+  # this will send False to ollama, because it would otherwise throw
+  # a 'model does not support thinking' error
   enable_thinking: false
+  # some models need special messages inserted to tell them to think
   add_message: null
+  # how to find the thinking in the content response
+  # there can be multiple parsers. All are tried for non-streaming
+  # just the last is tried for streaming (granite3.2)
   content_parsers:
     - "<think>(?P<thinking>.*?)</think>(?P<content>.*)"
 
+# a rule will be applied if the 'name' here matches the start of the
+# model name used in the request. Rules are applied in order. First match wins.
 models:
   - name: cogito
     add_message:
       role: system
       content: Enable deep thinking subroutine.
+
   - name: granite3.2-vision
     content_parsers: [] # doesn't produce thinking
+
   - name: granite3.2
     add_message:
       role: control
       content: thinking
     content_parsers:
+      # the order is inverted for streaming
       - "Here is my response:\n(?P<content>.*?)Here is my thought process:\n(?P<thinking>.*)"
       - "Here is my thought process:\n(?P<thinking>.*?)Here is my response:\n(?P<content>.*)"
+
   - name: granite3.3
     add_message:
       role: control
       content: thinking
     content_parsers:
       - "<think>(?P<thinking>.*?)</think><response>(?P<content>.*?)</response>"
+
   - name: reflection
     content_parsers:
       - "<thinking>(?P<thinking>.*?)</thinking><output>(?P<content>.*?)</output>"
+
+    # these use default settings
   - name: phi4-reasoning
   - name: phi4-mini-reasoning
   - name: deepscaler

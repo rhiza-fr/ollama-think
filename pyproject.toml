@@ -1,7 +1,7 @@
 [project]
 name = "ollama-think"
-version = "0.1.1"
-description = "Add your description here"
+version = "0.1.2"
+description = "A light wrapper around ollama-python that introduces caching, syntax sugar and increased `think` compatibility"
 readme = "README.md"
 authors = [
     { name = "Chris Kilner", email = "cjp.kilner@gmail.com" }
@@ -25,14 +25,11 @@ dev = [
     "pytest-mock>=3.14.1",
     "ruff>=0.11.13",
 ]
-lint = [
-    "ruff>=0.12.1",
-]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 markers = [
-    "slow: marks tests as slow (deselect with '-m \"not slow\"')" ]
+    "slow: marks tests as slow (select with '-m \"slow\"')" ]
 addopts = "--cov=src/ollama_think --cov-report html -m 'not slow'"
 
 [project.scripts]
