@@ -20,16 +20,20 @@ def main(
     """
     with Client(host=host) as client:
         seen_first_content = False
-        stream = client.stream(model=model, prompt=prompt, think=think)
-        if think:
-            print("[dim]Thinking...[/dim]")
-        for thinking, content in stream:
-            if thinking:
-                print(f"[i]{thinking}[/i]", end="")
-            elif think and seen_first_content is False:
-                seen_first_content = True
-                print("[dim]Content...[/dim]")
-            print(content, end="")
+        try:
+            stream = client.stream(model=model, prompt=prompt, think=think)
+            if think:
+                print("[dim]Thinking...[/dim]")
+            for thinking, content in stream:
+                if thinking:
+                    print(f"[i]{thinking}[/i]", end="")
+                elif think and seen_first_content is False:
+                    seen_first_content = True
+                    print("[dim]Content...[/dim]")
+                print(content, end="")
+        except Exception as e:
+            print("[bold red]Error:[/bold red] Maybe use --host http://localhost:11434 ?")
+            print(f"The underlying error was: {e}")
 
 
 def entrypoint():
