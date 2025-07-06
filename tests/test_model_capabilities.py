@@ -160,9 +160,9 @@ def test_model_capabilities(output_path: str = "model_capabilies.json"):
 
 
 def generate_markdown_report(
-    no_hacks: str = "model_capabilies_no_hacks.json",
-    hacks: str = "model_capabilies.json",
-    output_path: str = "model_capabilies.md",
+    no_hacks: str = "model_capabilities_no_hacks.json",
+    hacks: str = "model_capabilities.json",
+    output_path: str = "model_capabilities.md",
 ):
     """
     Generates a Markdown report comparing model capabilities with and without hacks.
@@ -272,5 +272,5 @@ def generate_markdown_report(
 if __name__ == "__main__":
     test_model_capabilities()
     client.config.enable_hacks = False
-    test_model_capabilities(output_path="model_capabilies_no_hacks.json")
+    test_model_capabilities(output_path="model_capabilities_no_hacks.json")
     generate_markdown_report()

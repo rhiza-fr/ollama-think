@@ -213,10 +213,10 @@ See [examples/response_format_example.py](examples/response_format_example.py)
 
 ### Access to the underlying ollama client
 
-Since the `ollama-think.client` is a thin wrapper around the `ollama.client`, you can still access the all the underlying ollama client methods.
+Since the `ollama_think.client` is a thin wrapper around the `ollama.client`, you can still access the all the underlying ollama client methods.
 
 ```python
-from ollama-think.client import Client
+from ollama_think.client import Client
 from ollama import ChatResponse
 
 client = Client()
