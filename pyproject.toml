@@ -6,7 +6,7 @@ readme = "README.md"
 authors = [
     { name = "Chris Kilner", email = "cjp.kilner@gmail.com" }
 ]
-requires-python = ">=3.12.2"
+requires-python = ">=3.9"
 dependencies = [
     "diskcache>=5.6.3",
     "ollama>=0.5.1",
@@ -18,7 +18,7 @@ dependencies = [
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
-[dependency-groups]
+[project.optional-dependencies]
 dev = [
     "pytest>=8.4.0",
     "pytest-cov>=6.2.0",
