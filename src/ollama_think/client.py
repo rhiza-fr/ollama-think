@@ -94,6 +94,7 @@ class Client(OllamaClient):
         if clear_cache:
             self.cache.clear()
         self.config = Config()
+        self.host = host
         super().__init__(host=host)
 
     def close(self):
@@ -124,7 +125,7 @@ class Client(OllamaClient):
         """
         Create a cache key by hashing the request payload.
         """
-        str_key = request.model_dump_json()
+        str_key = request.model_dump_json() + f"{self.host or 'default'}"
         return hashlib.md5(str_key.encode()).hexdigest()
 
     def call(
@@ -302,8 +303,8 @@ class Client(OllamaClient):
             response = cast(list[ThinkResponse], response)
             yield from response
         else:
-            hack_parser = setup_stream_parser(model, hacks=model_hacks) # will be None if no hacks are required
-            chunks: list[ThinkResponse] = [] # we will cache this list, when finished
+            hack_parser = setup_stream_parser(model, hacks=model_hacks)  # will be None if no hacks are required
+            chunks: list[ThinkResponse] = []  # we will cache this list, when finished
             for chunk in super().chat(**request.__dict__):
                 tr = ThinkResponse(chunk)
                 if hack_parser:
