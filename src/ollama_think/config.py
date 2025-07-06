@@ -10,13 +10,14 @@ class ThinkingHacks(TypedDict):
     add_message: dict[str, str] | None
     content_parsers: list[str]
 
-class Config():
+
+class Config:
     def __init__(self):
-        default_path = Path(__file__).parent.parent.parent / "config.yaml"
+        default_path = Path(__file__).parent / "config.yaml"
         self.models: dict[str, ThinkingHacks] = {}
         self.enable_hacks = False
         self.load_config(default_path)
-        
+
     def load_config(self, path: str | Path):
         path = Path(path)
         if not path.exists():
@@ -47,7 +48,7 @@ class Config():
 
         self.enable_hacks = hacks.get("enabled", False)
 
-    def get_hacks_if_enabled(self, model:str) -> ThinkingHacks | None:
+    def get_hacks_if_enabled(self, model: str) -> ThinkingHacks | None:
         if not self.enable_hacks:
             return None
         for key in self.models.keys():

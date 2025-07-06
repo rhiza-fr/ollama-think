@@ -132,8 +132,9 @@ def test_stream_with_cache_miss(mocked_client_deps):
     mock_chat.assert_called_once()
     mock_cache_instance.set.assert_called_once()
 
+
 def test_load_config():
-    path = "config.yaml"
+    path = "src/ollama_think/config.yaml"
     client = Client()
     client.load_config(path)
     assert client.config.enable_hacks is True
