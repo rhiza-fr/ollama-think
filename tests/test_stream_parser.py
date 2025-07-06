@@ -102,7 +102,9 @@ TEST_CASES = [
     TEST_CASES,
     ids=[case[0] for case in TEST_CASES],
 )
-def test_streaming_parser_scenarios(test_id, format_pattern, full_response, expected_thinking, expected_content):
+def test_streaming_parser_scenarios(
+    test_id, format_pattern, full_response, expected_thinking, expected_content
+):
     """
     Tests the StreamingParser against a variety of scenarios and chunk sizes.
     This test is updated for the API that yields (thinking, content) tuples.
@@ -110,7 +112,9 @@ def test_streaming_parser_scenarios(test_id, format_pattern, full_response, expe
     for chunk_size in CHUNK_SIZES_TO_TEST:
         parser = StreamingParser(format_pattern)
 
-        stream = (full_response[i : i + chunk_size] for i in range(0, len(full_response), chunk_size))
+        stream = (
+            full_response[i : i + chunk_size] for i in range(0, len(full_response), chunk_size)
+        )
 
         actual_thinking = ""
         actual_content = ""

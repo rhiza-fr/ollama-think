@@ -2,9 +2,9 @@
 
 This report compares model capabilities with and without `ollama-think`'s compatibility hacks.
 A `❌` &rarr; `✅` indicates that the hack fixed a previously failing capability.
-
+A `❗` indicates invalid JSON
 | Model | JSON Format | Pydantic Format | Tool Calls | Thinking output | No thinking in Content |
-|:---| :---: | :---: | :---: | :---: | :---: |
+|:---| :--- | :--- | :--- | :--- | :--- |
 | `codeqwen:7b-chat` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |
 | `cogito:14b` | ✅ | ✅ | ✅ | [❌](## "Does not support thinking") &rarr; ✅ | ✅ |
 | `deepcoder:latest` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Thinking supported but empty") | [❌](## "Thinking outputed to content when think=False &#x27;&lt;th") &rarr; ✅ |
@@ -35,7 +35,7 @@ A `❌` &rarr; `✅` indicates that the hack fixed a previously failing capabili
 | `mistral:latest` | ✅ | ✅ | ✅ | [❌](## "Does not support thinking") | ✅ |
 | `phi3.5:latest` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |
 | `phi3:14b` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |
-| `phi4-mini-reasoning:latest` | [❌](## "Expecting property name enclosed in double quotes:") | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") &rarr; ✅ | [❌](## "Thinking outputed to content when think=False &#x27;&lt;th") &rarr; ✅ |
+| `phi4-mini-reasoning:latest` | ✅ &rarr; [❗](## "Invalid JSON") | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") &rarr; ✅ | [❌](## "Thinking outputed to content when think=False &#x27;&lt;th") &rarr; ✅ |
 | `phi4-mini:latest` | ✅ | ✅ | [❌](## "Expected tool call, received &#x27;&lt;tool_call&gt;Sure, I") | [❌](## "Does not support thinking") | ✅ |
 | `phi4-reasoning:plus` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") &rarr; ✅ | [❌](## "Thinking outputed to content when think=False &#x27;&lt;th") &rarr; ✅ |
 | `phi4:latest` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |
@@ -43,7 +43,7 @@ A `❌` &rarr; `✅` indicates that the hack fixed a previously failing capabili
 | `qwen2.5-coder:14b` | ✅ | ✅ | [❌](## "Expected tool call, received &#x27;{   &quot;name&quot;: &quot;addTwoI") | [❌](## "Does not support thinking") | ✅ |
 | `qwen2.5-coder:7b-base` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |
 | `qwen2.5-coder:latest` | ✅ | ✅ | [❌](## "Expected tool call, received &#x27;{   &quot;name&quot;: &quot;addTwoI") | [❌](## "Does not support thinking") | ✅ |
-| `qwen3:0.6b` | [❌](## "Unterminated string starting at: line 1 column 4 (") | ✅ | ✅ | ✅ | ✅ |
+| `qwen3:0.6b` | ✅ &rarr; [❌](## "Unterminated string starting at: line 1 column 4 (") | ✅ | ✅ | ✅ | ✅ |
 | `qwen3:1.7b` | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `qwen3:14b` | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `qwen3:4b` | ✅ | ✅ | [❌](## "Expected tool call, received &#x27;The result of 2 + 3 ") | ✅ | ✅ |

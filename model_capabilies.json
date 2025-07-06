@@ -39,28 +39,28 @@
             ""
         ],
         "can_json_think": [
-            false,
-            "Thinking not supported"
+            true,
+            ""
         ],
         "can_pydantic": [
             true,
             ""
         ],
         "can_pydantic_think": [
-            false,
-            "Thinking not supported"
+            true,
+            ""
         ],
         "can_think": [
-            false,
-            "Does not support thinking"
+            true,
+            ""
         ],
         "can_tool_call": [
             true,
             ""
         ],
         "can_tool_call_think": [
-            false,
-            "Thinking not supported"
+            true,
+            ""
         ],
         "content_no_thinking": [
             true,
@@ -73,20 +73,20 @@
             ""
         ],
         "can_json_think": [
-            false,
-            "Thinking not supported"
+            true,
+            ""
         ],
         "can_pydantic": [
             true,
             ""
         ],
         "can_pydantic_think": [
-            false,
-            "Thinking not supported"
+            true,
+            ""
         ],
         "can_think": [
-            false,
-            "Does not support thinking"
+            true,
+            ""
         ],
         "can_tool_call": [
             false,
@@ -94,11 +94,11 @@
         ],
         "can_tool_call_think": [
             false,
-            "Thinking not supported"
+            "Does not support tools"
         ],
         "content_no_thinking": [
-            false,
-            "Thinking outputed to content when think=False '<think>\nI will start by identifying the two numbers that need to be added: 2 and 3.\n\nNext, I'll add these two numbers together to find their sum.\n\nFinally, I'll determine that the total is 5.\n</think>\n\n**Solution:**\n\nWe need to calculate the sum of the numbers 2 and 3.\n\n\\[\n2 + 3 = \\boxed{5}\n\\]\n\n**Answer:** \\(\\boxed{5}\\)'"
+            true,
+            ""
         ]
     },
     "deepscaler:latest": {
@@ -107,20 +107,20 @@
             ""
         ],
         "can_json_think": [
-            false,
-            "Thinking not supported"
+            true,
+            ""
         ],
         "can_pydantic": [
             true,
             ""
         ],
         "can_pydantic_think": [
-            false,
-            "Thinking not supported"
+            true,
+            ""
         ],
         "can_think": [
-            false,
-            "Does not support thinking"
+            true,
+            ""
         ],
         "can_tool_call": [
             false,
@@ -128,11 +128,11 @@
         ],
         "can_tool_call_think": [
             false,
-            "Thinking not supported"
+            "Does not support tools"
         ],
         "content_no_thinking": [
-            false,
-            "Thinking outputed to content when think=False '<think>\nTo find the sum of 2 and 3, I will start by identifying the two numbers involved in the addition.\n\nNext, I will add these numbers together to compute their total.\n</think>\n\n**Solution:**\n\nWe need to calculate the sum of **2** and **3**.\n\n1. Start with the first number:  \n   \\[\n   2\n   \\]\n\n2. Add the second number to it:  \n   \\[\n   2 + 3 = 5\n   \\]\n\nTherefore, the final answer is:\n\n\\[\n\\boxed{5}\n\\]'"
+            true,
+            ""
         ]
     },
     "deepseek-coder-v2:16b": {
@@ -664,7 +664,7 @@
         ],
         "can_think": [
             false,
-            "Does not support thinking"
+            "Thinking supported but empty"
         ],
         "can_tool_call": [
             false,
@@ -685,20 +685,20 @@
             ""
         ],
         "can_json_think": [
-            false,
-            "Thinking not supported"
+            true,
+            ""
         ],
         "can_pydantic": [
             true,
             ""
         ],
         "can_pydantic_think": [
-            false,
-            "Thinking not supported"
+            true,
+            ""
         ],
         "can_think": [
-            false,
-            "Does not support thinking"
+            true,
+            ""
         ],
         "can_tool_call": [
             false,
@@ -706,7 +706,7 @@
         ],
         "can_tool_call_think": [
             false,
-            "Thinking not supported"
+            "Expected tool call, received '5'"
         ],
         "content_no_thinking": [
             true,
@@ -715,24 +715,24 @@
     },
     "granite3.3:latest": {
         "can_json": [
-            true,
-            ""
+            false,
+            "Extra data: line 1 column 3 (char 2) '2 + 3 equals $\\boxed{5}$.'"
         ],
         "can_json_think": [
             false,
-            "Thinking not supported"
+            "Extra data: line 1 column 3 (char 2) '2 + 3 equals $\\boxed{5}$.'"
         ],
         "can_pydantic": [
             true,
             ""
         ],
         "can_pydantic_think": [
-            false,
-            "Thinking not supported"
+            true,
+            ""
         ],
         "can_think": [
-            false,
-            "Does not support thinking"
+            true,
+            ""
         ],
         "can_tool_call": [
             false,
@@ -740,7 +740,7 @@
         ],
         "can_tool_call_think": [
             false,
-            "Thinking not supported"
+            "Expected tool call, received ''"
         ],
         "content_no_thinking": [
             true,
@@ -1025,20 +1025,20 @@
             ""
         ],
         "can_json_think": [
-            false,
-            "Thinking not supported"
+            true,
+            ""
         ],
         "can_pydantic": [
             true,
             ""
         ],
         "can_pydantic_think": [
-            false,
-            "Thinking not supported"
+            true,
+            ""
         ],
         "can_think": [
-            false,
-            "Does not support thinking"
+            true,
+            ""
         ],
         "can_tool_call": [
             false,
@@ -1046,11 +1046,11 @@
         ],
         "can_tool_call_think": [
             false,
-            "Thinking not supported"
+            "Does not support tools"
         ],
         "content_no_thinking": [
-            false,
-            "Thinking outputed to content when think=False '<think>\nOkay, so I need to figure out what 2 plus 3 is. Let me start by recalling the basic addition facts. Addition is combining two numbers to get a total count. So if I have 2 items and someone gives me 3 more, how many do I have in total?\n\nLet me visualize it. Imagine I have 2 apples. Then my friend gives me 3 more apples. Picking up each apple one by one: 1, 2, then adding the next three. So after 2, adding a third apple would make 3. Then the second apple becomes 3 as well, so that's 4. Wait, maybe I should count them all together.\n\nStarting from 2: 3, 4, 5, 6. Hmm, no, that doesn't seem right. Wait, if I start at 2 and add 1, that's 3. Add another 1 to get to 4, then another to reach 5, and one more to get to 6? But that's adding four ones. Maybe there's a simpler way. \n\nAlternatively, I know that addition is commutative, so 2 + 3 is the same as 3 + 2. If I do 3 + 2, that's like having 3 and then adding 2 more. 3 plus 2 is 5. So maybe 2 + 3 is also 5. \n\nWait, but let me check with objects to be sure. Let's take two fingers on one hand and three fingers on the other. Total fingers: 2 + 3 = 5. Yeah, that makes sense. So whether I add them one by one or group them, the result is 5. \n\nIs there a number line method? Starting at 0, jump 2 units to land on 2, then jump 3 more.Jumping 3 from there would reach 5. Yes, that's consistent. \n\nAlternatively, using skip counting: 2, 3, 4, 5, 6... but adding 3 steps from 2 would land on 5. Wait, no. If I start at 2 and count up 3 numbers: the next number after 2 is 3 (first), then 4 (second), then 5 (third). So that's three steps from 2, landing on 5. \n\nAll these methods point to the same answer. I don't see any contradictions here. The associative property also holds here because (a + b) + c is the same as a + (b + c), so regardless of grouping, it's still 5. \n\nTherefore, after checking multiple approaches\u2014visual representation, number line, skip counting, and properties like commutativity and associativity\u2014all confirm that 2 + 3 equals 5. I can't think of any scenario where addition would be different here, especially with positive integers. No carrying over or borrowing needed since both numbers are single-digit. \n\nSo the conclusion is straightforward. The answer must be 5.\n</think>\n\nThe problem asks for the sum of 2 and 3. By defining addition as combining quantities and verifying through multiple methods\u2014such as counting objects, using a number line, associativity, and commutativity\u2014all approaches consistently lead to the same result.\n\n**Answer:** \\boxed{5}'"
+            true,
+            ""
         ]
     },
     "phi4-mini:latest": {
@@ -1093,20 +1093,20 @@
             ""
         ],
         "can_json_think": [
-            false,
-            "Thinking not supported"
+            true,
+            ""
         ],
         "can_pydantic": [
             true,
             ""
         ],
         "can_pydantic_think": [
-            false,
-            "Thinking not supported"
+            true,
+            ""
         ],
         "can_think": [
-            false,
-            "Does not support thinking"
+            true,
+            ""
         ],
         "can_tool_call": [
             false,
@@ -1114,11 +1114,11 @@
         ],
         "can_tool_call_think": [
             false,
-            "Thinking not supported"
+            "Does not support tools"
         ],
         "content_no_thinking": [
-            false,
-            "Thinking outputed to content when think=False '<think>User says: \"what is 2+3?\" The answer is obviously 5.\nHowever I'll check instructions. It seems a simple arithmetic problem.\n\nI'll produce an answer with explanation if needed, but careful instructions: \"by default, do not output markdown formatting\" etc. But instructions said: \"By default, do not reply with Markdown formatting unless requested.\" So I'll just produce plain text answer. I'll say something like \"2+3=5.\" Possibly I'll also provide an explanation if appropriate.\n\nI'll check safe analysis instructions: no further risk issues as it's arithmetic and trivial.\n\nI'll produce a short response: \"The sum of 2 + 3 is 5.\"\n\nI must check potential trick: But nothing tricky about that. Just answer: \"5.\" Possibly I'll include additional explanation if needed, but since the question is simple I will just produce answer. \n\nLet's produce final message accordingly. We'll produce answer text.\n\nI'll produce a clear final answer with some explanation: \"2 + 3 equals 5\" etc.\n\nI'll produce answer in plain text message: \"The sum is 5.\"\n\nI'll include possible step-by-step explanation if needed, but it's just simple arithmetic addition so I might say \"Because 2+3 = 5.\" \n\nWe can also ask: \"Is that what you were expecting?\" But the problem instructions says do not produce markdown formatting. I'll produce answer in plain text message.\n\nI'll produce final answer as:\n\n\"Answer: 5\"\n\nI'll then produce final answer with explanation if desired. Possibly \"The sum of two and three equals five.\" I'll produce final answer in plain text message.\n\nI'll produce a final answer text message now in plain text message.\n\nI'll produce a final answer: \"The result is 5.\"\n\nI'll produce final answer accordingly.\n\nI'll produce final answer as:\n\n\"2 + 3 = 5.\"\n\nI'll produce final answer with explanation if needed. We'll produce final answer.\n\nI'll produce answer accordingly.\n\nI'll produce plain text message with no markdown formatting.\n\nI'll produce answer in plain text message.\n\nI'll produce final answer.</think>The sum of 2 and 3 is 5.'"
+            true,
+            ""
         ]
     },
     "phi4:latest": {

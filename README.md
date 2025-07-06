@@ -288,7 +288,57 @@ client.call(model='llama3.2', messages=[message])
 
 ## Contributing
 
-Contributions are welcome. Please open an issue or submit a pull request.
+Contributions are welcome! Please open an issue or submit a pull request.
+
+### Development Setup
+
+This project uses `uv` for package management and `hatch` for task running.
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/your-username/ollama-think.git
+    cd ollama-think
+    ```
+
+2.  **Create a virtual environment and install dependencies:**
+    This command creates a virtual environment in `.venv` and installs all dependencies, including development tools.
+    ```bash
+    uv venv
+    uv pip install -e .[dev]
+    ```
+
+3.  **Activate the virtual environment:**
+    - On Windows:
+      ```bash
+      .venv\Scripts\activate
+      ```
+    - On macOS/Linux:
+      ```bash
+      source .venv/bin/activate
+      ```
+
+### Running Checks
+
+- **Linting and Formatting:**
+  To automatically format and lint the code, run:
+  ```bash
+  uv run ruff format .
+  uv run ruff check . --fix
+  ```
+
+- **Running Tests:**
+  - To run the default (fast) unit tests:
+    ```bash
+    uv run hatch test
+    ```
+  - To run the full test suite, including `slow` integration tests that require a running Ollama instance:
+    ```bash
+    uv run hatch test -m "slow or not slow"
+    ```
+  - To pass a custom host to the integration tests:
+    ```bash
+    uv run hatch test -m "slow" --host http://192.168.0.101:11434
+    ```
 
 ## License
 

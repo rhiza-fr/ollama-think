@@ -8,11 +8,10 @@ from rich import print
 
 from ollama_think.client import Client
 
-client = Client(host="http://localhost:11434")
 prompt = "what is 2 + 3?"
 
 
-def _thinking_mode(model: str, think: bool = True) -> tuple[bool, str]:
+def _thinking_mode(client: Client, model: str, think: bool = True) -> tuple[bool, str]:
     try:
         tr = client.call(model=model, prompt=prompt, think=think)
         if not tr.thinking:
@@ -26,7 +25,7 @@ def _thinking_mode(model: str, think: bool = True) -> tuple[bool, str]:
         return (False, err)
 
 
-def _content_no_thinking(model: str) -> tuple[bool, str]:
+def _content_no_thinking(client: Client, model: str) -> tuple[bool, str]:
     try:
         tr = client.call(model=model, prompt=prompt, think=False)
         if tr.content.find("<think>") > -1 or tr.content.find("Here is my thought process") > -1:
@@ -40,7 +39,7 @@ def _content_no_thinking(model: str) -> tuple[bool, str]:
         return (True, err)
 
 
-def _json_format(model: str, think: bool = True) -> tuple[bool, str]:
+def _json_format(client: Client, model: str, think: bool = True) -> tuple[bool, str]:
     r = None
     try:
         r = client.call(model=model, prompt=prompt, format="json", think=think)
@@ -59,7 +58,7 @@ class ResponseObj(BaseModel):
     addition_result: int = Field(..., description="the result of the addition")
 
 
-def _pydantic_format(model: str, think: bool = True) -> tuple[bool, str]:
+def _pydantic_format(client: Client, model: str, think: bool = True) -> tuple[bool, str]:
     r = None
     try:
         r = client.call(
@@ -91,7 +90,7 @@ def addTwoInts(a: int, b: int) -> int:
     return int(a) + int(b)
 
 
-def _tool_calling(model: str, think: bool = True) -> tuple[bool, str]:
+def _tool_calling(client: Client, model: str, think: bool = True) -> tuple[bool, str]:
     r = None
     try:
         r = client.call(model=model, prompt=prompt, tools=[addTwoInts], think=think)
@@ -109,13 +108,13 @@ def _tool_calling(model: str, think: bool = True) -> tuple[bool, str]:
         return False, err
 
 
-def _get_model_names():
+def _get_model_names(client: Client):
     return [m["model"] for m in client.list()["models"]]
 
 
 @pytest.mark.slow
-def test_model_capabilities(output_path: str = "model_capabilies.json"):
-    model_names = _get_model_names()
+def test_model_capabilities(client: Client, output_path: str = "model_capabilies.json"):
+    model_names = _get_model_names(client)
     blacklisted_models = [
         "mxbai-embed-large:latest",
         "granite-embedding:278m",
@@ -130,16 +129,16 @@ def test_model_capabilities(output_path: str = "model_capabilies.json"):
     results = {}
     for name in models:
         print(f"Testing model: {name}")
-        can_think = _thinking_mode(model=name, think=True)
-        can_json = _json_format(model=name, think=False)
-        can_pydantic = _pydantic_format(model=name, think=False)
-        can_tool_call = _tool_calling(model=name, think=False)
-        content_no_thinking = _content_no_thinking(model=name)
+        can_think = _thinking_mode(client, model=name, think=True)
+        can_json = _json_format(client, model=name, think=False)
+        can_pydantic = _pydantic_format(client, model=name, think=False)
+        can_tool_call = _tool_calling(client, model=name, think=False)
+        content_no_thinking = _content_no_thinking(client, model=name)
 
         if can_think[0] is True:
-            can_json_think = _json_format(model=name, think=True)
-            can_pydantic_think = _pydantic_format(model=name, think=True)
-            can_tool_call_think = _tool_calling(model=name, think=True)
+            can_json_think = _json_format(client, model=name, think=True)
+            can_pydantic_think = _pydantic_format(client, model=name, think=True)
+            can_tool_call_think = _tool_calling(client, model=name, think=True)
         else:
             can_json_think = False, "Thinking not supported"
             can_pydantic_think = False, "Thinking not supported"
@@ -219,14 +218,14 @@ def generate_markdown_report(
         "",
         "This report compares model capabilities with and without `ollama-think`'s compatibility hacks.",
         "A `❌` &rarr; `✅` indicates that the hack fixed a previously failing capability.",
-        "A `❗` indicates invalid JSON",
+        "A `❗` indicates invalid JSON, on one test without specific encouragement.",
     ]
 
     # Header
     header = "| Model | " + " | ".join(header_map[c] for c in capabilities) + " |"
     md_lines.append(header)
     # Separator
-    separator = "|:---| " + " | ".join([":---:"] * len(capabilities)) + " |"
+    separator = "|:---| " + " | ".join([":---"] * len(capabilities)) + " |"
     md_lines.append(separator)
 
     def format_icon(res):
@@ -270,7 +269,10 @@ def generate_markdown_report(
 
 
 if __name__ == "__main__":
-    test_model_capabilities()
-    client.config.enable_hacks = False
-    test_model_capabilities(output_path="model_capabilities_no_hacks.json")
+    # This section is for manual execution and needs a client instance.
+    # It will not be run by pytest.
+    main_client = Client()
+    test_model_capabilities(main_client)
+    main_client.config.enable_hacks = False
+    test_model_capabilities(main_client, output_path="model_capabilities_no_hacks.json")
     generate_markdown_report()

@@ -1,0 +1,31 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [0.1.2] - 2025-07-06
+
+### Added
+
+- `CHANGELOG.md` to document project changes.
+- `LICENSE` file with the full MIT License text.
+- `requirements.txt` lock file for reproducible development environments.
+- `tests/conftest.py` to provide a parameterized `--host` option for tests.
+- Comprehensive "Contributing" section to `README.md` with development setup and workflow instructions.
+- `hatch` configuration in `pyproject.toml` for standardized task running.
+
+### Changed
+
+- **Packaging:** Moved `config.yaml` into the source directory to ensure it is included in the final package.
+- **Configuration:** Centralized `pytest` and `ruff` configurations in `pyproject.toml`.
+- **Testing:** Refactored integration tests to use a parameterized `client` fixture instead of a hardcoded host.
+- **Dependencies:** Added `hatch` as a development dependency.
+
+### Fixed
+
+- Corrected various syntax and configuration issues in `pyproject.toml`.
+- Fixed a broken link to `model_capabilities.md` in `README.md`.
+- Resolved a `NameError` in the test suite by correctly passing fixtures.
+- Addressed and resolved various shell and command execution issues during the interactive session.
