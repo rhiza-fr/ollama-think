@@ -11,15 +11,19 @@ def pytest_generate_tests(metafunc):
         hacks = client.config.models
 
         # all model names on the server
-        all_models = [m["model"] for m in client.list()["models"]]
+        selected_model = metafunc.config.getoption("--model")
+        if selected_model:
+            models = [selected_model]
+        else:
+         models = [m["model"] for m in client.list()["models"]]
 
         # refine to models that have hacks
         test_cases = []
-        for model in all_models:
+        for model in models:
             for hack_model in hacks.keys():
                 if model.startswith(hack_model):
                     if len(hacks[hack_model].get("content_parsers", [])) == 0:
-                        break # granite3.2-vision is skipped
+                        break  # granite3.2-vision is skipped
                     test_cases.append({"model": model, "hack": hacks[hack_model]})
                     break
         metafunc.parametrize("test_case", test_cases)
@@ -57,4 +61,3 @@ def test_models(client, test_case):
     assert len(thinking) > 0
     assert len(content) > 0
     print("-" * 50)
-
