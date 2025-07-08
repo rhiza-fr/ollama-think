@@ -1,0 +1,36 @@
+{
+    "cogito:14b": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            true,
+            ""
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            true,
+            ""
+        ],
+        "can_think": [
+            true,
+            ""
+        ],
+        "can_tool_call": [
+            true,
+            ""
+        ],
+        "can_tool_call_think": [
+            true,
+            ""
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    }
+}

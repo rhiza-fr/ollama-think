@@ -4,3 +4,4 @@
 .coverage
 htmlcov/
 dist/
+test_output/htmlcov 

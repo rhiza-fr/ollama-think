@@ -56,7 +56,7 @@ dependencies = [
   "pytest-cov"
 ]
 [tool.hatch.envs.test.scripts]
-run = "pytest --cov=src/ollama_think --cov-report=html {args}"
+run = "pytest --cov=src/ollama_think --cov-report=html:test_output/htmlcov {args}"
 
 [tool.ruff]
 line-length = 100

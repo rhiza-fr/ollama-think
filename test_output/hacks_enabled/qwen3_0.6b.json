@@ -1,0 +1,36 @@
+{
+    "qwen3:0.6b": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Expecting property name enclosed in double quotes: line 4 column 1 (char 4) '{\n\n\n{\n\n\n  \"answer\": \"5\",\n  \"source\": \"math\"\n}'"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "1 validation error for ResponseObj\n  Invalid JSON: expected `:` at line 1 column 5 [type=json_invalid, input_value='{\"{\"addition_result\": 5}\\n', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.11/v/json_invalid '{\"{\"addition_result\": 5}\n'"
+        ],
+        "can_think": [
+            true,
+            ""
+        ],
+        "can_tool_call": [
+            true,
+            ""
+        ],
+        "can_tool_call_think": [
+            true,
+            ""
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    }
+}

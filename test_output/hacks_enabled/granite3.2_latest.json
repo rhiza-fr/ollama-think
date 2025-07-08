@@ -1,0 +1,36 @@
+{
+    "granite3.2:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            true,
+            ""
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            true,
+            ""
+        ],
+        "can_think": [
+            true,
+            ""
+        ],
+        "can_tool_call": [
+            false,
+            "Expected tool call, received '5'"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Expected tool call, received '5'"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    }
+}

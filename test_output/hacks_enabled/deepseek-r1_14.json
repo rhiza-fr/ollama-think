@@ -1,0 +1,36 @@
+{
+    "deepseek-r1:14": {
+        "can_json": [
+            false,
+            "model \"deepseek-r1:14\" not found, try pulling it first (status code: 404)"
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            false,
+            "model \"deepseek-r1:14\" not found, try pulling it first (status code: 404)"
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "model \"deepseek-r1:14\" not found, try pulling it first (status code: 404)"
+        ],
+        "can_tool_call": [
+            false,
+            "model \"deepseek-r1:14\" not found, try pulling it first (status code: 404)"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            "model \"deepseek-r1:14\" not found, try pulling it first (status code: 404)"
+        ]
+    }
+}
