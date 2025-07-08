@@ -4,8 +4,9 @@ version = "0.1.2"
 description = "A light wrapper around ollama-python that introduces caching, syntax sugar and increased `think` compatibility"
 readme = "README.md"
 authors = [
-    { name = "Chris Kilner", email = "cjp.kilner@gmail.com" }
+    { name = "Chris Kilner", email = "chris@rhiza.fr" }
 ]
+keywords = ["ollama", "LLM", "think", "AI", "compatibility", "cogito", "granite", "phi4-reasoning", "phi4-mini-reasoning"]
 requires-python = ">=3.9"
 dependencies = [
     "diskcache>=5.6.3",
@@ -24,8 +25,8 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/your-username/ollama-think"
-"Bug Tracker" = "https://github.com/your-username/ollama-think/issues"
+Homepage = "https://github.com/rhiza-fr/ollama-think"
+"Bug Tracker" = "https://github.com/rhiza-fr/ollama-think/issues"
 
 [project.scripts]
 ollama-think = "ollama_think.playground.cli:entrypoint"
