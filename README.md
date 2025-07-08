@@ -5,7 +5,7 @@ This project provides a Python client for the Ollama API, extending the official
 ## Features
 
 - **Caching**: Automatically caches responses to speed up repeated requests.
-- **Thinking**: Enables some officially unsupported models to use thinking mode.
+- **Thinking**: Enables some officially unsupported models to use thinking mode. [Why hack?](why_hack.md)
 - **Streaming and Non-streaming**: Separates the underlying streaming and non-streaming interface to provide clean type hints.
 - **Syntax Sugar**: Less boiler-plate, so that you can maintain your flow.
 
@@ -101,11 +101,11 @@ for chunk in stream:
 
 ### Thinking Mode
 
-The `think` parameter tells ollama to enable thinking for models that support this. For other models that use non-standard ways of enabling thinking we do the neccesary. See the default condiguration: [config.md](config.md)
+The `think` parameter tells ollama to enable thinking for models that support this. For other models that use non-standard ways of enabling thinking we do the neccesary. [Why hack?](why_hack.md)
+
+See the default configuration: [src/ollama_think/config.yaml](src/ollama_think/config.yaml) and the summary of the test results: [model_capabilities.md](model_capabilities.md)
 
 Some models will think, even without 'enabling' thinking. This output is separated out of the `content` into `thinking`
-
-See [Model Capabilities](model_capabilities.md)
 
 Note: Not all models officially or unofficially support thinking. They will throw a `400` error if you try to enable thinking.
 
@@ -303,19 +303,8 @@ This project uses `uv` for package management and `hatch` for task running.
 2.  **Create a virtual environment and install dependencies:**
     This command creates a virtual environment in `.venv` and installs all dependencies, including development tools.
     ```bash
-    uv venv
-    uv pip install -e .[dev]
+    uv sync --extra dev
     ```
-
-3.  **Activate the virtual environment:**
-    - On Windows:
-      ```bash
-      .venv\Scripts\activate
-      ```
-    - On macOS/Linux:
-      ```bash
-      source .venv/bin/activate
-      ```
 
 ### Running Checks
 
@@ -330,6 +319,8 @@ This project uses `uv` for package management and `hatch` for task running.
   - To run the default (fast) unit tests:
     ```bash
     uv run hatch test
+    # or more simply
+    uv run pytest
     ```
   - To run the full test suite, including `slow` integration tests that require a running Ollama instance:
     ```bash
@@ -340,6 +331,23 @@ This project uses `uv` for package management and `hatch` for task running.
     uv run hatch test -m "slow" --host http://192.168.0.101:11434
     ```
 
+
+- **Testing new models:**
+
+  ```python
+  # edit /src/ollama_think/config.yaml
+  # check the output from non-streaming and streaming
+  uv run ./tests/test_hacks.py --host http://localhost:11434 --model "model_name"
+
+  # check that this makes a difference
+  uv run pytest ./tests/test_model_capabilities.py --host http://localhost:11434 -m "slow" --model "model_name"
+
+  # re-generate doc
+  uv run tests/generate_model_capabilities_report.py
+
+  # submit a PR
+  ```
+ 
 ## License
 
 This project is licensed under the MIT License.

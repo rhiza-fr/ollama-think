@@ -15,7 +15,7 @@ def pytest_generate_tests(metafunc):
         if selected_model:
             models = [selected_model]
         else:
-         models = [m["model"] for m in client.list()["models"]]
+            models = [m["model"] for m in client.list()["models"]]
 
         # refine to models that have hacks
         test_cases = []
@@ -61,3 +61,48 @@ def test_models(client, test_case):
     assert len(thinking) > 0
     assert len(content) > 0
     print("-" * 50)
+
+if __name__ == "__main__":
+    import argparse
+    import sys
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--host", default="http://localhost:11434", help="Ollama host")
+    parser.add_argument("--model", help="Run a single model")
+    args = parser.parse_args()
+
+    class MockConfig:
+        def __init__(self, host, model):
+            self.host = host
+            self.model = model
+        def getoption(self, name):
+            if name == "--host":
+                return self.host
+            if name == "--model":
+                return self.model
+            return None
+
+    class MockMetafunc:
+        def __init__(self, config):
+            self.fixturenames = ["test_case"]
+            self.config = config
+            self.test_cases = []
+        def parametrize(self, name, test_cases):
+            self.test_cases = test_cases
+
+    mock_config = MockConfig(args.host, args.model)
+    mock_metafunc = MockMetafunc(mock_config)
+
+    pytest_generate_tests(mock_metafunc)
+
+    client = Client(host=args.host)
+
+    if not mock_metafunc.test_cases:
+        print("No models with hacks found to test.")
+        sys.exit(0)
+
+    for test_case in mock_metafunc.test_cases:
+        try:
+            test_models(client, test_case)
+        except Exception as e:
+            print(f"Error testing model {test_case['model']}: {e}")
