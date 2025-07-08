@@ -9,5 +9,5 @@
     "Replaces ollama-python",
     "Use think=True for thinking support",
     "ollama_think.call is a non-streaming replacment for ollama.generate and ollama.chat",
-    "ollama_think.stream is a streming replacment for ollama.chat"],
+    "ollama_think.stream is a streming replacment for ollama.chat"]
 }
