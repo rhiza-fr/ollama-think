@@ -3,4 +3,4 @@
 **/__pycache__/
 .coverage
 dist/
-test_output/htmlcov 
+test_output/htmlcov/

@@ -1,0 +1,36 @@
+{
+    "phi4-reasoning:plus": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Does not support thinking"
+        ],
+        "can_tool_call": [
+            false,
+            "Does not support tools"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            false,
+            "Thinking outputed to content when think=False '<think>User asks \"what is 2+3?\" It's a basic arithmetic addition problem. We can answer that the sum is 5.\n\nWe need to double-check if any instructions or formatting are required. But the user says, \"what is 2+3?\" The assistant should respond with \"the result is 5.\" The assistant should produce an answer that is correct and not cause any problems. \n\nI'll check potential pitfalls: There's no trick in this problem.\n\nHowever, let me consider if there might be any additional instructions hidden behind the query? Possibly there's a possibility to provide some context or extra explanation such as \"2+3=5\" because maybe it is an arithmetic addition question. But I'd simply answer \"2+3 equals 5.\" Should I mention \"The answer to 2+3 is 5\"? Alternatively, I could also use text formatting: plain text.\n\nI'll produce a simple answer: The result of the operation is 5. Or maybe we can mention something like \"If you have any other questions feel free to ask!\" But it's likely not needed.\n\nI should check if instructions say that the assistant should provide a safe response. There's no disallowed content. I'll simply produce \"The answer is 5.\" That will suffice.\n\nI'll produce: \"2 + 3 = 5.\"\n\nI can include some additional notes if necessary, but the question is straightforward.\n\nI'll now produce a final output message which states something like:\n\n\"I have computed that 2+3 equals 5. Let me know if you need anything else.\" But likely I should not produce extraneous text if not needed.\n\nI'll produce final answer: \"The result of 2 + 3 is 5.\"\n\nI'll check potential formatting instructions: The default style instructions are to output plain text with no markdown unless requested, so I will produce a simple message. However, instructions said that by default do not reply with Markdown formatting. So I'll produce plain text answer.\n\nI'll now produce final answer in plain text as \"5.\" I'll also include an explanation if needed: \"2 + 3 = 5\" because addition is commutative and the sum is straightforward.\n\nI'll produce a final message: \"The result of 2+3 is 5.\"\n\nI'll produce output with minimal formatting, perhaps simply \"5\", then maybe a sentence like \"Thus, 2+3 equals 5.\" I'll produce that as text. Possibly I need to include a step-by-step explanation if needed.\n\nBut the query is simple arithmetic addition: \"what is 2 + 3?\" So I'll produce answer: \"The sum of 2 and 3 is 5.\"\n\nI'll now produce final answer in plain text: \"The answer is 5.\" We can then say that's correct.\n\nI'll now produce output message.</think>The answer is 5.'"
+        ]
+    }
+}

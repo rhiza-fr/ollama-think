@@ -1,0 +1,36 @@
+{
+    "deepseek-r1:1.5b": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Expecting property name enclosed in double quotes: line 3 column 1 (char 3) '{\n\n{\n\n\"The sum of two and three is five. So, 2 plus 3 equals 5. This can be expressed as: 2 + 3 = 5.\":{}\n\n}'"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "1 validation error for ResponseObj\n  Invalid JSON: key must be a string at line 3 column 1 [type=json_invalid, input_value='{\\n\\n{\\n\\n\"addition_resu...t    \\t    \\t\\t\\t\\t\\t\\t', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.11/v/json_invalid '{\n\n{\n\n\"addition_result\":24}\n\n    \t    \t    \t\t\t\t\t\t'"
+        ],
+        "can_think": [
+            true,
+            ""
+        ],
+        "can_tool_call": [
+            false,
+            "Does not support tools"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Does not support tools"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    }
+}

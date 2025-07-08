@@ -1,0 +1,36 @@
+{
+    "deepcoder:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Does not support thinking"
+        ],
+        "can_tool_call": [
+            false,
+            "Does not support tools"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            false,
+            "Thinking outputed to content when think=False '<think>\nI need to calculate the sum of 2 and 3.\n\nFirst, I identify the numbers involved in the addition: 2 and 3.\n\nNext, I add these two numbers together to find the total.\n</think>\n\n**Solution:**\n\nWe are asked to find the sum of two numbers: 2 and 3.\n\n\\[\n2 + 3\n\\]\n\nTo calculate this:\n\n1. **Add the numbers:**\n   \n   \\[\n   2 + 3 = 5\n   \\]\n\n2. **Final Answer:**\n   \n   \\[\n   \\boxed{5}\n   \\]'"
+        ]
+    }
+}

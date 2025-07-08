@@ -1,0 +1,36 @@
+{
+    "phi4:latest": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Does not support thinking"
+        ],
+        "can_tool_call": [
+            false,
+            "Does not support tools"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    }
+}

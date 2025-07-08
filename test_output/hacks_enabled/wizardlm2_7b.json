@@ -1,0 +1,36 @@
+{
+    "wizardlm2:7b": {
+        "can_json": [
+            false,
+            "Unterminated string starting at: line 1 column 23 (char 22) '{\":) 2 + 3 equals 5.\":\"} That's the correct answer to the simple arithmetic addition question! If you needed it in a different format or for a specific purpose, let me know how I can assist you further. (The emoticons are optional for expressing happiness about the answer! :D) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )'"
+        ],
+        "can_json_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "can_think": [
+            false,
+            "Does not support thinking"
+        ],
+        "can_tool_call": [
+            false,
+            "Does not support tools"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Thinking not supported"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    }
+}
