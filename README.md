@@ -275,17 +275,17 @@ client.call(model='llama3.2', messages=[message])
 
 ## Credit to
 
-- ollama [https://ollama.com/]([https://ollama.com/)
-- ollama-python [https://github.com/ollama/ollama-python]([https://github.com/ollama/ollama-python)
-- diskcache [https://github.com/grantjenks/python-diskcache/]([https://github.com/grantjenks/python-diskcache/)
-- pydantic [https://pydantic-docs.helpmanual.io/]([https://pydantic-docs.helpmanual.io/)
+- ollama [https://ollama.com/](https://ollama.com/)
+- ollama-python [https://github.com/ollama/ollama-python](https://github.com/ollama/ollama-python)
+- diskcache [https://github.com/grantjenks/python-diskcache/](https://github.com/grantjenks/python-diskcache/)
+- pydantic [https://pydantic-docs.helpmanual.io/](https://pydantic-docs.helpmanual.io/)
 
 ## Reference docs
 
 - Ollama Thinking - [https://ollama.com/blog/thinking](https://ollama.com/blog/thinking)
-- Ollama Tool support - [https://ollama.com/blog/tool-support]([https://ollama.com/blog/tool-support)
-- Ollama Structured Outputs - [https://ollama.com/blog/structured-outputs]([https://ollama.com/blog/structured-outputs)
-- Ollama Options - [https://github.com/ollama/ollama-python/blob/main/ollama/_types.py]([https://github.com/ollama/ollama-python/blob/main/ollama/_types.py)
+- Ollama Tool support - [https://ollama.com/blog/tool-support](https://ollama.com/blog/tool-support)
+- Ollama Structured Outputs - [https://ollama.com/blog/structured-outputs](https://ollama.com/blog/structured-outputs)
+- Ollama Options - [https://github.com/ollama/ollama-python/blob/main/ollama/_types.py](https://github.com/ollama/ollama-python/blob/main/ollama/_types.py)
 
 ## Contributing
 
