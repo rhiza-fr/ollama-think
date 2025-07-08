@@ -22,7 +22,7 @@ Below are the specific configurations used to enable thinking for each model.
 
 ### `deepseek-r1`
 
-- **Blog**: [DeepSeek-R1 Release](https://api-docs.deepseek.com/news/news250120)]
+- **Blog**: [DeepSeek-R1 Release](https://api-docs.deepseek.com/news/news250120)
 - Recent versions of these models require no hacks. Please update the models with `ollama pull`
 
 

@@ -1,10 +1,11 @@
 # Ollama-Think Library
 
-This project provides a Python client for the Ollama API, extending the official `ollama-python` library with the addition of caching, a generous dose of syntax sugar and increased `think` model compatibility.
+A thin wrapper around the [ollama-python](https://github.com/ollama/ollama-python) library with the addition of caching, increased `think` model compatibility and a little syntax sugar.
+
 
 ## Features
 
-- **Caching**: Automatically caches responses to speed up repeated requests.
+- **Caching**: Automatically caches responses to significantly speed up repeated requests.
 - **Thinking**: Enables some officially unsupported models to use thinking mode. [Why hack?](why_hack.md)
 - **Streaming and Non-streaming**: Separates the underlying streaming and non-streaming interface to provide clean type hints.
 - **Syntax Sugar**: Less boiler-plate, so that you can maintain your flow.
@@ -324,11 +325,11 @@ This project uses `uv` for package management and `hatch` for task running.
     ```
   - To run the full test suite, including `slow` integration tests that require a running Ollama instance:
     ```bash
-    uv run hatch test -m "slow or not slow"
+    uv run hatch test:run -m "slow or not slow"
     ```
   - To pass a custom host to the integration tests:
     ```bash
-    uv run hatch test -m "slow" --host http://192.168.0.101:11434
+    uv run hatch test:run -m "slow or not slow" --host http://localhost:11434
     ```
 
 
