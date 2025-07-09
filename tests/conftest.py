@@ -1,6 +1,6 @@
 import pytest
 
-from ollama_think.client import Client
+from ollama_think import Client
 
 
 def pytest_addoption(parser):
@@ -10,7 +10,9 @@ def pytest_addoption(parser):
         default="http://localhost:11434",
         help="Ollama host to run tests against",
     )
-    parser.addoption("--model", action="store", default=None, help="run tests only on the specified model")
+    parser.addoption(
+        "--model", action="store", default=None, help="run tests only on the specified model"
+    )
 
 
 @pytest.fixture(scope="session")

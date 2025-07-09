@@ -10,81 +10,84 @@ A thin wrapper around the [ollama-python](https://github.com/ollama/ollama-pytho
 - **Streaming and Non-streaming**: Separates the underlying streaming and non-streaming interface to provide clean type hints.
 - **Syntax Sugar**: Less boiler-plate, so that you can maintain your flow.
 
-## Install
+## Quickstart
+
+Get up and running in less than a minute.
+
+**1. Install the library:**
 
 ```bash
 pip install ollama-think
-# or
-poetry add ollama-think
-# or
-uv add ollama-think
 ```
 
-## Usage
-
-### Initialization
-
-You can initialize the client with default settings, which will look for the `OLLAMA_HOST` environment variable or default to `http://localhost:11434`.
+**2. Use:**
 
 ```python
-from ollama_think.client import Client
+from ollama_think import Client
 
-# Initialize with default settings
-client = Client()
-```
+# Initialize the client
+client = Client(host="http://localhost:11434", cache_dir=".ollama_cache", clear_cache=False)
 
-You can provide explicit settings for the host, cache directory, and whether to clear the cache on startup.
-
-```python
-# Initialize with custom settings
-client = Client(
-    host="http://localhost:11434",
-    cache_dir=".ollama_cache",
-    clear_cache=False
+# unpack the response into thinking and content
+thinking, content = client.call(
+    model="qwen3",                 # or any other model
+    prompt="Why is the sky blue?", # shortcut for messages=[{'role': 'user', 'content': 'Why is the sky blue?'}]
+    think=True                     # Set to True to see the model's thinking process
 )
+
+print(f"Thinking: {thinking}, Content: {content}")
 ```
 
-### Making Calls
+## Detailed Usage
+
+
+### Non-streaming
 
 The `call` method provides strongly typed access to the underlying `Chat` method in non-streaming mode. It returns a `ThinkResponse` object which is a subclass of `ollama.ChatResponse` and adds some convenience properties. You can use `prompt` or `messages` as you prefer.
 
 ```python
+from ollama_think import Client
+client = Client()
+
 # Make a non-streaming call
-response = client.call(model="qwen3", prompt="Hello, world!")
+response: ThinkResponse = client.call(
+    model="qwen3",         # The model to use
+    prompt="Hello, world!" # A single user message
+    messages = None,       # or a list of messages
+    tools = None,          # A list of tools available
+    think = True,          # Enable thinking mode
+    format = None,         # The format to return a response in: None | 'json' | your_obj.model_json_schema()
+    options = None,        # Additional model parameter dict, such as {'temperature': 0.1, 'num_ctx': 8192}
+    keep_alive = None,     # Controls how long the model will stay loaded in memory following the request.
+    use_cache = True)      # If True, attempts to retrieve the response from cache.
 
 # The response object contains all the original data from the Ollama ChatResponse
 print(response)
-ThinkResponse(
-    model='qwen3',
-    created_at='2025-07-03T14:16:05.8452406Z',
-    done=True,
-    done_reason='stop',
-    total_duration=2461619200,
-    load_duration=2111438400,
-    prompt_eval_count=20,
-    prompt_eval_duration=78409600,
-    eval_count=16,
-    eval_duration=271104600,
-    message=Message(role='assistant', content='Hello, world! 🌍✨ How can I assist you today?', thinking=None, images=None, tool_calls=None)
-)
+# ThinkResponse(
+#     model='qwen3',
+#     created_at='2025-07-03T14:16:05.8452406Z',
+#     done=True,
+#     done_reason='stop',
+#     total_duration=2461619200,
+#     load_duration=2111438400,
+#     prompt_eval_count=20,
+#     prompt_eval_duration=78409600,
+#     eval_count=16,
+#     eval_duration=271104600,
+#     message=Message(role='assistant', content='Hello, world! How can I assist you today?', thinking='...',
+#                     images=None, tool_calls=None))
 
-# As normal, we can access the thinking and the content via the unaltered ChatResponse.message
-print(response.message.thinking) # this is empty because we used the default think=False
-# None
-print(response.message.content)
-# 'Hello, world! 🌍✨ How can I assist you toda
-
-# For convenience, you can access the content directly
+# For convenience, you can access the content and thinking as properties
 print(response.thinking)
-# '' - an empty string
+# '...'
 print(response.content)
 # 'Hello, world! ...'
 
 # The response object can be used as a string which will show just the 'content'
-print(f"The model said: {response}")
+print(f"The model said: {response}")  # same as response.content
 # The model said: Hello, world! ...
 
-# For further convenience, you can unpack the response into thinking and content
+# or unpack the response into thinking and content for single line access
 thinking, content = response
 print(f"Thinking: {thinking}, Content: {content}")
 ```
@@ -94,36 +97,23 @@ print(f"Thinking: {thinking}, Content: {content}")
 The `stream` method provides a strongly typed access to the underlying `Chat` method in streaming mode. It returns a an iterator of `ThinkResponse` chunks
 
 ```python
-stream = client.stream(model="qwen3", prompt="Tell me a short story about italian chimpanzees and bananas")
-for chunk in stream:
-    print(chunk.thinking, end="") # empty, since think=False. Your choice.
-    print(chunk.content, end="")
+from ollama_think import Client
+client = Client()
+
+stream = client.stream(model="qwen3", prompt="Tell me a short story about italian chimpanzees and bananas", think=True)
+for thinking, content in stream:
+    print(thinking, end="")
+    print(content, end="")  # empty until thinking is finished for most models
 ```
 
 ### Thinking Mode
 
-The `think` parameter tells ollama to enable thinking for models that support this. For other models that use non-standard ways of enabling thinking we do the neccesary. [Why hack?](why_hack.md)
-
-See the default configuration: [src/ollama_think/config.yaml](src/ollama_think/config.yaml) and the summary of the test results: [model_capabilities.md](model_capabilities.md)
+The `think` parameter tells ollama to enable thinking for models that support this. For other models that use non-standard ways of enabling thinking we do the neccesary. [Why hack?](why_hack.md) Default config: [src/ollama_think/config.yaml](src/ollama_think/config.yaml) Results: [model_capabilities.md](model_capabilities.md)
 
 Some models will think, even without 'enabling' thinking. This output is separated out of the `content` into `thinking`
 
 Note: Not all models officially or unofficially support thinking. They will throw a `400` error if you try to enable thinking.
 
-```python
-# Non-streaming call with think=True
-thinking, content = client.call(model="qwen3", prompt="Why is the sky red at night??", think=True)
-print("--- Thinking ---")
-print(thinking)
-print("\n--- Content ---")
-print(content)
-
-# Streaming call with think=True
-stream = client.stream(model="qwen3", prompt="What is bigger an egg or a mouse?", think=True)
-for thinking_chunk, content_chunk in stream:
-    print(thinking_chunk, end="")
-    print(content_chunk, end="") # empty until thinking is finished for most models
-```
 
 ### Caching
 
@@ -156,7 +146,9 @@ responds. The most commonly used parameters are
 than `num_ctx` tokens, ollama will silently truncate your message, which can lead to lost instructions.
 
 ```python
-client = Client(host="http://localhost:11434")
+from ollama_think import Client
+client = Client()
+
 prompt="Describe the earth to an alien who has just arrived."
 options={'num_ctx': 8192, 'temperature': 0.9}
 
@@ -164,8 +156,7 @@ print("Using prompt:", prompt)
 print("Using options:", options)
 
 thinking, content = client.call(model="qwen3", prompt=prompt, think=True, options=options)
-print("Thinking:", thinking)
-print("Content:", content)
+print(f"Thinking: {thinking}, Content: {content}")
 ```
 
 See [examples/options_example.py](examples/options_example.py) for a full list of options
@@ -183,7 +174,10 @@ See [examples/tool_calling_example.py](examples/tool_calling_example.py)
 Forcing JSON format can encourage some models to behave. It is usualy a good idea to mention JSON in the prompt.
 
 ```python
+from ollama_think import Client
 import json
+
+client = Client()
 
 text_json = client.call(
     model="qwen3",
@@ -191,13 +185,15 @@ text_json = client.call(
     format="json",
 ).content
 
-my_object = json.loads(text_json) # might explode if invalid json was returned
+my_object = json.loads(text_json)  # might explode if invalid json was returned
 ```
 
 You can use pydantic models to describe more exactly the format you want.
 
 ```python
+from ollama_think import Client
 from pydantic import BaseModel, Field
+client = Client()
 
 class Heat(BaseModel):
     """A specially crafted response object to capture an iterpretation of heat"""
@@ -214,10 +210,10 @@ See [examples/response_format_example.py](examples/response_format_example.py)
 
 ### Access to the underlying ollama client
 
-Since the `ollama_think.client` is a thin wrapper around the `ollama.client`, you can still access the all the underlying ollama client methods.
+Since the `ollama_think` is a thin wrapper around the `ollama.client`, you can still access the all the underlying ollama client methods.
 
 ```python
-from ollama_think.client import Client
+from ollama_think import Client
 from ollama import ChatResponse
 
 client = Client()
@@ -233,45 +229,15 @@ print(response['message']['content'])
 ### Prompts and Messages
 
 ```python
+from ollama_think import Client
+
+client = Client()
 # the prompt parameter in `call` and `stream` is just a shortcut for
 prompt = 'Why is the sky blue?'
 message =  {'role': 'user', 'content': prompt}
-client.call(model='llama3.2', messages=[message])
+client.call(model='llama3.2', messages=[message])  # shortcut
+client.call(model='llama3.2', prompt=prompt)       # same thing
 ```
-
-## API Reference
-
-### `Client`
-
-- `__init__(self, host: str | None = None, cache_dir=".ollama_cache", clear_cache: bool = False)`
-
-- `call(self, model: str = "", prompt: str | None = None, messages: Sequence[Mapping[str, Any] | Message] | None = None, tools: Sequence[Tool] | None = None, think: bool = False, format: JsonSchemaValue | Literal["", "json"] | None = None, options: Mapping[str, Any] | Options | None = None, keep_alive: float | str | None = None, use_cache: bool = True) -> ThinkResponse`
-
-- `stream(self, model: str = "", prompt: str | None = None, messages: Sequence[Mapping[str, Any] | Message] | None = None, tools: Sequence[Tool] | None = None, think: bool = True, format: JsonSchemaValue | Literal["", "json"] | None = None, options: Mapping[str, Any] | Options | None = None, keep_alive: float | str | None = None, use_cache: bool = True) -> Iterator[ThinkResponse]`
-
-### `ThinkResponse`
-
-- `thinking` : str - The thinking content from the message.
-- `content` : str - The content from the message.
-
-#### Inherited fields
-
-- `model`: str Model used to generate response.
-- `created_at`: str - Time when the request was created.
-- `done`: bool - True if response is complete, otherwise False. Useful for streaming to detect the final response.
-- `done_reason`: str - Reason for completion. Only present when done is True.
-- `total_duration`: int - Total duration in nanoseconds.
-- `load_duration`: int - Load duration in nanoseconds.
-- `prompt_eval_count`: int - Number of tokens evaluated in the prompt.
-- `prompt_eval_duration`: int - Duration of evaluating the prompt in nanoseconds.
-- `eval_count`: int - Number of tokens evaluated in inference.
-- `eval_duration`: int - Duration of evaluating inference in nanoseconds.
-- `message`
-  - `role`: str - Assumed role of the message. Response messages has role 'assistant' or 'tool'.
-  - `content`: str - Content of the message. Response messages contains message fragments when streaming.
-  - `thinking`: str - Thinking content. Only present when thinking is enabled.'
-  - `images`: Sequence[Image] - List of image data for multimodal models.
-  - `tool_calls`: Sequence[ToolCall]  -Tools calls to be made by the model.
 
 ## Credit to
 

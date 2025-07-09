@@ -53,3 +53,4 @@ A `❗` indicates invalid JSON, on one test without specific encouragement.
 | `smallthinker:latest` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |
 | `starcoder2:7b` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |
 | `wizardlm2:7b` | [❌](## "Unterminated string starting at: line 1 column 23 ") | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |
+| `deepseek-r1:14` | [❌](## "model &quot;deepseek-r1:14&quot; not found, try pulling it f") | [❌](## "model &quot;deepseek-r1:14&quot; not found, try pulling it f") | [❌](## "model &quot;deepseek-r1:14&quot; not found, try pulling it f") | [❌](## "model &quot;deepseek-r1:14&quot; not found, try pulling it f") | ✅ |

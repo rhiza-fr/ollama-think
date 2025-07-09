@@ -5,7 +5,7 @@ import pytest
 # Corrected import: httpx uses ConnectError for connection issues
 from ollama import ChatResponse, Message
 
-from ollama_think.client import Client
+from ollama_think import Client
 
 
 @pytest.fixture

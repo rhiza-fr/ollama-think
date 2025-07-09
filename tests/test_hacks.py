@@ -1,7 +1,7 @@
 import pytest
 from rich import print
 
-from ollama_think.client import Client
+from ollama_think import Client
 
 
 def pytest_generate_tests(metafunc):
@@ -62,6 +62,7 @@ def test_models(client, test_case):
     assert len(content) > 0
     print("-" * 50)
 
+
 if __name__ == "__main__":
     import argparse
     import sys
@@ -75,6 +76,7 @@ if __name__ == "__main__":
         def __init__(self, host, model):
             self.host = host
             self.model = model
+
         def getoption(self, name):
             if name == "--host":
                 return self.host
@@ -87,6 +89,7 @@ if __name__ == "__main__":
             self.fixturenames = ["test_case"]
             self.config = config
             self.test_cases = []
+
         def parametrize(self, name, test_cases):
             self.test_cases = test_cases
 

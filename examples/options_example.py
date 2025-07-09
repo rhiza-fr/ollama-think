@@ -1,6 +1,6 @@
 from rich import print
 
-from ollama_think.client import Client
+from ollama_think import Client
 
 
 def main():

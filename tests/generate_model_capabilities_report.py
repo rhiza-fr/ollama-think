@@ -1,4 +1,3 @@
-
 import html
 import json
 from pathlib import Path
@@ -67,7 +66,7 @@ def generate_markdown_report(
         "This report compares model capabilities with and without `ollama-think`'s compatibility hacks.",
         "A `❌` &rarr; `✅` indicates that the hack fixed a previously failing capability.",
         "A `❗` indicates invalid JSON, on one test without specific encouragement.",
-        ""
+        "",
     ]
 
     header = "| Model | " + " | ".join(header_map[c] for c in capabilities) + " |"
@@ -83,7 +82,7 @@ def generate_markdown_report(
         if ok:
             return "✅"
         if "Invalid JSON" in res[1] or "Expecting" in res[1]:
-            return '''[❗](## "Invalid JSON")'''
+            return """[❗](## "Invalid JSON")"""
         return f'''[❌](## "{desc}")'''
 
     def format_cell(no_hacks_res, hacks_res):

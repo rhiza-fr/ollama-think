@@ -5,7 +5,7 @@ import pytest
 from pydantic import BaseModel, Field
 from rich import print
 
-from ollama_think.client import Client
+from ollama_think import Client
 
 prompt = "what is 2 + 3?"
 
@@ -137,7 +137,10 @@ def pytest_generate_tests(metafunc):
             for hacks_enabled in [True, False]:
                 test_specs.append({"model_name": model_name, "hacks_enabled": hacks_enabled})
 
-        ids = [f"{spec['model_name']}-hacks_{'on' if spec['hacks_enabled'] else 'off'}" for spec in test_specs]
+        ids = [
+            f"{spec['model_name']}-hacks_{'on' if spec['hacks_enabled'] else 'off'}"
+            for spec in test_specs
+        ]
         metafunc.parametrize("test_spec", test_specs, ids=ids)
 
 
@@ -186,5 +189,6 @@ def test_model_capabilities(client: Client, test_spec: dict):
     sanitized_model_name = model_name.replace(":", "_").replace("/", "_")
 
     outpath = output_dir / f"{sanitized_model_name}.json"
-    outpath.write_text(json.dumps({model_name: results}, indent=4, sort_keys=True), encoding="utf-8")
-
+    outpath.write_text(
+        json.dumps({model_name: results}, indent=4, sort_keys=True), encoding="utf-8"
+    )

@@ -3,7 +3,7 @@ import json
 from pydantic import BaseModel, Field
 from rich import print  # makes it much more obvious
 
-from ollama_think.client import Client
+from ollama_think import Client
 
 
 # Used by format=MyResponseObject.model_json_schema()

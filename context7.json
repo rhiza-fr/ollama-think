@@ -3,11 +3,11 @@
   "projectTitle": "ollama-think",
   "description": "A thin wrapper around ollama-python that introduces caching and increases think=True compatibility",
   "folders": [],
-  "excludeFolders": ["src", "tests", "test_output"],
-  "excludeFiles": ["model_capabilities.md"],
+  "excludeFolders": ["src", "tests", "test_output", "examples"],
+  "excludeFiles": ["model_capabilities.md", "why_hack.md"],
   "rules": [
     "Replaces ollama-python",
     "Use think=True for thinking support",
-    "ollama_think.call is a non-streaming replacment for ollama.generate and ollama.chat",
-    "ollama_think.stream is a streming replacment for ollama.chat"]
+    "Use ollama_think.Client.call for a non-streaming replacment of ollama.Client.generate and ollama.Client.chat(..., stream=False)",
+    "Use ollama_think.Client.stream for a streaming replacment for ollama.Client.chat(..., stream=True)"]
 }
