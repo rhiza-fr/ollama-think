@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [0.1.5] - 2025-07-14
+
+### Changed
+- Widened version ranges for `diskcache` and `pyyaml` dependencies.
+
+### Removed
+- Removed the `ollama-think` command-line interface and the `typer` dependency.
+
 # [0.1.4] - 2025-07-09
 
 - Reworked README.md and context7.json to make it easier for LLMs

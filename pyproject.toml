@@ -1,6 +1,6 @@
 [project]
 name = "ollama-think"
-version = "0.1.4"
+version = "0.1.5"
 description = "A light wrapper around ollama-python that introduces caching, syntax sugar and increased `think` compatibility"
 readme = "README.md"
 authors = [
@@ -9,10 +9,9 @@ authors = [
 keywords = ["ollama", "LLM", "think", "AI", "compatibility", "cogito", "granite", "phi4-reasoning", "phi4-mini-reasoning"]
 requires-python = ">=3.9"
 dependencies = [
-    "diskcache>=5.6.3",
+    "diskcache>=5.6",
     "ollama>=0.5.1",
-    "pyyaml>=6.0.2",
-    "typer>=0.16.0",
+    "pyyaml>=6.0",
 ]
 classifiers = [
     "Development Status :: 4 - Beta",

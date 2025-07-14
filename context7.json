@@ -4,7 +4,7 @@
   "description": "A thin wrapper around ollama-python that introduces caching and increases think=True compatibility",
   "folders": [],
   "excludeFolders": ["src", "tests", "test_output", "examples"],
-  "excludeFiles": ["model_capabilities.md", "why_hack.md"],
+  "excludeFiles": ["model_capabilities.md", "why_hack.md", "config.yaml"],
   "rules": [
     "Replaces ollama-python",
     "Use think=True for thinking support",
