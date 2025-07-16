@@ -1,4 +1,7 @@
-from rich import print
+try:
+    from rich import print  # type: ignore
+except ImportError:
+    from builtins import print
 
 from ollama_think import Client
 

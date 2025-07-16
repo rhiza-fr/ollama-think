@@ -1,4 +1,7 @@
-from rich import print
+try:
+    from rich import print  # type: ignore
+except ImportError:
+    from builtins import print
 
 from ollama_think import Client
 
@@ -31,7 +34,7 @@ def main():
     print("Calling model with tools...")
     response = client.call(model="qwen3", messages=messages, tools=[add_two_ints])
     print("\nRAW first response:")
-    print(response)
+    print(response.to_dict())
 
     # if there are tool_calls we would normally have hidden the first result
     # we will call all the tools, add these as message and send back to the model
@@ -47,7 +50,7 @@ def main():
         if len(messages) > 1:
             second_response = client.call(model="qwen3", messages=messages)
             print("\nRAW second response:")
-            print(second_response)
+            print(second_response.to_dict())
 
 
 if __name__ == "__main__":

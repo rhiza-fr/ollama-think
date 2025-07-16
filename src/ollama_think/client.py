@@ -9,10 +9,11 @@ This module provides a `Client` class that adds several key features:
 """
 
 import hashlib
-from collections.abc import Callable, Iterator, Mapping, Sequence
+from collections.abc import AsyncIterator, Callable, Iterator, Mapping, Sequence
 from typing import Any, Literal, cast
 
 from diskcache import Cache
+from ollama import AsyncClient as OllamaAsyncClient
 from ollama import ChatResponse
 from ollama import Client as OllamaClient
 from ollama._client import _copy_tools
@@ -333,6 +334,141 @@ class Client(OllamaClient):
             A `GenerateResponse` object from the underlying API call.
         """
         return super().generate(model=model, keep_alive=0.0)
+
+    def load_config(self, path: str) -> None:
+        self.config.load_config(path)
+
+
+class AsyncClient(OllamaAsyncClient):
+    def __init__(
+        self,
+        host: str | None = None,
+        cache_dir: str = ".ollama_cache",
+        clear_cache: bool = False,
+    ) -> None:
+        self.cache = Cache(directory=cache_dir)
+        if clear_cache:
+            self.cache.clear()
+        self.config = Config()
+        self.host = host
+        super().__init__(host=host)
+
+    async def close(self):
+        self.cache.close()
+
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
+        await self.close()
+
+    def __del__(self) -> None:
+        try:
+            self.cache.close()
+        except Exception:
+            pass
+
+    def _make_cache_key(self, request: ChatRequest) -> str:
+        str_key = request.model_dump_json() + f"{self.host or 'default'}"
+        return hashlib.md5(str_key.encode()).hexdigest()
+
+    async def call(
+        self,
+        model: str = "",
+        prompt: str | None = None,
+        messages: Sequence[Mapping[str, Any] | Message] | None = None,
+        tools: Sequence[Mapping[str, Any] | Tool | Callable] | None = None,
+        think: bool = False,
+        format: JsonSchemaValue | Literal["", "json"] | None = None,
+        options: Mapping[str, Any] | Options | None = None,
+        keep_alive: float | str | None = None,
+        use_cache: bool = True,
+    ) -> ThinkResponse:
+        if messages is None:
+            if prompt is not None:
+                messages = [Message(role="user", content=prompt)]
+        request = ChatRequest(
+            model=model,
+            stream=False,
+            options=options,
+            format=format,
+            keep_alive=keep_alive,
+            messages=messages,
+            tools=list(_copy_tools(tools)),
+            think=think,
+        )
+        model_hacks = self.config.get_hacks_if_enabled(model)
+        if model_hacks:
+            request = hack_request(request, hacks=model_hacks)
+        hash_key = self._make_cache_key(request)
+        response = None
+        if use_cache:
+            response = self.cache.get(hash_key, None)
+        if response:
+            response = cast(ChatResponse, response)
+        else:
+            response = await super().chat(**request.__dict__)
+            if use_cache:
+                self.cache.set(hash_key, response, tag=model)
+        tr = ThinkResponse(response)
+        if model_hacks:
+            tr = hack_response(tr, hacks=model_hacks)
+        return tr
+
+    async def stream(
+        self,
+        model: str = "",
+        prompt: str | None = None,
+        messages: Sequence[Mapping[str, Any] | Message] | None = None,
+        tools: Sequence[Mapping[str, Any] | Tool | Callable] | None = None,
+        think: bool = True,
+        format: JsonSchemaValue | Literal["", "json"] | None = None,
+        options: Mapping[str, Any] | Options | None = None,
+        keep_alive: float | str | None = None,
+        use_cache: bool = True,
+    ) -> AsyncIterator[ThinkResponse]:
+        if messages is None:
+            if prompt is not None:
+                messages = [Message(role="user", content=prompt)]
+        request = ChatRequest(
+            model=model,
+            stream=True,
+            options=options,
+            format=format,
+            keep_alive=keep_alive,
+            messages=messages,
+            tools=list(_copy_tools(tools)),
+            think=think,
+        )
+        model_hacks = self.config.get_hacks_if_enabled(model)
+        if model_hacks:
+            request = hack_request(request, hacks=model_hacks)
+        hash_key = self._make_cache_key(request)
+
+        response = None
+        if use_cache:
+            response = self.cache.get(hash_key, None)
+        if response:
+            response = cast(list[ThinkResponse], response)
+            for r in response:
+                yield r
+        else:
+            hack_parser = setup_stream_parser(model, hacks=model_hacks)
+            chunks: list[ThinkResponse] = []
+            response_iterator = await super().chat(**request.__dict__)
+            async for chunk in response_iterator:
+                tr = ThinkResponse(chunk)
+                if hack_parser:
+                    tr = hack_stream_chunk(tr, hack_parser)
+                    if not tr:
+                        continue
+                chunks.append(tr)
+                yield tr
+            if use_cache:
+                self.cache.set(hash_key, chunks, tag=model)
+
+    async def stop(self, model: str = "") -> GenerateResponse:
+        return await super().generate(model=model, keep_alive=0.0)
 
     def load_config(self, path: str) -> None:
         self.config.load_config(path)

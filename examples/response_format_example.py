@@ -1,7 +1,11 @@
 import json
 
 from pydantic import BaseModel, Field
-from rich import print  # makes it much more obvious
+
+try:
+    from rich import print  # type: ignore
+except ImportError:
+    from builtins import print
 
 from ollama_think import Client
 

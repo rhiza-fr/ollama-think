@@ -3,7 +3,11 @@ from pathlib import Path
 
 import pytest
 from pydantic import BaseModel, Field
-from rich import print
+
+try:
+    from rich import print
+except ImportError:
+    from builtins import print
 
 from ollama_think import Client
 

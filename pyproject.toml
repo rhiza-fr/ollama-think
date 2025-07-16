@@ -1,6 +1,6 @@
 [project]
 name = "ollama-think"
-version = "0.1.5"
+version = "0.1.6"
 description = "A light wrapper around ollama-python that introduces caching, syntax sugar and increased `think` compatibility"
 readme = "README.md"
 authors = [
@@ -27,8 +27,6 @@ classifiers = [
 Homepage = "https://github.com/rhiza-fr/ollama-think"
 "Bug Tracker" = "https://github.com/rhiza-fr/ollama-think/issues"
 
-[project.scripts]
-ollama-think = "ollama_think.playground.cli:entrypoint"
 
 [build-system]
 requires = ["hatchling"]
@@ -40,24 +38,19 @@ dev = [
     "pytest-cov>=6.2.0",
     "pytest-mock>=3.14.1",
     "ruff>=0.11.13",
-    "hatch",
+    "pytest-asyncio>=1.1.0",
 ]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 markers = [
-    "slow: marks tests as slow (select with '-m \"slow\"')"
+    "slow: marks tests as slow (select with '-m \"slow\"')",
+    "asyncio: marks tests as asyncio tests (select with '-m \"asyncio\"')"
 ]
 addopts = "-m 'not slow'"
 
-[tool.hatch.envs.test]
-dependencies = [
-  "pytest>=8.4.0",
-  "pytest-cov>=6.2.0",
-  "pytest-mock>=3.14.1"
-]
-[tool.hatch.envs.test.scripts]
-run = "pytest --cov=src/ollama_think --cov-report=html:test_output/htmlcov {args}"
-
 [tool.ruff]
 line-length = 100
+
+
+

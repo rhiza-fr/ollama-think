@@ -259,7 +259,7 @@ Contributions are welcome! Please open an issue or submit a pull request.
 
 ### Development Setup
 
-This project uses `uv` for package management and `hatch` for task running.
+This project uses `uv` for package management, but pip should work too.
 
 1.  **Clone the repository:**
     ```bash
@@ -285,17 +285,15 @@ This project uses `uv` for package management and `hatch` for task running.
 - **Running Tests:**
   - To run the default (fast) unit tests:
     ```bash
-    uv run hatch test
-    # or more simply
     uv run pytest
     ```
   - To run the full test suite, including `slow` integration tests that require a running Ollama instance:
     ```bash
-    uv run hatch test:run -m "slow or not slow"
+    uv run pytest -m "slow or not slow"
     ```
   - To pass a custom host to the integration tests:
     ```bash
-    uv run hatch test:run -m "slow or not slow" --host http://localhost:11434
+    uv run pytest -m "slow or not slow" --host http://localhost:11434
     ```
 
 
