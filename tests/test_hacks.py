@@ -39,18 +39,18 @@ def test_models(client, test_case):
     hack = test_case["hack"]
     prompt = "What is 12 + 12 / 3?"
 
-    print(f"{'=' * 20} Model: {model} {'=' * 20}")
+    print(f"{'=' * 20} Model: {model} think=True {'=' * 20}")
     print(hack)
 
     thinking, content = client.call(model=model, prompt=prompt, think=True)
-    print(f"--- Thinking ---\n[i]{thinking}[/i]")
+    print(f"--- Thinking ---\n{thinking}")
     print(f"\n--- Content ---\n{content}")
     print("-" * 50)
 
     assert len(thinking) > 0
     assert len(content) > 0
 
-    print(f"{'=' * 15} Model: {model} (STREAMING) {'=' * 15}")
+    print(f"{'=' * 15} Model: {model} think=True (STREAMING) {'=' * 15}")
     print(hack)
     stream = client.stream(model=model, prompt=prompt, think=True)
     thinking_chunks = []
@@ -60,8 +60,11 @@ def test_models(client, test_case):
         thinking_chunks.append(chunk.thinking)  # we don't need to see the streaming come in
         content_chunks.append(chunk.content)
         chunks.append(chunk)  # for debug
-    print(f"--- Thinking ---\n[i]{''.join(thinking_chunks)}[/i]")
-    print(f"\n--- Content ---\n{''.join(content_chunks)}")
+    thinking = ''.join(thinking_chunks)
+    content = ''.join(content_chunks)
+    print(f"--- Thinking ---\n{thinking}")
+    print(f"\n--- Content ---\n{content}")
+
     assert len(thinking) > 0
     assert len(content) > 0
     print("-" * 50)
