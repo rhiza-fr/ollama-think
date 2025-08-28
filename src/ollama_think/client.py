@@ -135,7 +135,7 @@ class Client(OllamaClient):
         prompt: str | None = None,
         messages: Sequence[Mapping[str, Any] | Message] | None = None,
         tools: Sequence[Mapping[str, Any] | Tool | Callable] | None = None,
-        think: bool = False,
+        think: bool | Literal['low', 'medium', 'high'] = False,
         format: JsonSchemaValue | Literal["", "json"] | None = None,
         options: Mapping[str, Any] | Options | None = None,
         keep_alive: float | str | None = None,
@@ -239,7 +239,7 @@ class Client(OllamaClient):
         prompt: str | None = None,
         messages: Sequence[Mapping[str, Any] | Message] | None = None,
         tools: Sequence[Mapping[str, Any] | Tool | Callable] | None = None,
-        think: bool = True,
+        think: bool | Literal['low', 'medium', 'high']  = True,
         format: JsonSchemaValue | Literal["", "json"] | None = None,
         options: Mapping[str, Any] | Options | None = None,
         keep_alive: float | str | None = None,
@@ -257,7 +257,7 @@ class Client(OllamaClient):
             prompt: A single user prompt. If provided, it will be converted to a `messages` list.
             messages: A list of messages in the chat.
             tools: A list of tools the model may call.
-            think: If True, enables thinking mode in the response.
+            think: If True, enables thinking mode in the response. (or 'high', 'medium', 'low' for gpt-oss)
             format: The format to return a response in. None | 'json' | your_obj.model_json_schema()
             options: Additional model parameter dict, such as {'temperature': 0.1, 'num_ctx': 8192}
             keep_alive: Controls how long the model will stay loaded in memory following the request.
@@ -378,7 +378,7 @@ class AsyncClient(OllamaAsyncClient):
         prompt: str | None = None,
         messages: Sequence[Mapping[str, Any] | Message] | None = None,
         tools: Sequence[Mapping[str, Any] | Tool | Callable] | None = None,
-        think: bool = False,
+        think: bool | Literal['low', 'medium', 'high']  = False,
         format: JsonSchemaValue | Literal["", "json"] | None = None,
         options: Mapping[str, Any] | Options | None = None,
         keep_alive: float | str | None = None,
@@ -421,7 +421,7 @@ class AsyncClient(OllamaAsyncClient):
         prompt: str | None = None,
         messages: Sequence[Mapping[str, Any] | Message] | None = None,
         tools: Sequence[Mapping[str, Any] | Tool | Callable] | None = None,
-        think: bool = True,
+        think: bool | Literal['low', 'medium', 'high']  = True,
         format: JsonSchemaValue | Literal["", "json"] | None = None,
         options: Mapping[str, Any] | Options | None = None,
         keep_alive: float | str | None = None,

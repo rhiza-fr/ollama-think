@@ -32,7 +32,7 @@ client = Client(host="http://localhost:11434", cache_dir=".ollama_cache", clear_
 thinking, content = client.call(
     model="qwen3",                 # or any other model
     prompt="Why is the sky blue?", # shortcut for messages=[{'role': 'user', 'content': 'Why is the sky blue?'}]
-    think=True                     # Set to True to see the model's thinking process
+    think=True                     # Set to True to see the model's thinking process or ('low', 'medium', 'high' for gpt-oss)
 )
 
 print(f"Thinking: {thinking}, Content: {content}")
@@ -110,7 +110,7 @@ for thinking, content in stream:
 
 The `think` parameter tells ollama to enable thinking for models that support this. For other models that use non-standard ways of enabling thinking we do the neccesary. [Why hack?](why_hack.md) Default config: [src/ollama_think/config.yaml](src/ollama_think/config.yaml) Results: [model_capabilities.md](model_capabilities.md)
 
-Some models will think, even without 'enabling' thinking. This output is separated out of the `content` into `thinking`
+Some models will think, even without 'enabling' thinking. This output is separated out of the `content` into `thinking`.
 
 Note: Not all models officially or unofficially support thinking. They will throw a `400` error if you try to enable thinking.
 
