@@ -50,3 +50,4 @@ models:
   - name: phi4-mini-reasoning
   - name: deepscaler
   - name: deepcoder
+  - name: qwen3:30b
