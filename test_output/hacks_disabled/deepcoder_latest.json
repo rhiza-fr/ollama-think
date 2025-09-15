@@ -30,7 +30,7 @@
         ],
         "content_no_thinking": [
             false,
-            "Thinking outputed to content when think=False '<think>\nI need to calculate the sum of 2 and 3.\n\nFirst, I identify the numbers involved in the addition: 2 and 3.\n\nNext, I add these two numbers together to find the total.\n</think>\n\n**Solution:**\n\nWe are asked to find the sum of two numbers: 2 and 3.\n\n\\[\n2 + 3\n\\]\n\nTo calculate this:\n\n1. **Add the numbers:**\n   \n   \\[\n   2 + 3 = 5\n   \\]\n\n2. **Final Answer:**\n   \n   \\[\n   \\boxed{5}\n   \\]'"
+            "Thinking outputed to content when think=False '<think>\nI need to calculate the sum of 2 and 3.\n\nFirst, I'll identify the numbers involved in the addition: 2 and 3.\n\nNext, I'll add these two numbers together.\n\nFinally, I'll determine that the total is 5.\n</think>\n\n**Solution:**\n\nTo find the sum of 2 and 3, follow these simple steps:\n\n1. **Identify the numbers to be added:**  \n   - First number: 2\n   - Second number: 3\n\n2. **Add the two numbers together:**  \n   \\[\n   2 + 3 = 5\n   \\]\n\n**Final Answer:**  \n\\boxed{5}'"
         ]
     }
 }

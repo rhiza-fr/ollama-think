@@ -5,16 +5,16 @@
             ""
         ],
         "can_json_think": [
-            false,
-            "Expecting property name enclosed in double quotes: line 1 column 2 (char 1) '{{\n\n}'"
+            true,
+            ""
         ],
         "can_pydantic": [
             true,
             ""
         ],
         "can_pydantic_think": [
-            false,
-            "1 validation error for ResponseObj\n  Invalid JSON: key must be a string at line 1 column 2 [type=json_invalid, input_value='{{ \"addition_result\": 5 ...\\t\\t\\t\\t\\t  \\t\\t\\t\\t   ', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.11/v/json_invalid '{{ \"addition_result\": 5 }\n\n   \t\t\t\t\t\t\t\t  \t\t\t\t   '"
+            true,
+            ""
         ],
         "can_think": [
             true,

@@ -5,16 +5,16 @@
             ""
         ],
         "can_json_think": [
-            false,
-            "Expecting property name enclosed in double quotes: line 2 column 1 (char 2) '{\n{\n  \"answer\": \"5\"\n}'"
+            true,
+            ""
         ],
         "can_pydantic": [
             true,
             ""
         ],
         "can_pydantic_think": [
-            false,
-            "1 validation error for ResponseObj\n  Invalid JSON: key must be a string at line 2 column 1 [type=json_invalid, input_value='{\\n{\\n\"addition_result\": 5\\n}\\n', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.11/v/json_invalid '{\n{\n\"addition_result\": 5\n}\n'"
+            true,
+            ""
         ],
         "can_think": [
             true,
@@ -22,7 +22,7 @@
         ],
         "can_tool_call": [
             false,
-            "Expected tool call, received 'The result of 2 + 3 is 5.'"
+            "Expected tool call, received 'The answer is 5.'"
         ],
         "can_tool_call_think": [
             true,

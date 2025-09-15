@@ -22,7 +22,7 @@
         ],
         "can_tool_call": [
             false,
-            "Expected tool call, received '```json\n{\n  \"name\": \"addTwoInts\",\n  \"arguments\": {\n    \"a\": 2,\n    \"b\": 3\n  }\n}\n```'"
+            "Expected tool call, received '{\"name\": \"addTwoInts\", \"arguments\": {\"a\": 2, \"b\": 3}}'"
         ],
         "can_tool_call_think": [
             false,

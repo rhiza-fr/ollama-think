@@ -1,5 +1,5 @@
 {
-    "qwen2.5-coder:1.5b": {
+    "allenporter/xlam:7b": {
         "can_json": [
             true,
             ""
@@ -22,7 +22,7 @@
         ],
         "can_tool_call": [
             false,
-            "Expected tool call, received '{\"name\": \"addTwoInts\", \"arguments\": {\"a\": 2, \"b\": 3}}'"
+            "Expected tool call, received '\n{\"tool_calls\": [{\"name\": \"addTwoInts\", \"arguments\": {\"a\": 2, \"b\": 3}}]}'"
         ],
         "can_tool_call_think": [
             false,

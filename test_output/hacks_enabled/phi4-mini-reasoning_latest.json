@@ -1,12 +1,12 @@
 {
     "phi4-mini-reasoning:latest": {
         "can_json": [
-            false,
-            "Expecting property name enclosed in double quotes: line 90 column 1 (char 211) '{\n\n\n      \n        \n        \n        \n        \n         \n        \n\n\n\n\n\n\n\n\n    \n\n\n        \n\n    \n\n\n\n \n\n  \n\n\n   \n\n\n\n      \n\n  \n\n    \n\n\n\n    \n\n\n\n\n     \n\n\n\n\n\n\n\n\n\n    \n\n\n\n\n\n  \n\n\n\n\n\n\n    \n\n\n\n    \n\n\n    \n\n\n    \n\n\n \n\n\n\n'"
+            true,
+            ""
         ],
         "can_json_think": [
-            false,
-            "Expecting property name enclosed in double quotes: line 90 column 1 (char 211) '{\n\n\n      \n        \n        \n        \n        \n         \n        \n\n\n\n\n\n\n\n\n    \n\n\n        \n\n    \n\n\n\n \n\n  \n\n\n   \n\n\n\n      \n\n  \n\n    \n\n\n\n    \n\n\n\n\n     \n\n\n\n\n\n\n\n\n\n    \n\n\n\n\n\n  \n\n\n\n\n\n\n    \n\n\n\n    \n\n\n    \n\n\n    \n\n\n \n\n\n\n'"
+            true,
+            ""
         ],
         "can_pydantic": [
             true,

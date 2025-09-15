@@ -1,0 +1,36 @@
+{
+    "qwen3:30b": {
+        "can_json": [
+            true,
+            ""
+        ],
+        "can_json_think": [
+            true,
+            ""
+        ],
+        "can_pydantic": [
+            true,
+            ""
+        ],
+        "can_pydantic_think": [
+            true,
+            ""
+        ],
+        "can_think": [
+            true,
+            ""
+        ],
+        "can_tool_call": [
+            true,
+            ""
+        ],
+        "can_tool_call_think": [
+            true,
+            ""
+        ],
+        "content_no_thinking": [
+            false,
+            "Thinking outputed to content when think=False '<think>\nOkay, the user asked \"what is 2 + 3?\" That seems really simple, but I should make sure I'm not missing anything. Maybe they're testing if I can handle basic math, or perhaps they're a young child learning addition. \n\nHmm, the question is straightforward\u20142 plus 3 equals 5. But I wonder if they meant something else, like in a different base or with a trick. Like, sometimes people ask \"2 + 3 = ?\" to see if you'll overcomplicate it. But no, in standard base 10, it's definitely 5. \n\nI should keep the answer simple and clear. No need to overthink it. Just state the answer plainly. They probably want a quick, correct response without any fluff. \n\nAlso, the user didn't give any context, so I'll assume they're just checking basic math. Maybe they're new to math or just want to verify. Either way, the answer is 5. \n\nI'll say it directly: \"2 + 3 = 5.\" Short and to the point. No extra explanation unless they ask for more. \n\n...Wait, is there any chance they're trolling? Like, asking a dumb question to see if I'll say \"5\" or something else? But even then, 5 is correct. So I'll stick with that. \n\nAlright, response locked in: 5.\n</think>\n\nThe answer to **2 + 3** is **5**.  \n\nThis is a basic arithmetic operation:  \n- 2 (two) plus 3 (three) equals 5 (five).  \n\nIf you have any other questions, feel free to ask! \ud83d\ude0a'"
+        ]
+    }
+}

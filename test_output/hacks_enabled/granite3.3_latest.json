@@ -21,12 +21,12 @@
             ""
         ],
         "can_tool_call": [
-            false,
-            "Expected tool call, received ''"
+            true,
+            ""
         ],
         "can_tool_call_think": [
-            false,
-            "Expected tool call, received ''"
+            true,
+            ""
         ],
         "content_no_thinking": [
             true,

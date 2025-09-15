@@ -1,5 +1,5 @@
 {
-    "qwen2.5-coder:1.5b": {
+    "aliafshar/gemma3-it-qat-tools:12b": {
         "can_json": [
             true,
             ""
@@ -21,8 +21,8 @@
             "Does not support thinking"
         ],
         "can_tool_call": [
-            false,
-            "Expected tool call, received '{\"name\": \"addTwoInts\", \"arguments\": {\"a\": 2, \"b\": 3}}'"
+            true,
+            ""
         ],
         "can_tool_call_think": [
             false,

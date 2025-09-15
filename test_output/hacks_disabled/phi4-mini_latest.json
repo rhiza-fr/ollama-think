@@ -22,7 +22,7 @@
         ],
         "can_tool_call": [
             false,
-            "Expected tool call, received '[\\{ \"status\": \"success\", \"data\": { \"result\": 5 } \\}]'"
+            "Expected tool call, received '<|tool_call|>Sure, I can help you with that. Let me use the function to add two integers for your calculation.\n\n[{\"type\":\"function\",\"function\":{\"name\":\"addTwoInts\",\"arguments\":{\"a\":2,\"b\":3}}}]<|/tool_call|><|tool_response|><|tool_call|>{\"result\":5}'"
         ],
         "can_tool_call_think": [
             false,

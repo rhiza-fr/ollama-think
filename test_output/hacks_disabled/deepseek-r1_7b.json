@@ -6,15 +6,15 @@
         ],
         "can_json_think": [
             false,
-            "Expecting ':' delimiter: line 1 column 6 (char 5) '{\"{\" question\": \"What is 2 + 3?\", \"options\": [\"5\", \"6\", \"7\", \"8\"], \"answer\": \"5\" }'"
+            "Expecting ',' delimiter: line 48 column 1 (char 187) '{\"}<think></think><jscript>console.log(2 + 3);</script>ANSWER:5</answer>{\": \"}\" \n\n  \n  \n\n  \n  \n\n  \n  \n\n  \n  \n\n  \n  \n\n  \n  \n\n  \n  \n\n  \n  \n\n  \n  \n\n  \n  \n\n  \n  \n\n  \n  \n\n  \n  \n\n  \n  \n\n  \n  \n\n'"
         ],
         "can_pydantic": [
             true,
             ""
         ],
         "can_pydantic_think": [
-            false,
-            "1 validation error for ResponseObj\n  Invalid JSON: expected `:` at line 1 column 5 [type=json_invalid, input_value='{\"{\"addition_result\":5}\\...t\\t\\t  \\t\\t\\t\\t\\t\\t  \\t', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.11/v/json_invalid '{\"{\"addition_result\":5}\n\n   \t\t\t\t\t\t  \t\t\t\t\t\t  \t'"
+            true,
+            ""
         ],
         "can_think": [
             true,

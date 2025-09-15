@@ -21,8 +21,8 @@
             "Does not support thinking"
         ],
         "can_tool_call": [
-            false,
-            "Expected tool call, received ''"
+            true,
+            ""
         ],
         "can_tool_call_think": [
             false,
