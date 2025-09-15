@@ -244,7 +244,7 @@ wheels = [
 
 [[package]]
 name = "ollama-think"
-version = "0.1.7"
+version = "0.1.9"
 source = { editable = "." }
 dependencies = [
     { name = "diskcache" },
