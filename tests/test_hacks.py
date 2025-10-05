@@ -19,7 +19,10 @@ def pytest_generate_tests(metafunc):
         if selected_model:
             models = [selected_model]
         else:
-            models = [m["model"] for m in client.list()["models"]]
+            try:
+                models = [m["model"] for m in client.list()["models"]]
+            except ConnectionError:
+                models = []
 
         # refine to models that have hacks
         test_cases = []

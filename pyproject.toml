@@ -1,12 +1,12 @@
 [project]
 name = "ollama-think"
 version = "0.1.9"
-description = "A light wrapper around ollama-python that introduces caching, syntax sugar and increased `think` compatibility"
+description = "A Python library for Ollama with response caching, enhanced thinking mode for LLMs, and developer-friendly syntax."
 readme = "README.md"
 authors = [
     { name = "Chris Kilner", email = "chris@rhiza.fr" }
 ]
-keywords = ["ollama", "LLM", "think", "AI", "compatibility", "cogito", "granite", "phi4-reasoning", "phi4-mini-reasoning"]
+keywords = ["ollama", "ollama-python", "LLM", "large-language-models", "AI", "machine-learning", "natural-language-processing", "nlp", "ml", "think", "tool-calling", "structured-output", "json-mode", "pydantic", "caching", "performance", "api-wrapper", "developer-tools", "ai-development", "compatibility", "cogito", "granite", "phi4-reasoning", "phi4-mini-reasoning"]
 requires-python = ">=3.9"
 dependencies = [
     "diskcache>=5.6",

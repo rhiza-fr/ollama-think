@@ -2,6 +2,12 @@
 
 A thin wrapper around the [ollama-python](https://github.com/ollama/ollama-python) library with the addition of caching, increased `think` model compatibility and a little syntax sugar.
 
+```
++-----------------+      +-------------------+      +-----------------+
+|   Your Code     |----->|   Ollama-Think    |----->|   Ollama API    |
++-----------------+      | (Cache & Hacking) |      +-----------------+
+                         +-------------------+
+```
 
 ## Features
 
@@ -313,6 +319,28 @@ This project uses `uv` for package management, but pip should work too.
   # submit a PR
   ```
  
+## Topics
+
+- ollama
+- ollama-python
+- LLM
+- large-language-models
+- AI
+- machine-learning
+- natural-language-processing
+- nlp
+- ml
+- think
+- tool-calling
+- structured-output
+- json-mode
+- pydantic
+- caching
+- performance
+- api-wrapper
+- developer-tools
+- ai-development
+
 ## License
 
 This project is licensed under the MIT License.

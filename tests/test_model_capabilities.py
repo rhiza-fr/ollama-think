@@ -112,7 +112,10 @@ def _tool_calling(client: Client, model: str, think: bool = True) -> tuple[bool,
 
 
 def _get_model_names(client: Client):
-    return [m["model"] for m in client.list()["models"]]
+    try:
+        return [m["model"] for m in client.list()["models"]]
+    except ConnectionError:
+        return []
 
 
 def pytest_generate_tests(metafunc):
