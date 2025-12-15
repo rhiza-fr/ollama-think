@@ -11,14 +11,14 @@ from ollama_think import Client
 @pytest.mark.slow
 def test_gptoss():
     c = Client(host="http://localhost:11434")
-    model = "gpt-oss"
+    model = "gpt-oss:20b"
     prompt = "What is 2 + 6^2 / 0.11? Show your working"
 
     levels : list[bool | Literal['low', 'medium', 'high']] = [False, True, 'low', 'medium', 'high']
 
     for level in levels:
         print(f"Calling {model} with think={level} prompt='{prompt}'")
-        res = c.call(model="gpt-oss", prompt=prompt, think=level)
+        res = c.call(model=model, prompt=prompt, think=level)
         print("Thinking:", res.thinking)
         print("Content:", res.content)
         print("-" * 50)
