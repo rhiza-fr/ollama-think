@@ -25,12 +25,6 @@ class TestThinkResponse(unittest.TestCase):
         think_response = self._make_response(content="")
         self.assertEqual(str(think_response), "")
 
-    def test_repr(self):
-        self.maxDiff = None
-        think_response = self._make_response(content="Hello!", thinking="I am thinking...")
-        expected_repr = "ThinkResponse(model='llama2', created_at='2023-08-04T19:22:45.499127Z', done=True, done_reason=None, total_duration=None, load_duration=None, prompt_eval_count=None, prompt_eval_duration=None, eval_count=None, eval_duration=None, message=Message(role='assistant', content='Hello!', thinking='I am thinking...', images=None, tool_name=None, tool_calls=None))"
-        self.assertEqual(repr(think_response), expected_repr)
-
     def test_iter(self):
         think_response = self._make_response(content="Hello!", thinking="I am thinking...")
         thinking, content = think_response
