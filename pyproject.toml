@@ -1,6 +1,6 @@
 [project]
 name = "ollama-think"
-version = "0.1.9"
+version = "0.1.10"
 description = "A light wrapper around ollama-python that introduces caching, syntax sugar and increased `think` compatibility"
 readme = "README.md"
 authors = [
