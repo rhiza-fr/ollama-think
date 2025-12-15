@@ -1,0 +1,36 @@
+{
+    "gpt-oss:120b-cloud": {
+        "can_json": [
+            false,
+            "Extra data: line 1 column 2 (char 1) '2\u202f+\u202f3\u202f=\u202f5.'"
+        ],
+        "can_json_think": [
+            false,
+            "Extra data: line 1 column 2 (char 1) '2\u202f+\u202f3\u202f=\u202f5.'"
+        ],
+        "can_pydantic": [
+            false,
+            "1 validation error for ResponseObj\n  Invalid JSON: trailing characters at line 1 column 2 [type=json_invalid, input_value='2\\u202f+\\u202f3\\u202f=\\u202f5.', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.12/v/json_invalid '2\u202f+\u202f3\u202f=\u202f5.'"
+        ],
+        "can_pydantic_think": [
+            false,
+            "1 validation error for ResponseObj\n  Invalid JSON: trailing characters at line 1 column 2 [type=json_invalid, input_value='2\\u202f+\\u202f3\\u202f=\\u202f5.', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.12/v/json_invalid '2\u202f+\u202f3\u202f=\u202f5.'"
+        ],
+        "can_think": [
+            true,
+            ""
+        ],
+        "can_tool_call": [
+            false,
+            "Expected tool call, received '2\u202f+\u202f3\u202f=\u202f5.'"
+        ],
+        "can_tool_call_think": [
+            false,
+            "Expected tool call, received '2\u202f+\u202f3\u202f=\u202f5.'"
+        ],
+        "content_no_thinking": [
+            true,
+            ""
+        ]
+    }
+}

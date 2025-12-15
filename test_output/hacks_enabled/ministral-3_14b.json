@@ -1,8 +1,8 @@
 {
-    "granite3.3:2b": {
+    "ministral-3:14b": {
         "can_json": [
-            true,
-            ""
+            false,
+            "Expecting property name enclosed in double quotes: line 1 column 33 (char 32) '{                               '"
         ],
         "can_json_think": [
             false,

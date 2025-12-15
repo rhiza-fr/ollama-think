@@ -1,5 +1,5 @@
 {
-    "granite3.3:2b": {
+    "qwen2.5vl:7b": {
         "can_json": [
             true,
             ""
@@ -21,8 +21,8 @@
             "Does not support thinking"
         ],
         "can_tool_call": [
-            true,
-            ""
+            false,
+            "Does not support tools"
         ],
         "can_tool_call_think": [
             false,

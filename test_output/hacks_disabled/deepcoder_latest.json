@@ -30,7 +30,7 @@
         ],
         "content_no_thinking": [
             false,
-            "Thinking outputed to content when think=False '<think>\nI need to calculate the sum of 2 and 3.\n\nFirst, I'll identify the numbers involved in the addition: 2 and 3.\n\nNext, I'll add these two numbers together.\n\nFinally, I'll determine that the total is 5.\n</think>\n\n**Solution:**\n\nTo find the sum of 2 and 3, follow these simple steps:\n\n1. **Identify the numbers to be added:**  \n   - First number: 2\n   - Second number: 3\n\n2. **Add the two numbers together:**  \n   \\[\n   2 + 3 = 5\n   \\]\n\n**Final Answer:**  \n\\boxed{5}'"
+            "Thinking outputed to content when think=False '<think>\nI need to calculate the sum of 2 and 3.\n\nFirst, I identify the two numbers involved in the addition: 2 and 3.\n\nNext, I add these two numbers together. Adding 2 and 3 gives me 5.\n\nTherefore, the final answer is 5.\n</think>\n\nCertainly! Let's solve the problem step by step.\n\n**Problem:** What is \\( 2 + 3 \\)?\n\n**Solution:**\n\n1. **Identify the Numbers to Add:**\n   - The first number is \\( 2 \\).\n   - The second number is \\( 3 \\).\n\n2. **Add the Two Numbers Together:**\n   \\[\n   2 + 3 = 5\n   \\]\n\n**Final Answer:**  \n\\(\\boxed{5}\\)'"
         ]
     }
 }

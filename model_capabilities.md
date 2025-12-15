@@ -7,7 +7,8 @@ A `❗` indicates invalid JSON, on one test without specific encouragement.
 | Model | JSON Format | Pydantic Format | Tool Calls | Thinking output | No thinking in Content |
 |:---| :--- | :--- | :--- | :--- | :--- |
 | `cogito:14b` | ✅ | ✅ | ✅ | [❌](## "Does not support thinking") &rarr; ✅ | ✅ |
-| `granite3.3:2b` | ✅ | ✅ | [❌](## "Expected tool call, received &#x27;&#x27;") &rarr; ✅ | [❌](## "Does not support thinking") &rarr; ✅ | ✅ |
+| `gpt-oss:20b` | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `granite3.3:2b` | ✅ | ✅ | ✅ | [❌](## "Does not support thinking") &rarr; ✅ | ✅ |
 | `granite3.3:latest` | ✅ | ✅ | ✅ | [❌](## "Does not support thinking") &rarr; ✅ | ✅ |
 | `qwen3:0.6b` | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `qwen3:1.7b` | ✅ | ✅ | ✅ | ✅ | ✅ |
@@ -22,18 +23,23 @@ A `❗` indicates invalid JSON, on one test without specific encouragement.
 | `deepseek-r1:7b` | ✅ | ✅ | [❌](## "Does not support tools") | ✅ | ✅ |
 | `deepseek-r1:8b` | ✅ | ✅ | [❌](## "Does not support tools") | ✅ | ✅ |
 | `deepseek-r1:latest` | ✅ | ✅ | [❌](## "Does not support tools") | ✅ | ✅ |
+| `devstral-small-2:24b` | ✅ | ✅ | ✅ | [❌](## "Does not support thinking") | ✅ |
 | `granite3.2:latest` | ✅ | ✅ | [❌](## "Expected tool call, received &#x27;5&#x27;") | [❌](## "Does not support thinking") &rarr; ✅ | ✅ |
+| `granite4:micro-h` | ✅ | ✅ | ✅ | [❌](## "Does not support thinking") | ✅ |
+| `granite4:tiny-h` | ✅ | ✅ | ✅ | [❌](## "Does not support thinking") | ✅ |
 | `llama3.1:latest` | ✅ | ✅ | ✅ | [❌](## "Does not support thinking") | ✅ |
 | `llama3.2:latest` | ✅ | ✅ | ✅ | [❌](## "Does not support thinking") | ✅ |
+| `ministral-3:3b` | ✅ | ✅ | ✅ | [❌](## "Does not support thinking") | ✅ |
 | `mistral:latest` | ✅ | ✅ | ✅ | [❌](## "Does not support thinking") | ✅ |
 | `nemotron-mini:4b` | ✅ | ✅ | ✅ | [❌](## "Does not support thinking") | ✅ |
 | `phi4-mini-reasoning:latest` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") &rarr; ✅ | [❌](## "Thinking outputed to content when think=False &#x27;&lt;th") &rarr; ✅ |
 | `phi4-reasoning:plus` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") &rarr; ✅ | [❌](## "Thinking outputed to content when think=False &#x27;&lt;th") &rarr; ✅ |
 | `qwen3:4b` | ✅ | ✅ | [❌](## "Expected tool call, received &#x27;The answer is 5.&#x27;") | ✅ | ✅ |
+| `rnj-1:latest` | ✅ | ✅ | ✅ | [❌](## "Does not support thinking") | ✅ |
 | `allenporter/xlam:7b` | ✅ | ✅ | [❌](## "Expected tool call, received &#x27; {&quot;tool_calls&quot;: [{&quot;n") | [❌](## "Does not support thinking") | ✅ |
 | `codeqwen:7b-chat` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |
 | `deepseek-coder-v2:16b` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |
-| `devstral:latest` | ✅ | ✅ | [❌](## "Expected tool call, received &#x27;Let me calculate tha") | [❌](## "Does not support thinking") | ✅ |
+| `devstral:latest` | ✅ | ✅ | [❌](## "Expected tool call, received &#x27;Let me quickly calcu") | [❌](## "Does not support thinking") | ✅ |
 | `dolphin-llama3:8b` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |
 | `ebdm/gemma3-enhanced:12b` | ✅ | ✅ | [❌](## "Expected tool call, received &#x27;2 + 3 = 5&#x27;") | [❌](## "Does not support thinking") | ✅ |
 | `exaone-deep:latest` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |
@@ -45,19 +51,23 @@ A `❗` indicates invalid JSON, on one test without specific encouragement.
 | `gpt-oss:latest` | [❗](## "Invalid JSON") | [❗](## "Invalid JSON") | ✅ | ✅ | ✅ |
 | `granite3.1-dense:8b` | ✅ | ✅ | [❌](## "Expected tool call, received &#x27;&lt;tool_call&gt;[{&quot;argume") | [❌](## "Does not support thinking") | ✅ |
 | `granite3.2-vision:latest` | ✅ | ✅ | [❌](## "Expected tool call, received &#x27; 5&#x27;") | [❌](## "Thinking supported but empty") | ✅ |
-| `llama3.2-vision:latest` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |
 | `marco-o1:latest` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |
 | `minicpm-v:latest` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |
+| `ministral-3:14b` | [❗](## "Invalid JSON") | ✅ | ✅ | [❌](## "Does not support thinking") | ✅ |
+| `ministral-3:8b` | [❗](## "Invalid JSON") | ✅ | ✅ | [❌](## "Does not support thinking") | ✅ |
 | `phi3.5:latest` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |
 | `phi3:14b` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |
-| `phi4-mini:latest` | ✅ | ✅ | [❌](## "Expected tool call, received &#x27;&lt;tool_call&gt;Sure, I") | [❌](## "Does not support thinking") | ✅ |
+| `phi4-mini:latest` | ✅ | ✅ | [❌](## "Expected tool call, received &#x27;&lt;tool_call&gt;I will ") | [❌](## "Does not support thinking") | ✅ |
 | `phi4:latest` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |
-| `qwen2.5-coder:1.5b` | ✅ | ✅ | [❌](## "Expected tool call, received &#x27;{&quot;name&quot;: &quot;addTwoInts") | [❌](## "Does not support thinking") | ✅ |
+| `qwen2.5-coder:1.5b` | ✅ | ✅ | [❌](## "Expected tool call, received &#x27;{ &quot;name&quot;: &quot;addTwoInt") | [❌](## "Does not support thinking") | ✅ |
 | `qwen2.5-coder:14b` | ✅ | ✅ | [❌](## "Expected tool call, received &#x27;{   &quot;name&quot;: &quot;addTwoI") | [❌](## "Does not support thinking") | ✅ |
 | `qwen2.5-coder:7b-base` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |
 | `qwen2.5-coder:latest` | ✅ | ✅ | [❌](## "Expected tool call, received &#x27;{   &quot;name&quot;: &quot;addTwoI") | [❌](## "Does not support thinking") | ✅ |
+| `qwen2.5vl:7b` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |
 | `qwen3-coder:latest` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |
 | `reader-lm:latest` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |
 | `smallthinker:latest` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |
 | `starcoder2:7b` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |
 | `wizardlm2:7b` | ✅ | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |
+| `gpt-oss:120b-cloud` | [❌](## "Extra data: line 1 column 2 (char 1) &#x27;2 + 3 = 5.&#x27;") | [❗](## "Invalid JSON") | [❌](## "Expected tool call, received &#x27;2 + 3 = 5.&#x27;") | ✅ | ✅ |
+| `llama3.2-vision:latest` | [❗](## "Invalid JSON") | ✅ | [❌](## "Does not support tools") | [❌](## "Does not support thinking") | ✅ |

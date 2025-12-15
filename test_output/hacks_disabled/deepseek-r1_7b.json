@@ -6,15 +6,15 @@
         ],
         "can_json_think": [
             false,
-            "Expecting ',' delimiter: line 48 column 1 (char 187) '{\"}<think></think><jscript>console.log(2 + 3);</script>ANSWER:5</answer>{\": \"}\" \n\n  \n  \n\n  \n  \n\n  \n  \n\n  \n  \n\n  \n  \n\n  \n  \n\n  \n  \n\n  \n  \n\n  \n  \n\n  \n  \n\n  \n  \n\n  \n  \n\n  \n  \n\n  \n  \n\n  \n  \n\n'"
+            "Expecting value: line 1 column 1 (char 0) 'The sum of 2 and 3 is:\n\n\\[\n2 + 3 = \\boxed{5}\n\\]'"
         ],
         "can_pydantic": [
             true,
             ""
         ],
         "can_pydantic_think": [
-            true,
-            ""
+            false,
+            "1 validation error for ResponseObj\n  Invalid JSON: expected value at line 1 column 1 [type=json_invalid, input_value='The sum of 2 and 3 is ca...s follows:\\n\\n2 + 3 = 5', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.12/v/json_invalid 'The sum of 2 and 3 is calculated as follows:\n\n2 + 3 = 5'"
         ],
         "can_think": [
             true,

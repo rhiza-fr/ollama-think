@@ -22,7 +22,7 @@
         ],
         "can_tool_call": [
             false,
-            "Expected tool call, received 'Let me calculate that for you. 2 + 3 equals 5.'"
+            "Expected tool call, received 'Let me quickly calculate that for you.\n\n2 + 3 = 5\n\nSo the answer is 5.'"
         ],
         "can_tool_call_think": [
             false,
