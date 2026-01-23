@@ -1,5 +1,9 @@
 # Ollama-Think Library
 
+![Tests](http://git.radix.lan/ckilner/ollama-think/actions/workflows/test.yaml/badge.svg)
+![Python Tests](http://git.radix.lan/ckilner/ollama-think/actions/workflows/python-multi-version-test.yaml/badge.svg)
+
+
 A thin wrapper around the [ollama-python](https://github.com/ollama/ollama-python) library with the addition of caching, increased `think` model compatibility and a little syntax sugar.
 
 
