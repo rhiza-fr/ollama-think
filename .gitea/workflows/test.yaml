@@ -7,5 +7,5 @@ jobs:
     runs-on: python-test-image
     steps:
       - uses: actions/checkout@v4
-      - run: uv sync
-      - run: uv run pytest
+      - run: uv sync --all-extras
+      - run: uv run pytest -m "not slow"
