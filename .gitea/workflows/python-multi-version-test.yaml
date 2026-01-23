@@ -1,0 +1,65 @@
+# Template: Multi-version Python testing workflow for Gitea Actions
+# Copy this file to your project's .gitea/workflows/ directory
+#
+# Runs tests against multiple Python versions using generic ubuntu runners.
+# Includes optional dependency upgrade testing.
+
+name: Python Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.12', '3.13', '3.14']
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Run tests
+        run: uv run pytest
+
+  # Optional: Test if dependencies can be upgraded
+  upgrade-test:
+    name: Dependency Upgrade Test
+    runs-on: ubuntu-latest
+    continue-on-error: true  # Don't fail the whole workflow if upgrades break
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.14'  # Test upgrades on latest Python
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Upgrade all dependencies
+        run: uv lock --upgrade
+
+      - name: Install upgraded dependencies
+        run: uv sync
+
+      - name: Run tests with upgraded dependencies
+        run: uv run pytest
