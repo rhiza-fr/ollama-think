@@ -114,7 +114,7 @@ def _tool_calling(client: Client, model: str, think: bool = True) -> tuple[bool,
 def _get_model_names(client: Client):
     return [m["model"] for m in client.list()["models"]]
 
-
+@pytest.mark.slow
 def pytest_generate_tests(metafunc):
     if "test_spec" in metafunc.fixturenames:
         host = metafunc.config.getoption("--host")

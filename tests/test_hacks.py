@@ -8,6 +8,7 @@ except ImportError:
 from ollama_think import Client
 
 
+@pytest.mark.slow
 def pytest_generate_tests(metafunc):
     if "test_case" in metafunc.fixturenames:
         host = metafunc.config.getoption("--host")
