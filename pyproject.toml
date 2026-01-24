@@ -47,7 +47,7 @@ markers = [
     "slow: marks tests as slow (select with '-m \"slow\"')",
     "asyncio: marks tests as asyncio tests (select with '-m \"asyncio\"')"
 ]
-addopts = "-m 'not slow'"
+addopts = ["-m", "not slow"]
 
 [tool.ruff]
 line-length = 100

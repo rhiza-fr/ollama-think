@@ -8,4 +8,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: uv sync --all-extras
-      - run: uv run pytest -m "not slow"
+      - run: uv run pytest
