@@ -112,7 +112,13 @@ def _tool_calling(client: Client, model: str, think: bool = True) -> tuple[bool,
 
 
 def _get_model_names(client: Client):
-    return [m["model"] for m in client.list()["models"]]
+    try:
+        models = [m["model"] for m in client.list()["models"]]
+    except Exception as e:
+        print("Connection error for ollama", e)
+        models = []
+    return models
+
 
 @pytest.mark.slow
 def pytest_generate_tests(metafunc):
