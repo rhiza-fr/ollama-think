@@ -7,7 +7,7 @@ authors = [
     { name = "Chris Kilner", email = "chris@rhiza.fr" }
 ]
 keywords = ["ollama", "LLM", "think", "AI", "compatibility", "cogito", "granite", "phi4-reasoning", "phi4-mini-reasoning"]
-requires-python = ">=3.9"
+requires-python = ">=3.12"
 dependencies = [
     "diskcache>=5.6",
     "ollama>=0.5.3",
@@ -34,7 +34,7 @@ build-backend = "hatchling.build"
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=8.4.0",
+    "pytest>=9.0.0",
     "pytest-cov>=6.2.0",
     "pytest-mock>=3.14.1",
     "ruff>=0.11.13",
