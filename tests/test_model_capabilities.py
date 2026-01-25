@@ -5,7 +5,7 @@ import pytest
 from pydantic import BaseModel, Field
 
 try:
-    from rich import print
+    from rich import print  # type: ignore
 except ImportError:
     from builtins import print
 
