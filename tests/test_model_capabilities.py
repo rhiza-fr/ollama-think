@@ -132,13 +132,13 @@ def pytest_generate_tests(metafunc):
         else:
             model_names = _get_model_names(client)
             blacklisted_models = [
-                "mxbai-embed-large:latest",
-                "granite-embedding:278m",
-                "nomic-embed-text:latest",
-                "tazarov/all-minilm-l6-v2-f32:latest",
+                "mxbai-embed-large:latest",            # embed
+                "granite-embedding:278m",              # embed
+                "nomic-embed-text:latest",             # embed
+                "tazarov/all-minilm-l6-v2-f32:latest", # meh
                 "stable-code:3b-code-q4_0",
-                "stable-code:3b-code-q4_0",
-                "qwen3:4b-nothink",
+                "qwen3:4b-nothink",                    # too slow
+                "olmo-3.1:latest",                     # too slow
             ]
             models = [m for m in model_names if m not in blacklisted_models]
 
