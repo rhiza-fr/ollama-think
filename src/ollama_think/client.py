@@ -9,10 +9,11 @@ This module provides a `Client` class that adds several key features:
 """
 
 import hashlib
+import os
 from collections.abc import AsyncIterator, Callable, Iterator, Mapping, Sequence
-from typing import Any, Literal, cast
+from typing import Any, Literal
 
-from diskcache import Cache
+from diskcache import Cache, JSONDisk
 from ollama import AsyncClient as OllamaAsyncClient
 from ollama import ChatResponse
 from ollama import Client as OllamaClient
@@ -28,6 +29,9 @@ from ollama_think.thinking_hacks import (
     setup_stream_parser,
 )
 from ollama_think.thinkresponse import ThinkResponse
+
+CACHE_EXPIRE = 90 * 24 * 3600  # 90 days
+CACHE_SIZE_LIMIT = 1024**3  # 1 GB
 
 
 class Client(OllamaClient):
@@ -55,7 +59,7 @@ class Client(OllamaClient):
     def __init__(
         self,
         host: str | None = None,
-        cache_dir: str = ".ollama_cache",
+        cache_dir: str = "~/.cache/ollama_think_cache",
         clear_cache: bool = False,
     ) -> None:
         """
@@ -67,8 +71,8 @@ class Client(OllamaClient):
             host: The URL of the Ollama API server. If not provided, it defaults to the value of
                   the `OLLAMA_HOST` environment variable or `http://localhost:11434` if the
                   variable is not set.
-            cache_dir: The directory where API responses will be cached. Defaults to `.ollama_cache`
-                       in the current working directory.
+            cache_dir: The directory where API responses will be cached. Defaults to
+                       `~/.cache/ollama_think_cache`.
             clear_cache: If True, the entire cache in `cache_dir` will be cleared upon
                          initialization. Defaults to False.
 
@@ -91,7 +95,7 @@ class Client(OllamaClient):
 
                 client = Client(cache_dir="~/.my_app_cache/ollama", clear_cache=True)
         """
-        self.cache = Cache(directory=cache_dir)
+        self.cache = Cache(directory=os.path.expanduser(cache_dir), disk=JSONDisk, size_limit=CACHE_SIZE_LIMIT)
         if clear_cache:
             self.cache.clear()
         self.config = Config()
@@ -110,7 +114,7 @@ class Client(OllamaClient):
         """Enter the runtime context related to this object."""
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+    def __exit__(self, _exc_type, _exc_val, _exc_tb) -> None:
         """Exit the runtime context and close the cache."""
         self.close()
 
@@ -221,13 +225,16 @@ class Client(OllamaClient):
         hash_key = self._make_cache_key(request)
         response = None
         if use_cache:
-            response = self.cache.get(hash_key, None)
-        if response:
-            response = cast(ChatResponse, response)
-        else:
+            try:
+                raw = self.cache.get(hash_key, None)
+                if raw is not None:
+                    response = ChatResponse.model_validate(raw)
+            except Exception:
+                pass
+        if response is None:
             response = super().chat(**request.__dict__)
             if use_cache:
-                self.cache.set(hash_key, response, tag=model)
+                self.cache.set(hash_key, response.model_dump(mode='json'), tag=model, expire=CACHE_EXPIRE)
         tr = ThinkResponse(response)
         if model_hacks:
             tr = hack_response(tr, hacks=model_hacks)  # cludge ollama to respect thought
@@ -297,27 +304,31 @@ class Client(OllamaClient):
             request = hack_request(request, hacks=model_hacks)  # cludge ollama to respect thought
         hash_key = self._make_cache_key(request)
 
-        response = None
+        cached = None
         if use_cache:
-            response = self.cache.get(hash_key, None)
-        if response:
-            response = cast(list[ThinkResponse], response)
-            yield from response
+            try:
+                raw = self.cache.get(hash_key, None)
+                if raw is not None:
+                    cached = [ThinkResponse(ChatResponse.model_validate(d)) for d in raw]
+            except Exception:
+                pass
+        if cached is not None:
+            yield from cached
         else:
             hack_parser = setup_stream_parser(
                 model, hacks=model_hacks
             )  # will be None if no hacks are required
-            chunks: list[ThinkResponse] = []  # we will cache this list, when finished
+            chunks: list[dict] = []
             for chunk in super().chat(**request.__dict__):
                 tr = ThinkResponse(chunk)
                 if hack_parser:
                     tr = hack_stream_chunk(tr, hack_parser)
                     if not tr:  # we consumed a non-output chunk like a <think> tag
                         continue
-                chunks.append(tr)
+                chunks.append(tr.model_dump(mode='json'))
                 yield tr
             if use_cache:
-                self.cache.set(hash_key, chunks, tag=model)
+                self.cache.set(hash_key, chunks, tag=model, expire=CACHE_EXPIRE)
 
     def stop(self, model: str = "") -> GenerateResponse:
         """
@@ -343,10 +354,10 @@ class AsyncClient(OllamaAsyncClient):
     def __init__(
         self,
         host: str | None = None,
-        cache_dir: str = ".ollama_cache",
+        cache_dir: str = "~/.cache/ollama_think_cache",
         clear_cache: bool = False,
     ) -> None:
-        self.cache = Cache(directory=cache_dir)
+        self.cache = Cache(directory=os.path.expanduser(cache_dir), disk=JSONDisk, size_limit=CACHE_SIZE_LIMIT)
         if clear_cache:
             self.cache.clear()
         self.config = Config()
@@ -359,7 +370,7 @@ class AsyncClient(OllamaAsyncClient):
     async def __aenter__(self):
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
+    async def __aexit__(self, _exc_type, _exc_val, _exc_tb) -> None:
         await self.close()
 
     def __del__(self) -> None:
@@ -403,13 +414,16 @@ class AsyncClient(OllamaAsyncClient):
         hash_key = self._make_cache_key(request)
         response = None
         if use_cache:
-            response = self.cache.get(hash_key, None)
-        if response:
-            response = cast(ChatResponse, response)
-        else:
+            try:
+                raw = self.cache.get(hash_key, None)
+                if raw is not None:
+                    response = ChatResponse.model_validate(raw)
+            except Exception:
+                pass
+        if response is None:
             response = await super().chat(**request.__dict__)
             if use_cache:
-                self.cache.set(hash_key, response, tag=model)
+                self.cache.set(hash_key, response.model_dump(mode='json'), tag=model, expire=CACHE_EXPIRE)
         tr = ThinkResponse(response)
         if model_hacks:
             tr = hack_response(tr, hacks=model_hacks)
@@ -445,16 +459,20 @@ class AsyncClient(OllamaAsyncClient):
             request = hack_request(request, hacks=model_hacks)
         hash_key = self._make_cache_key(request)
 
-        response = None
+        cached = None
         if use_cache:
-            response = self.cache.get(hash_key, None)
-        if response:
-            response = cast(list[ThinkResponse], response)
-            for r in response:
+            try:
+                raw = self.cache.get(hash_key, None)
+                if raw is not None:
+                    cached = [ThinkResponse(ChatResponse.model_validate(d)) for d in raw]
+            except Exception:
+                pass
+        if cached is not None:
+            for r in cached:
                 yield r
         else:
             hack_parser = setup_stream_parser(model, hacks=model_hacks)
-            chunks: list[ThinkResponse] = []
+            chunks: list[dict] = []
             response_iterator = await super().chat(**request.__dict__)
             async for chunk in response_iterator:
                 tr = ThinkResponse(chunk)
@@ -462,10 +480,10 @@ class AsyncClient(OllamaAsyncClient):
                     tr = hack_stream_chunk(tr, hack_parser)
                     if not tr:
                         continue
-                chunks.append(tr)
+                chunks.append(tr.model_dump(mode='json'))
                 yield tr
             if use_cache:
-                self.cache.set(hash_key, chunks, tag=model)
+                self.cache.set(hash_key, chunks, tag=model, expire=CACHE_EXPIRE)
 
     async def stop(self, model: str = "") -> GenerateResponse:
         return await super().generate(model=model, keep_alive=0.0)

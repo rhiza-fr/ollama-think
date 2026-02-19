@@ -79,7 +79,7 @@ async def test_call_with_cache_hit(mocked_async_client_deps):
         message=Message(role="assistant", content="Cached response"),
         done=True,
     )
-    mock_cache_instance.get.return_value = cached_response
+    mock_cache_instance.get.return_value = cached_response.model_dump(mode='json')
     client = AsyncClient()
     response = await client.call(model="llama2", prompt="Cache me")
 
@@ -147,3 +147,93 @@ def test_load_config():
     path = "DOESNOTEXIST.yaml"
     client.load_config(path)
     assert client.config.enable_hacks is False
+
+
+@pytest.mark.asyncio
+async def test_async_context_manager(mocked_async_client_deps):
+    """__aenter__ returns self, __aexit__ closes the cache."""
+    mock_cache_instance, _ = mocked_async_client_deps
+    async with AsyncClient() as client:
+        assert isinstance(client, AsyncClient)
+    mock_cache_instance.close.assert_called()
+
+
+def test_async_client_del_handles_exception(mocked_async_client_deps):
+    """__del__ swallows exceptions from cache.close()."""
+    mock_cache_instance, _ = mocked_async_client_deps
+    mock_cache_instance.close.side_effect = Exception("already closed")
+    client = AsyncClient()
+    client.__del__()  # must not raise
+
+
+@pytest.mark.asyncio
+async def test_stop(mocked_async_client_deps, mocker):
+    """stop() calls generate with keep_alive=0."""
+    _, _ = mocked_async_client_deps
+    mock_generate = mocker.patch("ollama_think.client.OllamaAsyncClient.generate")
+    mock_generate.return_value = None
+    await AsyncClient().stop("llama2")
+    mock_generate.assert_called_once_with(model="llama2", keep_alive=0.0)
+
+
+@pytest.mark.asyncio
+async def test_call_cache_read_error_falls_back_to_api(mocked_async_client_deps):
+    """A corrupt cache entry is silently ignored and a fresh API call is made."""
+    mock_cache_instance, mock_chat = mocked_async_client_deps
+    mock_cache_instance.get.side_effect = Exception("corrupt json")
+    mock_chat.return_value = ChatResponse(
+        model="l2", created_at="", message=Message(role="assistant", content="fresh"), done=True
+    )
+    response = await AsyncClient().call(model="l2", prompt="test")
+    assert response.content == "fresh"
+    mock_chat.assert_called_once()
+
+
+@pytest.mark.asyncio
+async def test_call_applies_model_hacks(mocked_async_client_deps, mocker):
+    """call() runs hack_request and hack_response when hacks are configured."""
+    mock_cache_instance, mock_chat = mocked_async_client_deps
+    mock_chat.return_value = ChatResponse(
+        model="cogito",
+        created_at="",
+        message=Message(role="assistant", content="<think>a thought</think>the answer"),
+        done=True,
+    )
+    hacks = {"enable_thinking": False, "add_message": None, "content_parsers": ["<think>(?P<thinking>.*?)</think>(?P<content>.*)"]}
+    mocker.patch("ollama_think.client.Config.get_hacks_if_enabled", return_value=hacks)
+    response = await AsyncClient().call(model="cogito:latest", prompt="test")
+    assert response.thinking == "a thought"
+    assert response.content == "the answer"
+
+
+@pytest.mark.asyncio
+async def test_stream_cache_hit(mocked_async_client_deps):
+    """stream() yields cached chunks without calling the API."""
+    mock_cache_instance, mock_chat = mocked_async_client_deps
+    cached = ChatResponse(model="l2", created_at="", message=Message(role="assistant", content="cached!"), done=True)
+    mock_cache_instance.get.return_value = [cached.model_dump(mode="json")]
+    results = [r async for r in AsyncClient().stream(model="l2", prompt="test")]
+    assert len(results) == 1
+    assert results[0].content == "cached!"
+    mock_chat.assert_not_called()
+
+
+@pytest.mark.asyncio
+async def test_stream_with_hack_parser_filters_none_chunks(mocked_async_client_deps, mocker):
+    """stream() skips chunks where hack_stream_chunk returns None."""
+    mock_cache_instance, mock_chat = mocked_async_client_deps
+
+    async def async_chunks():
+        yield ChatResponse(model="l2", created_at="", message=Message(role="assistant", content="<think>"), done=False)
+        yield ChatResponse(model="l2", created_at="", message=Message(role="assistant", content="answer"), done=True)
+
+    mock_chat.return_value = async_chunks()
+    hacks = {"enable_thinking": False, "add_message": None, "content_parsers": ["<think>(?P<thinking>.*?)</think>(?P<content>.*)"]}
+    mocker.patch("ollama_think.client.Config.get_hacks_if_enabled", return_value=hacks)
+    mocker.patch("ollama_think.client.setup_stream_parser", return_value=mocker.MagicMock())
+    answer_chunk = ChatResponse(model="l2", created_at="", message=Message(role="assistant", content="answer"), done=True)
+    from ollama_think.thinkresponse import ThinkResponse
+    mocker.patch("ollama_think.client.hack_stream_chunk", side_effect=[None, ThinkResponse(answer_chunk)])
+    results = [r async for r in AsyncClient().stream(model="cogito:latest", prompt="test")]
+    assert len(results) == 1
+    assert results[0].content == "answer"
