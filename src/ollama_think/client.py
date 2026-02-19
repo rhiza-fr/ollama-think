@@ -127,7 +127,7 @@ class Client(OllamaClient):
         Create a cache key by hashing the request payload.
         """
         str_key = request.model_dump_json() + f"{self.host or 'default'}"
-        return hashlib.md5(str_key.encode()).hexdigest()
+        return hashlib.md5(str_key.encode(), usedforsecurity=False).hexdigest()
 
     def call(
         self,
@@ -370,7 +370,7 @@ class AsyncClient(OllamaAsyncClient):
 
     def _make_cache_key(self, request: ChatRequest) -> str:
         str_key = request.model_dump_json() + f"{self.host or 'default'}"
-        return hashlib.md5(str_key.encode()).hexdigest()
+        return hashlib.md5(str_key.encode(), usedforsecurity=False).hexdigest()
 
     async def call(
         self,
