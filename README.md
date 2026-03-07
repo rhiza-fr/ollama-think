@@ -263,7 +263,7 @@ Contributions are welcome! Please open an issue or submit a pull request.
 
 ### Development Setup
 
-This project uses `uv` for package management, but pip should work too.
+This project uses `uv` for package management and `uv_build` as the build backend.
 
 1.  **Clone the repository:**
     ```bash
