@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [Unreleased]
+
+### Changed
+- Replaced blind `except Exception` handlers in tests and examples with the specific
+  exceptions raised (fixes ruff `BLE001`)
+
 # [0.1.12] - 2026-10-22
 
 ### Changed

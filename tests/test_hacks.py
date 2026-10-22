@@ -1,4 +1,5 @@
 import pytest
+from ollama import ResponseError
 
 try:
     from rich import print  # type: ignore
@@ -22,7 +23,7 @@ def pytest_generate_tests(metafunc):
         else:
             try:
                 models = [m["model"] for m in client.list()["models"]]
-            except Exception as e:
+            except (ConnectionError, ResponseError) as e:
                 print("Connection error for ollama", e)
                 models = []
 
@@ -119,5 +120,5 @@ if __name__ == "__main__":
     for test_case in mock_metafunc.test_cases:
         try:
             test_models(client, test_case)
-        except Exception as e:
+        except (AssertionError, ConnectionError, ResponseError) as e:
             print(f"Error testing model {test_case['model']}: {e}")

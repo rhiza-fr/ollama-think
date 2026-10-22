@@ -9,6 +9,7 @@ import time
 import uuid
 
 import pytest
+from ollama import ResponseError
 
 from ollama_think import Client
 from ollama_think.client import AsyncClient
@@ -23,7 +24,7 @@ def get_default_model(client: Client) -> str | None:
     """Get a model to test with, preferring smaller/faster models."""
     try:
         models = [m["model"] for m in client.list()["models"]]
-    except Exception:
+    except (ConnectionError, ResponseError):
         return None
 
     if not models:

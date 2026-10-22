@@ -1,7 +1,9 @@
 import json
 from pathlib import Path
 
+import httpx
 import pytest
+from ollama import RequestError, ResponseError
 from pydantic import BaseModel, Field
 
 try:
@@ -13,6 +15,10 @@ from ollama_think import Client
 
 prompt = "what is 2 + 3?"
 
+# Errors a capability probe records as a failed result instead of crashing the run.
+# ValueError covers json.JSONDecodeError and pydantic.ValidationError.
+PROBE_ERRORS = (ResponseError, RequestError, ConnectionError, httpx.HTTPError, ValueError)
+
 
 def _thinking_mode(client: Client, model: str, think: bool = True) -> tuple[bool, str]:
     try:
@@ -20,7 +26,7 @@ def _thinking_mode(client: Client, model: str, think: bool = True) -> tuple[bool
         if not tr.thinking:
             return False, "Thinking supported but empty"
         return (True, "")
-    except Exception as e:
+    except PROBE_ERRORS as e:
         if str(e).find("does not support thinking") > -1:
             err = "Does not support thinking"
             return (False, err)
@@ -37,7 +43,7 @@ def _content_no_thinking(client: Client, model: str) -> tuple[bool, str]:
                 f"Thinking outputed to content when think=False '{tr.content}'",
             )
         return (True, "")
-    except Exception as e:
+    except PROBE_ERRORS as e:
         err = f"{e}"
         return (True, err)
 
@@ -48,7 +54,7 @@ def _json_format(client: Client, model: str, think: bool = True) -> tuple[bool, 
         r = client.call(model=model, prompt=prompt, format="json", think=think)
         _ = json.loads(r.content)
         return True, ""
-    except Exception as e:
+    except PROBE_ERRORS as e:
         err = f"{e}"
         if r:
             err = err + f" '{r}'"
@@ -72,7 +78,7 @@ def _pydantic_format(client: Client, model: str, think: bool = True) -> tuple[bo
         )
         _ = ResponseObj.model_validate_json(r.content)
         return True, ""
-    except Exception as e:
+    except PROBE_ERRORS as e:
         err = f"{e}"
         if r:
             err = err + f" '{r}'"
@@ -100,7 +106,7 @@ def _tool_calling(client: Client, model: str, think: bool = True) -> tuple[bool,
         if r.message.tool_calls and r.message.tool_calls[0].function.name == "addTwoInts":
             return True, ""
         return False, f"Expected tool call, received '{r}'"
-    except Exception as e:
+    except PROBE_ERRORS as e:
         if str(e).find("does not support tools") > 0:
             err = "Does not support tools"
             return False, err
@@ -113,7 +119,7 @@ def _tool_calling(client: Client, model: str, think: bool = True) -> tuple[bool,
 def _get_model_names(client: Client):
     try:
         models = [m["model"] for m in client.list()["models"]]
-    except Exception as e:
+    except (ConnectionError, ResponseError) as e:
         print("Connection error for ollama", e)
         models = []
     return models

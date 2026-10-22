@@ -1,6 +1,6 @@
 import json
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ValidationError
 
 try:
     from rich import print  # type: ignore
@@ -41,7 +41,7 @@ def main():
         try:
             print("Parsed json:")
             print(json.loads(text_json))
-        except Exception as e:
+        except json.JSONDecodeError as e:
             print("Failed to parse json", e)
 
         # explicit constrained format
@@ -58,7 +58,7 @@ def main():
         try:
             print("\nParsed object:")
             print(MyResponseObject.model_validate_json(text_obj))
-        except Exception as e:
+        except ValidationError as e:
             print("Failed to parse object", e)
             # it might still be valid-ish json
             # See https://github.com/Qarj/fix-busted-json
