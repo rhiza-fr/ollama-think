@@ -120,7 +120,7 @@ class Client(OllamaClient):
         """Enter the runtime context related to this object."""
         return self
 
-    def __exit__(self, _exc_type, _exc_val, _exc_tb) -> None:
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
         """Exit the runtime context and close the cache."""
         self.close()
 
@@ -404,7 +404,7 @@ class AsyncClient(OllamaAsyncClient):
         """Enter the async runtime context related to this object."""
         return self
 
-    async def __aexit__(self, _exc_type, _exc_val, _exc_tb) -> None:
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Exit the async runtime context and close the cache."""
         await self.close()
 
