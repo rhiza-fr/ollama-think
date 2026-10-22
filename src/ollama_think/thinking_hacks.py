@@ -1,3 +1,5 @@
+"""Request and response rewrites that extract thinking for models without native support."""
+
 import re
 
 from ollama._types import ChatRequest
@@ -21,10 +23,7 @@ def hack_request(cr: ChatRequest, hacks: ThinkingHacks) -> ChatRequest:
         cr.think = False
     new_message = hacks.get("add_message", "")
     if new_message and cr.messages:
-        messages = [new_message]
-        for message in cr.messages:
-            messages.append(message)  # type: ignore hmmm
-        cr.messages = messages
+        cr.messages = [new_message, *cr.messages]
     return cr
 
 
@@ -50,6 +49,11 @@ def hack_response(tr: ThinkResponse, hacks: ThinkingHacks) -> ThinkResponse:
 
 
 def setup_stream_parser(model: str, hacks: ThinkingHacks | None) -> StreamingParser | None:
+    """
+    Create a StreamingParser for the model's content parsers.
+
+    Returns None when the model needs no hacks or has no content parsers.
+    """
     if not hacks:
         return None
 

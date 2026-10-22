@@ -65,6 +65,7 @@ def test_call_cache_speedup(cache_test_client: Client, request):
     model = request.config.getoption("--model") or get_default_model(cache_test_client)
     if model is None:
         pytest.skip("No models available on Ollama server")
+    assert model is not None  # ty does not treat pytest.skip as NoReturn
 
     prompt = get_unique_prompt()
 
@@ -98,6 +99,7 @@ def test_stream_cache_speedup(cache_test_client: Client, request):
     model = request.config.getoption("--model") or get_default_model(cache_test_client)
     if model is None:
         pytest.skip("No models available on Ollama server")
+    assert model is not None  # ty does not treat pytest.skip as NoReturn
 
     prompt = get_unique_prompt()
 
@@ -140,6 +142,7 @@ async def test_async_call_cache_speedup(async_cache_test_client: AsyncClient, re
 
     if model is None:
         pytest.skip("No models available on Ollama server")
+    assert model is not None  # ty does not treat pytest.skip as NoReturn
 
     prompt = get_unique_prompt()
 
@@ -179,6 +182,7 @@ async def test_async_stream_cache_speedup(async_cache_test_client: AsyncClient, 
 
     if model is None:
         pytest.skip("No models available on Ollama server")
+    assert model is not None  # ty does not treat pytest.skip as NoReturn
 
     prompt = get_unique_prompt()
 

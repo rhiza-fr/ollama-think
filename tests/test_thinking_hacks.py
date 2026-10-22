@@ -17,10 +17,16 @@ from ollama_think.thinkresponse import ThinkResponse
 THINK_PATTERN = "<think>(?P<thinking>.*?)</think>(?P<content>.*)"
 
 
-def _hacks(**overrides) -> ThinkingHacks:
-    base: ThinkingHacks = {"enable_thinking": False, "add_message": None, "content_parsers": [THINK_PATTERN]}
-    base.update(overrides)
-    return base
+def _hacks(
+    enable_thinking: bool = False,
+    add_message: dict[str, str] | None = None,
+    content_parsers: list[str] | None = None,
+) -> ThinkingHacks:
+    return {
+        "enable_thinking": enable_thinking,
+        "add_message": add_message,
+        "content_parsers": [THINK_PATTERN] if content_parsers is None else content_parsers,
+    }
 
 
 def _tr(**kwargs) -> ThinkResponse:
@@ -50,14 +56,17 @@ def test_hack_request_prepends_add_message():
     add_msg = {"role": "system", "content": "Enable deep thinking subroutine."}
     cr = ChatRequest(model="test", messages=[Message(role="user", content="hi")])
     result = hack_request(cr, _hacks(add_message=add_msg))
+    assert result.messages is not None
     assert len(result.messages) == 2
-    assert result.messages[0]["content"] == "Enable deep thinking subroutine."
+    assert result.messages[0] == add_msg
+    assert isinstance(result.messages[1], Message)
     assert result.messages[1].role == "user"
 
 
 def test_hack_request_no_add_message_leaves_messages_unchanged():
     cr = ChatRequest(model="test", messages=[Message(role="user", content="hi")])
     result = hack_request(cr, _hacks(add_message=None))
+    assert result.messages is not None
     assert len(result.messages) == 1
 
 

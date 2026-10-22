@@ -14,8 +14,8 @@ ollama-think is a Python library that wraps the ollama-python client to add:
 
 ### Setup
 ```bash
-# Install with development dependencies
-uv sync --extra dev
+# Install with development dependencies (dev group is installed by default)
+uv sync
 ```
 
 ### Testing
@@ -118,5 +118,5 @@ Fixtures:
 ## Code Conventions
 
 - Line length: 100 characters (ruff configured)
-- Minimum Python version: 3.9
+- Minimum Python version: 3.10
 - Type hints used throughout with pydantic for ollama types

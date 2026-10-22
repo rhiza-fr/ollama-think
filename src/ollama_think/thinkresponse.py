@@ -1,7 +1,14 @@
+"""ThinkResponse, a ChatResponse with convenience accessors and unpacking."""
+
+import sys
 from collections.abc import Iterator
-from typing import override
 
 from ollama import ChatResponse
+
+if sys.version_info >= (3, 12):
+    from typing import override
+else:
+    from typing_extensions import override
 
 
 class ThinkResponse(ChatResponse):
@@ -11,6 +18,7 @@ class ThinkResponse(ChatResponse):
     """
 
     def __init__(self, cr: ChatResponse) -> None:
+        """Wrap an existing ChatResponse."""
         super().__init__(**cr.__dict__)
 
     def __str__(self) -> str:
@@ -32,7 +40,8 @@ class ThinkResponse(ChatResponse):
         return self.model_dump()
 
     @override
-    def __iter__(self) -> Iterator[str]:  # type: ignore[override]
+    def __iter__(self) -> Iterator[str]:  # type: ignore[override]  # ty: ignore[invalid-method-override]
+        """Yield thinking then content, so `thinking, content = response` works."""
         return iter((self.thinking, self.content))
 
     @property

@@ -12,7 +12,7 @@ from ollama_think import Client
 
 # Used by format=MyResponseObject.model_json_schema()
 class MyResponseObject(BaseModel):
-    """A specially crafted response object to capture an iterpretation of heat"""
+    """A specially crafted response object to capture an interpretation of heat"""
 
     how_hot_is_the_world: str = Field(default=..., description="your reasoning for the response")
     average_temperature: float = Field(..., description="average temperature")

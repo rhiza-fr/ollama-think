@@ -200,14 +200,14 @@ from pydantic import BaseModel, Field
 client = Client()
 
 class Heat(BaseModel):
-    """A specially crafted response object to capture an iterpretation of heat"""
-    reaoning: str = Field(..., description="your reasoning for the response")
+    """A specially crafted response object to capture an interpretation of heat"""
+    reasoning: str = Field(..., description="your reasoning for the response")
     average_temperature: float = Field(..., description="average temperature")
 
 text_obj = client.call(model="qwen3", prompt="How hot is the world?",
         format=Heat.model_json_schema()).content
 
-my_obj = Heat.model_validate_json(text_obj) # might explode it the format is invalid
+my_obj = Heat.model_validate_json(text_obj) # might explode if the format is invalid
 ```
 
 See [examples/response_format_example.py](examples/response_format_example.py)
@@ -274,7 +274,7 @@ This project uses `uv` for package management and `uv_build` as the build backen
 2.  **Create a virtual environment and install dependencies:**
     This command creates a virtual environment in `.venv` and installs all dependencies, including development tools.
     ```bash
-    uv sync --extra dev
+    uv sync
     ```
 
 ### Running Checks

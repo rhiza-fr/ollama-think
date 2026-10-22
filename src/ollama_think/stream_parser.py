@@ -1,3 +1,5 @@
+"""Incremental parser that splits streamed content into thinking and content."""
+
 import re
 from collections.abc import Generator
 
@@ -12,11 +14,13 @@ class StreamingParser:
     """
 
     def __init__(self, format_pattern: str):
+        """Compile `format_pattern`, a regex with named `thinking` and `content` groups."""
         self.format_pattern = format_pattern
         self.plan = self._compile_format(format_pattern)
         self.reset()
 
     def reset(self):
+        """Clear the buffer and return to the start of the format pattern."""
         self._buffer = ""
         self._plan_index = 0
         self._capturing_name = None

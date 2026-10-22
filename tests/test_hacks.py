@@ -29,7 +29,7 @@ def pytest_generate_tests(metafunc):
         # refine to models that have hacks
         test_cases = []
         for model in models:
-            for hack_model in hacks.keys():
+            for hack_model in hacks:
                 if model.startswith(hack_model):
                     if len(hacks[hack_model].get("content_parsers", [])) == 0:
                         break  # granite3.2-vision is skipped
@@ -65,8 +65,8 @@ def test_models(client, test_case):
         thinking_chunks.append(chunk.thinking)  # we don't need to see the streaming come in
         content_chunks.append(chunk.content)
         chunks.append(chunk)  # for debug
-    thinking = ''.join(thinking_chunks)
-    content = ''.join(content_chunks)
+    thinking = "".join(thinking_chunks)
+    content = "".join(content_chunks)
     print(f"--- Thinking ---\n{thinking}")
     print(f"\n--- Content ---\n{content}")
 

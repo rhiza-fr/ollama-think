@@ -8,7 +8,9 @@ This module provides a `Client` class that adds several key features:
 - hacks older models to respect thinking separation where possible
 """
 
+import contextlib
 import hashlib
+import logging
 import os
 from collections.abc import AsyncIterator, Callable, Iterator, Mapping, Sequence
 from typing import Any, Literal
@@ -32,6 +34,8 @@ from ollama_think.thinkresponse import ThinkResponse
 
 CACHE_EXPIRE = 90 * 24 * 3600  # 90 days
 CACHE_SIZE_LIMIT = 1024**3  # 1 GB
+
+logger = logging.getLogger(__name__)
 
 
 class Client(OllamaClient):
@@ -95,7 +99,9 @@ class Client(OllamaClient):
 
                 client = Client(cache_dir="~/.my_app_cache/ollama", clear_cache=True)
         """
-        self.cache = Cache(directory=os.path.expanduser(cache_dir), disk=JSONDisk, size_limit=CACHE_SIZE_LIMIT)
+        self.cache = Cache(
+            directory=os.path.expanduser(cache_dir), disk=JSONDisk, size_limit=CACHE_SIZE_LIMIT
+        )
         if clear_cache:
             self.cache.clear()
         self.config = Config()
@@ -139,7 +145,7 @@ class Client(OllamaClient):
         prompt: str | None = None,
         messages: Sequence[Mapping[str, Any] | Message] | None = None,
         tools: Sequence[Mapping[str, Any] | Tool | Callable] | None = None,
-        think: bool | Literal['low', 'medium', 'high'] = False,
+        think: bool | Literal["low", "medium", "high"] = False,
         format: JsonSchemaValue | Literal["", "json"] | None = None,
         options: Mapping[str, Any] | Options | None = None,
         keep_alive: float | str | None = None,
@@ -206,9 +212,8 @@ class Client(OllamaClient):
             content: 'Hello, world! How can I assist you today? 😊'
 
         """
-        if messages is None:
-            if prompt is not None:
-                messages = [Message(role="user", content=prompt)]
+        if messages is None and prompt is not None:
+            messages = [Message(role="user", content=prompt)]
         request = ChatRequest(
             model=model,
             stream=False,
@@ -230,11 +235,13 @@ class Client(OllamaClient):
                 if raw is not None:
                     response = ChatResponse.model_validate(raw)
             except Exception:
-                pass
+                logger.debug("Ignoring unreadable cache entry %s", hash_key, exc_info=True)
         if response is None:
             response = super().chat(**request.__dict__)
             if use_cache:
-                self.cache.set(hash_key, response.model_dump(mode='json'), tag=model, expire=CACHE_EXPIRE)
+                self.cache.set(
+                    hash_key, response.model_dump(mode="json"), tag=model, expire=CACHE_EXPIRE
+                )
         tr = ThinkResponse(response)
         if model_hacks:
             tr = hack_response(tr, hacks=model_hacks)  # cludge ollama to respect thought
@@ -246,7 +253,7 @@ class Client(OllamaClient):
         prompt: str | None = None,
         messages: Sequence[Mapping[str, Any] | Message] | None = None,
         tools: Sequence[Mapping[str, Any] | Tool | Callable] | None = None,
-        think: bool | Literal['low', 'medium', 'high']  = True,
+        think: bool | Literal["low", "medium", "high"] = True,
         format: JsonSchemaValue | Literal["", "json"] | None = None,
         options: Mapping[str, Any] | Options | None = None,
         keep_alive: float | str | None = None,
@@ -286,9 +293,8 @@ class Client(OllamaClient):
 
 
         """
-        if messages is None:
-            if prompt is not None:
-                messages = [Message(role="user", content=prompt)]
+        if messages is None and prompt is not None:
+            messages = [Message(role="user", content=prompt)]
         request = ChatRequest(
             model=model,
             stream=True,
@@ -311,7 +317,7 @@ class Client(OllamaClient):
                 if raw is not None:
                     cached = [ThinkResponse(ChatResponse.model_validate(d)) for d in raw]
             except Exception:
-                pass
+                logger.debug("Ignoring unreadable cache entry %s", hash_key, exc_info=True)
         if cached is not None:
             yield from cached
         else:
@@ -325,7 +331,7 @@ class Client(OllamaClient):
                     tr = hack_stream_chunk(tr, hack_parser)
                     if not tr:  # we consumed a non-output chunk like a <think> tag
                         continue
-                chunks.append(tr.model_dump(mode='json'))
+                chunks.append(tr.model_dump(mode="json"))
                 yield tr
             if use_cache:
                 self.cache.set(hash_key, chunks, tag=model, expire=CACHE_EXPIRE)
@@ -347,17 +353,43 @@ class Client(OllamaClient):
         return super().generate(model=model, keep_alive=0.0)
 
     def load_config(self, path: str) -> None:
+        """Replace the thinking hacks config with the YAML file at `path`."""
         self.config.load_config(path)
 
 
 class AsyncClient(OllamaAsyncClient):
+    """
+    The asyncio counterpart of `Client`, extending `ollama.AsyncClient`.
+
+    Provides the same caching, thinking hacks and `ThinkResponse` wrapping as `Client`,
+    with awaitable `call` and `stop` and an async iterator from `stream`.
+
+    Example:
+        ```python
+        async with AsyncClient() as client:
+            response = await client.call(model="llama3", prompt="Why is the sky blue?")
+            print(response.content)
+        ```
+    """
+
     def __init__(
         self,
         host: str | None = None,
         cache_dir: str = "~/.cache/ollama_think_cache",
         clear_cache: bool = False,
     ) -> None:
-        self.cache = Cache(directory=os.path.expanduser(cache_dir), disk=JSONDisk, size_limit=CACHE_SIZE_LIMIT)
+        """
+        Initializes the async Ollama Think Client.
+
+        Args:
+            host: The URL of the Ollama API server. Defaults to `OLLAMA_HOST` or
+                  `http://localhost:11434`.
+            cache_dir: The directory where API responses will be cached.
+            clear_cache: If True, the entire cache in `cache_dir` is cleared on initialization.
+        """
+        self.cache = Cache(
+            directory=os.path.expanduser(cache_dir), disk=JSONDisk, size_limit=CACHE_SIZE_LIMIT
+        )
         if clear_cache:
             self.cache.clear()
         self.config = Config()
@@ -365,21 +397,26 @@ class AsyncClient(OllamaAsyncClient):
         super().__init__(host=host)
 
     async def close(self):
+        """Explicitly clean up the cache."""
         self.cache.close()
 
     async def __aenter__(self):
+        """Enter the async runtime context related to this object."""
         return self
 
     async def __aexit__(self, _exc_type, _exc_val, _exc_tb) -> None:
+        """Exit the async runtime context and close the cache."""
         await self.close()
 
     def __del__(self) -> None:
-        try:
+        """Close the cache on deletion, ignoring errors during interpreter shutdown."""
+        with contextlib.suppress(Exception):
             self.cache.close()
-        except Exception:
-            pass
 
     def _make_cache_key(self, request: ChatRequest) -> str:
+        """
+        Create a cache key by hashing the request payload.
+        """
         str_key = request.model_dump_json() + f"{self.host or 'default'}"
         return hashlib.md5(str_key.encode(), usedforsecurity=False).hexdigest()
 
@@ -389,15 +426,31 @@ class AsyncClient(OllamaAsyncClient):
         prompt: str | None = None,
         messages: Sequence[Mapping[str, Any] | Message] | None = None,
         tools: Sequence[Mapping[str, Any] | Tool | Callable] | None = None,
-        think: bool | Literal['low', 'medium', 'high']  = False,
+        think: bool | Literal["low", "medium", "high"] = False,
         format: JsonSchemaValue | Literal["", "json"] | None = None,
         options: Mapping[str, Any] | Options | None = None,
         keep_alive: float | str | None = None,
         use_cache: bool = True,
     ) -> ThinkResponse:
-        if messages is None:
-            if prompt is not None:
-                messages = [Message(role="user", content=prompt)]
+        """
+        A non-streaming chat with the model. See `Client.call` for details and examples.
+
+        Args:
+            model: The model name.
+            prompt: A single user prompt. If provided, it will be converted to a `messages` list.
+            messages: A list of messages in the chat.
+            tools: A list of tools the model may call.
+            think: If True, enables thinking mode in the response.
+            format: The format to return a response in. None | 'json' | your_obj.model_json_schema()
+            options: Additional model parameter dict: {'temperature': 0.1, 'num_ctx': 8192}
+            keep_alive: Controls how long the model will stay loaded in memory following the request.
+            use_cache: If True, attempts to retrieve the response from cache before making an API call.
+
+        Returns:
+            A `ThinkResponse` object containing the full response from the model.
+        """
+        if messages is None and prompt is not None:
+            messages = [Message(role="user", content=prompt)]
         request = ChatRequest(
             model=model,
             stream=False,
@@ -419,11 +472,13 @@ class AsyncClient(OllamaAsyncClient):
                 if raw is not None:
                     response = ChatResponse.model_validate(raw)
             except Exception:
-                pass
+                logger.debug("Ignoring unreadable cache entry %s", hash_key, exc_info=True)
         if response is None:
             response = await super().chat(**request.__dict__)
             if use_cache:
-                self.cache.set(hash_key, response.model_dump(mode='json'), tag=model, expire=CACHE_EXPIRE)
+                self.cache.set(
+                    hash_key, response.model_dump(mode="json"), tag=model, expire=CACHE_EXPIRE
+                )
         tr = ThinkResponse(response)
         if model_hacks:
             tr = hack_response(tr, hacks=model_hacks)
@@ -435,15 +490,32 @@ class AsyncClient(OllamaAsyncClient):
         prompt: str | None = None,
         messages: Sequence[Mapping[str, Any] | Message] | None = None,
         tools: Sequence[Mapping[str, Any] | Tool | Callable] | None = None,
-        think: bool | Literal['low', 'medium', 'high']  = True,
+        think: bool | Literal["low", "medium", "high"] = True,
         format: JsonSchemaValue | Literal["", "json"] | None = None,
         options: Mapping[str, Any] | Options | None = None,
         keep_alive: float | str | None = None,
         use_cache: bool = True,
     ) -> AsyncIterator[ThinkResponse]:
-        if messages is None:
-            if prompt is not None:
-                messages = [Message(role="user", content=prompt)]
+        """
+        A streaming chat with the model. See `Client.stream` for details and examples.
+
+        Args:
+            model: The model name.
+            prompt: A single user prompt. If provided, it will be converted to a `messages` list.
+            messages: A list of messages in the chat.
+            tools: A list of tools the model may call.
+            think: If True, enables thinking mode in the response. (or 'high', 'medium', 'low' for gpt-oss)
+            format: The format to return a response in. None | 'json' | your_obj.model_json_schema()
+            options: Additional model parameter dict, such as {'temperature': 0.1, 'num_ctx': 8192}
+            keep_alive: Controls how long the model will stay loaded in memory following the request.
+            use_cache: If True, attempts to retrieve the response from cache. If not found, the full
+                       list of streamed chunks is cached upon completion.
+
+        Returns:
+            An async iterator of `ThinkResponse` objects, each containing a chunk of the response.
+        """
+        if messages is None and prompt is not None:
+            messages = [Message(role="user", content=prompt)]
         request = ChatRequest(
             model=model,
             stream=True,
@@ -466,7 +538,7 @@ class AsyncClient(OllamaAsyncClient):
                 if raw is not None:
                     cached = [ThinkResponse(ChatResponse.model_validate(d)) for d in raw]
             except Exception:
-                pass
+                logger.debug("Ignoring unreadable cache entry %s", hash_key, exc_info=True)
         if cached is not None:
             for r in cached:
                 yield r
@@ -480,13 +552,23 @@ class AsyncClient(OllamaAsyncClient):
                     tr = hack_stream_chunk(tr, hack_parser)
                     if not tr:
                         continue
-                chunks.append(tr.model_dump(mode='json'))
+                chunks.append(tr.model_dump(mode="json"))
                 yield tr
             if use_cache:
                 self.cache.set(hash_key, chunks, tag=model, expire=CACHE_EXPIRE)
 
     async def stop(self, model: str = "") -> GenerateResponse:
+        """
+        Unloads a model from memory by calling `generate` with a `keep_alive` of 0.
+
+        Args:
+            model: The name of the model to unload. If empty, all models will be unloaded.
+
+        Returns:
+            A `GenerateResponse` object from the underlying API call.
+        """
         return await super().generate(model=model, keep_alive=0.0)
 
     def load_config(self, path: str) -> None:
+        """Replace the thinking hacks config with the YAML file at `path`."""
         self.config.load_config(path)
