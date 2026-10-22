@@ -8,6 +8,6 @@
   "rules": [
     "Replaces ollama-python",
     "Use think=True for thinking support",
-    "Use ollama_think.Client.call for a non-streaming replacment of ollama.Client.generate and ollama.Client.chat(..., stream=False)",
-    "Use ollama_think.Client.stream for a streaming replacment for ollama.Client.chat(..., stream=True)"]
+    "Use ollama_think.Client.call for a non-streaming replacement of ollama.Client.generate and ollama.Client.chat(..., stream=False)",
+    "Use ollama_think.Client.stream for a streaming replacement for ollama.Client.chat(..., stream=True)"]
 }

@@ -13,6 +13,7 @@ import hashlib
 import logging
 import os
 from collections.abc import AsyncIterator, Callable, Iterator, Mapping, Sequence
+from pathlib import Path
 from typing import Any, Literal
 
 from diskcache import Cache, JSONDisk
@@ -128,9 +129,11 @@ class Client(OllamaClient):
         """
         Clean up the cache when the Client instance is deleted.
 
-        Try hard to clean up even if Diskcache is forgiving.
+        Try hard to clean up even if Diskcache is forgiving, ignoring errors during
+        interpreter shutdown.
         """
-        self.close()
+        with contextlib.suppress(Exception):
+            self.cache.close()
 
     def _make_cache_key(self, request: ChatRequest) -> str:
         """
@@ -178,7 +181,7 @@ class Client(OllamaClient):
 
             client = Client(host="http://localhost:11434")
 
-            tr = client.call(model="qwen3", prompt="Hello, world!" think=False)  # 'think' is default False, which avoids pages of text for this example
+            tr = client.call(model="qwen3", prompt="Hello, world!", think=False)  # 'think' is default False, which avoids pages of text for this example
 
             # We can now look at the response object and see that it looks exactly the same as a ChatResponse object
             print(tr)
@@ -226,7 +229,7 @@ class Client(OllamaClient):
         )
         model_hacks = self.config.get_hacks_if_enabled(model)
         if model_hacks:
-            request = hack_request(request, hacks=model_hacks)  # cludge ollama to respect thought
+            request = hack_request(request, hacks=model_hacks)  # kludge ollama to respect thought
         hash_key = self._make_cache_key(request)
         response = None
         if use_cache:
@@ -244,7 +247,7 @@ class Client(OllamaClient):
                 )
         tr = ThinkResponse(response)
         if model_hacks:
-            tr = hack_response(tr, hacks=model_hacks)  # cludge ollama to respect thought
+            tr = hack_response(tr, hacks=model_hacks)  # kludge ollama to respect thought
         return tr
 
     def stream(
@@ -287,7 +290,7 @@ class Client(OllamaClient):
         .. code-block:: python
 
             client = Client(host="http://localhost:11434")
-            for thinking, content in client.stream(model="qwen3", prompt="Why is the sky blue?", thinking=True):
+            for thinking, content in client.stream(model="qwen3", prompt="Why is the sky blue?", think=True):
                 print(thinking, end="") # the thinking always comes first
                 print(content, end="")
 
@@ -307,7 +310,7 @@ class Client(OllamaClient):
         )
         model_hacks = self.config.get_hacks_if_enabled(model)
         if model_hacks:
-            request = hack_request(request, hacks=model_hacks)  # cludge ollama to respect thought
+            request = hack_request(request, hacks=model_hacks)  # kludge ollama to respect thought
         hash_key = self._make_cache_key(request)
 
         cached = None
@@ -352,7 +355,7 @@ class Client(OllamaClient):
         """
         return super().generate(model=model, keep_alive=0.0)
 
-    def load_config(self, path: str) -> None:
+    def load_config(self, path: str | Path) -> None:
         """Replace the thinking hacks config with the YAML file at `path`."""
         self.config.load_config(path)
 
@@ -569,6 +572,6 @@ class AsyncClient(OllamaAsyncClient):
         """
         return await super().generate(model=model, keep_alive=0.0)
 
-    def load_config(self, path: str) -> None:
+    def load_config(self, path: str | Path) -> None:
         """Replace the thinking hacks config with the YAML file at `path`."""
         self.config.load_config(path)

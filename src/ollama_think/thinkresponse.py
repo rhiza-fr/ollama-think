@@ -13,8 +13,8 @@ else:
 
 class ThinkResponse(ChatResponse):
     """
-    A wrapper around ChatResponse that adds string behavior, a thinking property,
-    and supports addition of ThinkResponse objects.
+    A wrapper around ChatResponse that adds string behavior, `thinking` and `content`
+    properties, and unpacking into `(thinking, content)`.
     """
 
     def __init__(self, cr: ChatResponse) -> None:

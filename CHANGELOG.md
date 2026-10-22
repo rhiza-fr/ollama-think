@@ -7,17 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 # [Unreleased]
 
-### Changed
-- Replaced blind `except Exception` handlers in tests and examples with the specific
-  exceptions raised (fixes ruff `BLE001`)
-
 # [0.1.12] - 2026-10-22
 
 ### Changed
 - Switched build backend from hatchling to uv_build
 - Lowered `requires-python` to `>=3.10` (unit tests pass on 3.10 to 3.14)
 - Dev dependencies moved to a `dev` dependency group, so `uv sync` installs them
-- Docstring, type annotation and README fixes
+- Replaced blind `except Exception` handlers in tests and examples with the specific
+  exceptions raised (fixes ruff `BLE001`)
+- Missing config file now emits a `UserWarning` naming the path, instead of printing a
+  literal `{path}` to stdout
+- `Client.__del__` now ignores errors during interpreter shutdown, matching `AsyncClient`
+- `load_config` accepts `str | Path`
+- Multi-version CI now tests Python 3.10 and 3.11
+- Docstring, type annotation, README and typo fixes
+
+### Removed
+- Stale `requirements.txt` and `requirements-dev.txt`; `uv.lock` is the lock file
 
 # [0.1.11] - 2026-02-19
 

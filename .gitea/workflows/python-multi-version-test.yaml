@@ -1,6 +1,3 @@
-# Template: Multi-version Python testing workflow for Gitea Actions
-# Copy this file to your project's .gitea/workflows/ directory
-#
 # Runs tests against multiple Python versions using generic ubuntu runners.
 # Includes optional dependency upgrade testing.
 
@@ -19,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.12', '3.13', '3.14']
+        python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
 
     steps:
       - uses: actions/checkout@v4

@@ -1,5 +1,6 @@
 """Loading of per-model thinking hacks from config.yaml."""
 
+import warnings
 from copy import deepcopy
 from pathlib import Path
 from typing import TypedDict
@@ -32,7 +33,9 @@ class Config:
         """
         path = Path(path)
         if not path.exists():
-            print("WARNING: config not found at {path}, no hacks for older models enabled.")
+            warnings.warn(
+                f"config not found at {path}, no hacks for older models enabled.", stacklevel=2
+            )
             self.enable_hacks = False
             self.models = {}
             return

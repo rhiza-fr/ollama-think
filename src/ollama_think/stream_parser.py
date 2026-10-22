@@ -28,7 +28,7 @@ class StreamingParser:
     @staticmethod
     def _get_boundary_char(regex_str: str) -> str | None:
         """
-        Find the first literal character in a regex,
+        Find the first literal character in a regex.
         """
         i = 0
         while i < len(regex_str):

@@ -140,7 +140,8 @@ def test_load_config():
     assert client.config.enable_hacks is True
 
     path = "DOESNOTEXIST.yaml"
-    client.load_config(path)
+    with pytest.warns(UserWarning, match=path):
+        client.load_config(path)
     assert client.config.enable_hacks is False
 
 
